@@ -1,6 +1,9 @@
 {% extends 'template.html.twig' %}
 {% block title %}{{ parent() }}Welcome{% endblock %}
 {% block content %}
+{% block header %}
+{{ parent() }}
+{% endblock %}
 <body class="bg-surface font-body-md text-body-md text-on-surface antialiased">
 
 
