@@ -5,12 +5,14 @@ namespace Controllers;
 
 use Factory\ManagerFactory;
 use model\Manager\ConnectionManager;
+// use model\Manager\DokuManager;
 use Twig\Environment;
 
 
 class ConnectionController extends Abstract\AbstractController
 {
     private ConnectionManager $connectionManager;
+   // private DokuManager $dokuManager;
 
     public function __construct(Environment $twig, ManagerFactory $managerFactory)
     {
@@ -20,7 +22,9 @@ class ConnectionController extends Abstract\AbstractController
          */
         parent::__construct($twig, $managerFactory);
         $this->connectionManager = $this->getManager(ConnectionManager::class);
+    //    $this->dokuManager = $this->getManager(DokuManager::class);
     }
+
     public function logout()
     {
         $this->connectionManager->logoutUser();
@@ -28,8 +32,51 @@ class ConnectionController extends Abstract\AbstractController
         exit;
     }
 
-    public function index() : void
+    public function index(): void
     {
-        echo $this->twig->render('public/public.index.html.twig');
+        global $systemMessage, $sessionRole;
+        if (!isset($_SESSION["visit_logged"])) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = $ip == "::1" ? "localhost" : $ip;
+            $this->connectionManager->logConnection($ip, 0);
+        }
+      //  $solvedPuzzles = $this->dokuManager->getLatestPuzzles();
+        echo $this->twig->render('public/public.index.html.twig', [
+            "systemMessage" => $systemMessage,
+            "sessionRole" => $sessionRole,
+            "csrfToken" => $this->csrfToken,
+       //     "solvedPuzzles" => $solvedPuzzles
+        ]);
     }
+
+    public function login(): void
+    {
+        global $systemMessage, $sessionRole;
+        if(!empty($sessionRole)) {
+            header("Location: ./");
+            exit();
+        }
+        if (isset($_POST['unset:entryUser'])) {
+            //  var_dump($_POST);
+            //  die();
+            //  $this->verifyCsrfToken($_POST['csrf:csrf_token']);
+            $cleanPostData = $this->preparePostData($_POST);
+            $userLogin = $this->connectionManager->loginUser($cleanPostData);
+            if($userLogin) {
+                header("Location: ?route=connected");
+            }else{
+                $_SESSION["systemMessage"] = "Not the right credentials";
+                header("Location: ./");
+            }
+            exit();
+        }
+
+        echo $this->twig->render('public/public.login.html.twig', [
+            "systemMessage" => $systemMessage,
+            "sessionRole" => $sessionRole,
+            "csrfToken" => $this->csrfToken,
+        ]);
+    }
+
+
 }
