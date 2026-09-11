@@ -4,7 +4,7 @@
 {% block header %}
 {{ parent() }}
 {% endblock %}
-<body class="bg-surface font-body-md text-body-md text-on-surface antialiased">
+
 
 
 <h1 class="text-6xl text-center mb-6 mt-12">The Variant Log</h1>
@@ -47,7 +47,8 @@
             <tbody class="divide-y divide-outline-variant font-body-md text-body-md">
 
             <!-- Row 2 (Highlighted Solve) -->
-            <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40">
+                 {% for puzzle in puzzles %}
+             <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40">
                 <td class="py-space-md px-space-lg border-r border-outline-variant font-label-md text-label-md text-on-surface-variant group-hover:text-primary font-semibold">
                     #SUD-2840
                 </td>
@@ -84,6 +85,7 @@
                         Details
                     </a>
                 </td>
+                 {% endfor %}
             </tr>
 
             </tbody>

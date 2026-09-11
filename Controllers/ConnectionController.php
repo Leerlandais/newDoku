@@ -5,14 +5,14 @@ namespace Controllers;
 
 use Factory\ManagerFactory;
 use model\Manager\ConnectionManager;
-// use model\Manager\DokuManager;
+use model\Manager\DokuManager;
 use Twig\Environment;
 
 
 class ConnectionController extends Abstract\AbstractController
 {
     private ConnectionManager $connectionManager;
-   // private DokuManager $dokuManager;
+    private DokuManager $dokuManager;
 
     public function __construct(Environment $twig, ManagerFactory $managerFactory)
     {
@@ -22,7 +22,7 @@ class ConnectionController extends Abstract\AbstractController
          */
         parent::__construct($twig, $managerFactory);
         $this->connectionManager = $this->getManager(ConnectionManager::class);
-    //    $this->dokuManager = $this->getManager(DokuManager::class);
+        $this->dokuManager = $this->getManager(DokuManager::class);
     }
 
     public function logout()
@@ -40,12 +40,13 @@ class ConnectionController extends Abstract\AbstractController
             $ip = $ip == "::1" ? "localhost" : $ip;
             $this->connectionManager->logConnection($ip, 0);
         }
-      //  $solvedPuzzles = $this->dokuManager->getLatestPuzzles();
+        $solvedPuzzles = $this->dokuManager->getLatestPuzzles();
+
         echo $this->twig->render('public/public.index.html.twig', [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
             "csrfToken" => $this->csrfToken,
-       //     "solvedPuzzles" => $solvedPuzzles
+            "puzzles" => $solvedPuzzles
         ]);
     }
 
@@ -71,10 +72,13 @@ class ConnectionController extends Abstract\AbstractController
             exit();
         }
 
+        $puzzles =$this->dokuManager->getLatestPuzzles();
+
         echo $this->twig->render('public/public.login.html.twig', [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
             "csrfToken" => $this->csrfToken,
+            "puzzles" => $puzzles
         ]);
     }
 
