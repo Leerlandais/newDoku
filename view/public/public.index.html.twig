@@ -1,4 +1,5 @@
-{% extends 'template.html.twig' %}   
+{% extends 'template.html.twig' %}
+{% block title %}{{ parent() }}Welcome{% endblock %}
 {% block content %}
     <body class="bg-surface font-body-md text-body-md text-on-surface antialiased">
 
@@ -17,11 +18,13 @@
                         <span>View All Solved Puzzles</span>
                         <span class="material-symbols-outlined text-base">arrow_forward</span>
                     </a>
+{% if "ROLE_ADMIN" in sessionRole %}
                     <button class="font-label-md text-label-md bg-surface-container-low text-on-surface px-space-lg py-space-sm border border-outline-variant hover:bg-surface-container transition-all flex items-center gap-space-xs focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                             id="quick-log-btn">
                         <span class="material-symbols-outlined text-base text-primary">add_box</span>
                         <span>Log New Solve</span>
                     </button>
+{% endif %}
                 </div>
             </div>
 
@@ -48,45 +51,11 @@
                             <th class="py-space-md px-space-lg border-r border-outline-variant font-medium text-right w-36"
                                 scope="col">TIME
                             </th>
-                            <th class="py-space-md px-space-lg font-medium text-center w-28" scope="col">ACTION</th>
+                            <th class="py-space-md px-space-lg font-medium text-center w-28" scope="col">Details</th>
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-outline-variant font-body-md text-body-md">
-                        <!-- Row 1 -->
-                        <tr class="hover:bg-surface-cream/80 transition-colors group">
-                            <td class="py-space-md px-space-lg border-r border-outline-variant font-label-md text-label-md text-on-surface-variant group-hover:text-primary font-semibold">
-                                #SUD-2841
-                            </td>
-                            <td class="py-space-md px-space-lg border-r border-outline-variant">
-                                <div class="flex flex-col">
-                                    <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">Whispering Whispers</span>
-                                    <span class="font-body-sm text-body-sm text-secondary">by Philip Newman</span>
-                                </div>
-                            </td>
-                            <td class="py-space-md px-space-lg border-r border-outline-variant">
-                                <div class="flex flex-wrap gap-1.5">
-                                    <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-on-surface">German Whisper</span>
-                                    <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-secondary">Parity</span>
-                                </div>
-                            </td>
-                            <td class="py-space-md px-space-lg border-r border-outline-variant">
-                                <a class="font-label-sm text-label-sm text-primary hover:text-inverse-surface inline-flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-primary underline decoration-outline-variant underline-offset-2"
-                                   href="https://crackingthecryptic.com/play/2841" rel="noopener noreferrer"
-                                   target="_blank">
-                                    <span>ctc.app/2841</span>
-                                    <span class="material-symbols-outlined text-xs">open_in_new</span>
-                                </a>
-                            </td>
-                            <td class="py-space-md px-space-lg border-r border-outline-variant font-grid-digit-sm text-label-md font-semibold text-right text-on-surface">
-                                24:18
-                            </td>
-                            <td class="py-space-md px-space-lg text-center">
-                                <a class="font-label-sm text-label-sm px-space-md py-1 border border-outline hover:border-primary hover:bg-primary hover:text-on-primary transition-all inline-block focus:outline-none focus:ring-2 focus:ring-primary"
-                                   data-path="puzzle-details" href="#">
-                                    Details
-                                </a>
-                            </td>
-                        </tr>
+
                         <!-- Row 2 (Highlighted Solve) -->
                         <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40">
                             <td class="py-space-md px-space-lg border-r border-outline-variant font-label-md text-label-md text-on-surface-variant group-hover:text-primary font-semibold">
@@ -126,79 +95,7 @@
                                 </a>
                             </td>
                         </tr>
-                        <!-- Row 3 -->
-                        <tr class="hover:bg-surface-cream/80 transition-colors group">
-                            <td class="py-space-md px-space-lg border-r border-outline-variant font-label-md text-label-md text-on-surface-variant group-hover:text-primary font-semibold">
-                                #SUD-2839
-                            </td>
-                            <td class="py-space-md px-space-lg border-r border-outline-variant">
-                                <div class="flex flex-col">
-                                    <div class="flex items-center gap-space-xs">
-                                        <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">Little Killer Symphony</span>
-                                        <span class="font-label-sm text-label-sm px-1.5 py-0.2 bg-tertiary-fixed text-on-tertiary-fixed font-medium">HARD</span>
-                                    </div>
-                                    <span class="font-body-sm text-body-sm text-secondary">by Clover</span>
-                                </div>
-                            </td>
-                            <td class="py-space-md px-space-lg border-r border-outline-variant">
-                                <div class="flex flex-wrap gap-1.5">
-                                    <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-on-surface">Little Killer</span>
-                                    <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-on-surface">Killer Cages</span>
-                                </div>
-                            </td>
-                            <td class="py-space-md px-space-lg border-r border-outline-variant">
-                                <a class="font-label-sm text-label-sm text-primary hover:text-inverse-surface inline-flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-primary underline decoration-outline-variant underline-offset-2"
-                                   href="https://crackingthecryptic.com/play/2839" rel="noopener noreferrer"
-                                   target="_blank">
-                                    <span>ctc.app/2839</span>
-                                    <span class="material-symbols-outlined text-xs">open_in_new</span>
-                                </a>
-                            </td>
-                            <td class="py-space-md px-space-lg border-r border-outline-variant font-grid-digit-sm text-label-md font-semibold text-right text-tertiary-container">
-                                52:30
-                            </td>
-                            <td class="py-space-md px-space-lg text-center">
-                                <a class="font-label-sm text-label-sm px-space-md py-1 border border-outline hover:border-primary hover:bg-primary hover:text-on-primary transition-all inline-block focus:outline-none focus:ring-2 focus:ring-primary"
-                                   data-path="puzzle-details" href="#">
-                                    Details
-                                </a>
-                            </td>
-                        </tr>
-                        <!-- Row 4 -->
-                        <tr class="hover:bg-surface-cream/80 transition-colors group">
-                            <td class="py-space-md px-space-lg border-r border-outline-variant font-label-md text-label-md text-on-surface-variant group-hover:text-primary font-semibold">
-                                #SUD-2838
-                            </td>
-                            <td class="py-space-md px-space-lg border-r border-outline-variant">
-                                <div class="flex flex-col">
-                                    <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">Arrowhead Matrix</span>
-                                    <span class="font-body-sm text-body-sm text-secondary">by BremSter</span>
-                                </div>
-                            </td>
-                            <td class="py-space-md px-space-lg border-r border-outline-variant">
-                                <div class="flex flex-wrap gap-1.5">
-                                    <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-on-surface">Arrow Sudoku</span>
-                                    <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-secondary">Renban</span>
-                                </div>
-                            </td>
-                            <td class="py-space-md px-space-lg border-r border-outline-variant">
-                                <a class="font-label-sm text-label-sm text-primary hover:text-inverse-surface inline-flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-primary underline decoration-outline-variant underline-offset-2"
-                                   href="https://crackingthecryptic.com/play/2838" rel="noopener noreferrer"
-                                   target="_blank">
-                                    <span>ctc.app/2838</span>
-                                    <span class="material-symbols-outlined text-xs">open_in_new</span>
-                                </a>
-                            </td>
-                            <td class="py-space-md px-space-lg border-r border-outline-variant font-grid-digit-sm text-label-md font-semibold text-right text-primary">
-                                18:45
-                            </td>
-                            <td class="py-space-md px-space-lg text-center">
-                                <a class="font-label-sm text-label-sm px-space-md py-1 border border-outline hover:border-primary hover:bg-primary hover:text-on-primary transition-all inline-block focus:outline-none focus:ring-2 focus:ring-primary"
-                                   data-path="puzzle-details" href="#">
-                                    Details
-                                </a>
-                            </td>
-                        </tr>
+
                         </tbody>
                     </table>
                 </div>
@@ -206,63 +103,7 @@
             </div>
 
         </div>
-        <!-- Micro-interaction for Log New Solve Modal / Drawer -->
-        <div class="hidden fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-xs flex items-center justify-center p-space-md"
-             id="quick-log-modal">
-            <div class="bg-surface-container-lowest border-2 border-on-surface max-w-lg w-full p-space-xl flex flex-col gap-space-lg">
-                <div class="flex items-center justify-between border-b border-outline-variant pb-space-sm">
-                    <div class="flex items-center gap-space-xs">
-                        <span class="material-symbols-outlined text-primary">add_box</span>
-                        <span class="font-headline-md text-headline-md text-on-surface">Log New Solve Entry</span>
-                    </div>
-                    <button class="text-secondary hover:text-on-surface focus:outline-none focus:ring-1 focus:ring-primary p-1"
-                            id="close-log-modal">
-                        <span class="material-symbols-outlined text-base">close</span>
-                    </button>
-                </div>
-                <div class="flex flex-col gap-space-md">
-                    <div class="flex flex-col gap-space-xs">
-                        <label class="font-label-sm text-label-sm text-secondary uppercase">Puzzle Reference or
-                            URL</label>
-                        <input class="w-full bg-surface-cream border border-on-surface px-space-md py-space-sm font-label-md text-label-md text-on-surface focus:outline-none focus:border-primary"
-                               placeholder="https://crackingthecryptic.com/play/..." type="text"/>
-                    </div>
-                    <div class="grid grid-cols-2 gap-space-md">
-                        <div class="flex flex-col gap-space-xs">
-                            <label class="font-label-sm text-label-sm text-secondary uppercase">Solve Time
-                                (mm:ss)</label>
-                            <input class="w-full bg-surface-cream border border-on-surface px-space-md py-space-sm font-label-md text-label-md text-on-surface focus:outline-none focus:border-primary"
-                                   placeholder="28:45" type="text"/>
-                        </div>
-                        <div class="flex flex-col gap-space-xs">
-                            <label class="font-label-sm text-label-sm text-secondary uppercase">Assessed
-                                Difficulty</label>
-                            <select class="w-full bg-surface-cream border border-on-surface px-space-md py-space-sm font-label-md text-label-md text-on-surface focus:outline-none focus:border-primary">
-                                <option>Easy</option>
-                                <option selected="">Medium</option>
-                                <option>Hard</option>
-                                <option>Diabolical</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-space-xs">
-                        <label class="font-label-sm text-label-sm text-secondary uppercase">Deduction Notes</label>
-                        <textarea
-                                class="w-full bg-surface-cream border border-on-surface px-space-md py-space-sm font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary"
-                                placeholder="Key logic breakthroughs or bottlenecks..." rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="flex items-center justify-end gap-space-sm pt-space-sm border-t border-outline-variant">
-                    <button class="font-label-md text-label-md px-space-lg py-space-sm border border-outline text-on-surface hover:bg-surface-container"
-                            id="cancel-log-modal">
-                        Cancel
-                    </button>
-                    <button class="font-label-md text-label-md px-space-lg py-space-sm bg-primary text-on-primary hover:bg-inverse-surface">
-                        Commit Solve
-                    </button>
-                </div>
-            </div>
-        </div>
+
         <script>
             (function () {
                 const openBtn = document.getElementById('quick-log-btn');

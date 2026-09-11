@@ -40,7 +40,7 @@ $twig->addGlobal("ENV", ENV_MODE);
 //    'debug' => false,
 // ]);
 // // no DebugExtension online
- var_dump($_SESSION);
+// var_dump($_SESSION);
 try {
     $db = ConnectionFactory::createDb();
 } catch (Exception $e) {
