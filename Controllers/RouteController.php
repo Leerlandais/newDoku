@@ -11,6 +11,12 @@ $router->registerRoute('home', ConnectionController::class, 'index');
 $router->registerRoute("logout", ConnectionController::class, "logout");
 $router->registerRoute('404', ErrorController::class, 'error404');
 
+// ADMIN ROUTES
+$router->registerRoute("admin", AdminController::class, "admin");
+$router->registerRoute("addSetter", AdminController::class, "addSetter");
+$router->registerRoute("addVariant", AdminController::class, "addVariant");
+$router->registerRoute("addSudoku", AdminController::class, "addSudoku");
+$router->registerRoute("viewLogs", AdminController::class, "viewLogs");
 
 
 
