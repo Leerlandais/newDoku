@@ -4,7 +4,7 @@
 <body class="bg-surface font-body-md text-body-md text-on-surface antialiased">
 
 
-<h1 class="text-6xl text-center mb-6">The Variant Log</h1>
+<h1 class="text-6xl text-center mb-6 mt-12">The Variant Log</h1>
 <div class="w-full px-margin py-space-xl flex flex-col gap-space-xl max-w-[1440px] mx-auto">
     <!-- Top Action & Date Anchor -->
     <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
@@ -12,21 +12,7 @@
             Today's Solved
             Puzzles</h1>
     </div>
-    <!-- Action Group -->
-    <div class="flex flex-wrap items-center gap-space-md">
-        <a class="font-label-md text-label-md bg-primary text-on-primary px-space-lg py-space-sm transition-all duration-150 flex items-center gap-space-xs hover:bg-inverse-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-           data-path="all-solved-puzzles" href="#">
-            <span>View All Solved Puzzles</span>
-            <span class="material-symbols-outlined text-base">arrow_forward</span>
-        </a>
-        {% if "ROLE_ADMIN" in sessionRole %}
-            <button class="font-label-md text-label-md bg-surface-container-low text-on-surface px-space-lg py-space-sm border border-outline-variant hover:bg-surface-container transition-all flex items-center gap-space-xs focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                    id="quick-log-btn">
-                <span class="material-symbols-outlined text-base text-primary">add_box</span>
-                <span>Log New Solve</span>
-            </button>
-        {% endif %}
-    </div>
+
 </div>
 
 <!-- Main Solves Log Data View -->
@@ -101,6 +87,21 @@
         </table>
     </div>
 
+</div>
+<!-- Action Group -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg ms-20 mt-12">
+    <a class="font-label-md text-label-md bg-primary text-on-primary px-space-lg py-space-sm transition-all duration-150 flex items-center gap-space-xs hover:bg-inverse-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+       data-path="all-solved-puzzles" href="#">
+        <span>View All Solved Puzzles</span>
+        <span class="material-symbols-outlined text-base">arrow_forward</span>
+    </a>
+    {% if "ROLE_ADMIN" in sessionRole %}
+        <button class="font-label-md text-label-md bg-surface-container-low text-on-surface px-space-lg py-space-sm border border-outline-variant hover:bg-surface-container transition-all flex items-center gap-space-xs focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                id="quick-log-btn">
+            <span class="material-symbols-outlined text-base text-primary">add_box</span>
+            <span>Log New Solve</span>
+        </button>
+    {% endif %}
 </div>
 {% endblock %}
         
