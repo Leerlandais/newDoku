@@ -1,8 +1,42 @@
 {% extends 'base.html.twig' %}
 {% block stylesheet %}
     <link href="../dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+          rel="stylesheet"/>
 {% endblock %}
 {% block bodyClass %}h-screen bg-amber-50{% endblock %}
+
+{% block header %}
+    <header class="fixed top-0 w-full z-50 bg-surface-container-lowest/95 backdrop-blur-md border-b border-outline-variant">
+        <div class="h-20 w-full px-margin flex items-center justify-between gap-gutter">
+            <div class="flex items-center gap-space-md"><img alt="Cryptic Log Brand Mark"
+                                                             class="h-8 w-auto object-contain"
+                                                             src="https://lh3.googleusercontent.com/aida/AEtjO1VnYxvKFFbX1A1phzJFKv4Fsnmb87DVNJuWUqg9HwoyCPR7iWGsOjicLcIdoOpgZ-k-TrE3bvwlmOASKRXkgQLhqSXk4llOxYQWpAL8106WWi2yxF5wyiza_7irh-wsKOT5Z2uZpCO0htXAK_WSR6ndsK_M-3-dqk8CVu40sk8uRnbX6_SJH6ei3I4KwjTYn7AtuOFwF7T0I4Li9hjkn7EMLv1Iu-3Dkaway-BQXChKPwRLVStEIa4LWrOa"/>
+                <div class="flex flex-col"><span
+                            class="font-headline-md text-headline-md text-on-surface tracking-tight leading-none">The Variant Log</span><span
+                            class="font-label-sm text-label-sm text-secondary tracking-wider uppercase mt-space-xs">Cracking The Cryptic Solver Journal</span>
+                </div>
+            </div>
+            <nav class="hidden lg:flex items-center gap-space-xs"
+                 data-active-classes="bg-primary-container text-on-primary font-semibold"><a
+                        class="font-label-md text-label-md px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                        data-path="todays-solves" href="#">Today's Solves</a><a
+                        class="font-label-md text-label-md px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                        data-path="all-solved-puzzles" href="#">All Solved Puzzles</a><a
+                        class="font-label-md text-label-md px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                        data-path="puzzle-details" href="#">Puzzle Details</a><a
+                        class="font-label-md text-label-md px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                        data-path="search-archive" href="#">Search Archive</a></nav>
+
+        </div>
+    </header>
+{% endblock %}
 
 {% block javascript %}
 <script src="{{ PUB_DIR }}scripts/tableSorter.js"></script>
