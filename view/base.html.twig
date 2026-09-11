@@ -8,7 +8,7 @@
         {% block stylesheet %}{% endblock %}
     {% endblock %}
 </head>
-<body class="{% block bodyClass %}{% endblock %}">{% block body %}
+{% block body %}<body class="{% block bodyClass %}{% endblock %}">
 {% block systemMessage %}{% endblock %}
 {% block dumpArea %}{% endblock %}
 {% block navBar %}
