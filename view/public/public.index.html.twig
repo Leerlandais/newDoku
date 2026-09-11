@@ -5,7 +5,9 @@
 {{ parent() }}
 {% endblock %}
 
-
+{% block dumpArea %}
+    {{ dump(puzzles) }}
+    {% endblock %}
 
 <h1 class="text-6xl text-center mb-6 mt-12">The Variant Log</h1>
 <div class="w-full px-margin py-space-xl flex flex-col gap-space-xl max-w-[1440px] mx-auto">
@@ -23,7 +25,7 @@
 
     <!-- High-Contrast Analytical Table -->
     <div class="overflow-x-auto w-full">
-        <table class="w-full text-left border-collapse">
+        <table class="w-full text-center border-collapse">
             <thead>
             <tr class="border-b-2 border-on-surface bg-surface-cream text-secondary font-label-sm text-label-sm">
                 <th class="py-space-md px-space-lg border-r border-outline-variant font-medium w-36"
@@ -50,15 +52,15 @@
                  {% for puzzle in puzzles %}
              <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40">
                 <td class="py-space-md px-space-lg border-r border-outline-variant font-label-md text-label-md text-on-surface-variant group-hover:text-primary font-semibold">
-                    #SUD-2840
+                    {{ puzzle.getDokuId }}
                 </td>
                 <td class="py-space-md px-space-lg border-r border-outline-variant">
                     <div class="flex flex-col">
                         <div class="flex items-center gap-space-xs">
-                            <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">The Miracle II</span>
+                            <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">{{ puzzle.getDokuTitle }}</span>
                             <span class="font-label-sm text-label-sm px-1.5 py-0.2 bg-tertiary-fixed text-on-tertiary-fixed font-medium">HARD</span>
                         </div>
-                        <span class="font-body-sm text-body-sm text-secondary">by Mitchell Lee</span>
+                        <span class="font-body-sm text-body-sm text-left text-secondary">by {{ puzzle.getDokuSetterName }}</span>
                     </div>
                 </td>
                 <td class="py-space-md px-space-lg border-r border-outline-variant">
@@ -70,14 +72,14 @@
                 </td>
                 <td class="py-space-md px-space-lg border-r border-outline-variant">
                     <a class="font-label-sm text-label-sm text-primary hover:text-inverse-surface inline-flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-primary underline decoration-outline-variant underline-offset-2"
-                       href="https://crackingthecryptic.com/play/2840" rel="noopener noreferrer"
+                       href="{{ puzzle.getDokuUrl }}" rel="noopener noreferrer"
                        target="_blank">
-                        <span>ctc.app/2840</span>
+                        <span>{{ puzzle.getDokuUrl }}</span>
                         <span class="material-symbols-outlined text-xs">open_in_new</span>
                     </a>
                 </td>
                 <td class="py-space-md px-space-lg border-r border-outline-variant font-grid-digit-sm text-label-md font-semibold text-right text-on-surface">
-                    41:05
+                    {{ puzzle.getDokuDuration }}
                 </td>
                 <td class="py-space-md px-space-lg text-center">
                     <a class="font-label-sm text-label-sm px-space-md py-1 border border-outline hover:border-primary hover:bg-primary hover:text-on-primary transition-all inline-block focus:outline-none focus:ring-2 focus:ring-primary"
@@ -85,8 +87,8 @@
                         Details
                     </a>
                 </td>
-                 {% endfor %}
             </tr>
+                 {% endfor %}
 
             </tbody>
         </table>
