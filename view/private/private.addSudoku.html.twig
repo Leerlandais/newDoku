@@ -1,0 +1,75 @@
+{% extends "template.html.twig" %}
+{% block title %}{{ parent() }} | Add Setter{% endblock %}
+{% block content %}
+
+    <div class="w-1/6 mx-auto text-center border border-blue-500 rounded-xl p-10 mt-12">
+        <form method="POST">
+            <h3 class="text-xl font-bold pb-4">
+                Add Sudoku
+            </h3>
+            <label>
+                <input type="text" class="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
+            </label>
+            <div>
+                <label class="text-gray-600 font-bold inline-block pb-2"
+                       for="sudokuName">
+                    Sudoku Name
+
+                </label>
+                <input class="border border-gray-400 focus:outline-slate-400 rounded-md w-full shadow-sm px-5 py-2"
+                       type="text"
+                       name="str:doku_title"
+                       id="sudokuName"
+                       required
+                       autofocus>
+            </div>
+            <div>
+                <label class="text-gray-600 font-bold inline-block pb-2"
+                       for="sudokuUrl">
+                    Sudoku URL
+
+                </label>
+                <input class="border border-gray-400 focus:outline-slate-400 rounded-md w-full shadow-sm px-5 py-2"
+                       type="text"
+                       name="str:doku_url"
+                       id="sudokuUrl"
+                       required>
+            </div>
+            <div>
+                <label class="text-gray-600 font-bold inline-block pb-2"
+                       for="solveTime">
+                    Solve Time
+
+                </label>
+                <input class="border border-gray-400 focus:outline-slate-400 rounded-md w-full shadow-sm px-5 py-2"
+                       type="text"
+                       name="int:doku_duration"
+                       id="solveTime"
+                       required>
+            </div>
+            <div class="border border-gray-400 rounded-md w-full shadow-sm mt-2 flex flex-col items-center">
+                {% for variant in variants %}
+                    <div class="flex items-center justify-between">
+                        <label>{{ variant.getVariantName }}
+                            <input type="checkbox" name="int:variant[]" value="{{ variant.getVariantId }}">
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+            <label for="setterName"></label>
+            <select name="int:doku_setter_id" id="setterName" class="select-standard">
+                <option value="" disabled selected>Choose Setter</option>
+                {% for setter in setters %}
+                    <option value="{{ setter.getSetterId }}">{{ setter.getSetterName }}</option>
+                {% endfor %}
+            </select>
+            <div>
+                <button type="submit" name="unset:addSudoku"
+                        class="bg-[#4F46E5] w-auto mt-3 p-2 rounded-md text-white font-bold cursor-pointer hover:bg-[#1811E5]">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -65,7 +65,7 @@ class ConnectionController extends Abstract\AbstractController
             $cleanPostData = $this->preparePostData($_POST);
             $userLogin = $this->connectionManager->loginUser($cleanPostData);
             if($userLogin) {
-                header("Location: ?route=connected");
+                header("Location: ?route=admin");
             }else{
                 $_SESSION["systemMessage"] = "Not the right credentials";
                 header("Location: ./");

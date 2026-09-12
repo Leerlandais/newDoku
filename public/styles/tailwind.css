@@ -2,3 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 /* Personalised TW Classes go here */
+
+.adminButton {
+    @apply h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300
+    hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100;
+}
+
+.adminSpan {
+    @apply block w-max font-semibold tracking-wide
+    text-gray-700 text-sm transition duration-300
+    group-hover:text-blue-600 sm:text-base;
+}
+
+.h1-default {
+    @apply text-center text-4xl font-bold my-6;
+}
+
+.h2-default {
+    @apply text-left text-2xl font-bold ps-6 my-4;
+}
+
+.h2-center {
+    @apply text-center text-2xl font-bold my-4;
+}
+
+.h3-default {
+    @apply text-left text-xl font-bold ps-6 my-4;
+}
+
+.h3-center {
+    @apply text-center text-xl font-bold my-4;
+}
+
+.input-standard {
+    @apply block border border-blue-400
+    outline-blue-800 px-2 py-2 text-sm rounded-md
+    my-2 bg-white dark:bg-gray-700 text-gray-900
+    dark:text-white;
+}
+
+.select-standard {
+    @apply w-fit border border-blue-400
+    outline-blue-800 px-4 py-2 text-sm
+    rounded-md my-2 bg-white dark:bg-gray-700
+    text-gray-900 dark:text-white;
+}

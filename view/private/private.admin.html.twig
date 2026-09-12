@@ -1,0 +1,70 @@
+{% extends "template.html.twig" %}
+{% block title %}{{ parent() }} | Admin{% endblock %}
+{% block content %}
+    <div class="relative py-16 bg-gradient-to-br from-sky-50 to-gray-200">
+        <div class="relative container m-auto px-6 text-gray-500 md:px-12 xl:px-40">
+            <div class="m-auto md:w-8/12 lg:w-6/12 xl:w-6/12">
+                <div class="rounded-xl bg-white shadow-xl">
+                    <div class="p-2 sm:p-8">
+                        <h1 class="h1-default">Admin Controls</h1>
+                        <div class="mt-16 grid space-y-4">
+                            <button class="adminButton">
+                                <span class="relative flex items-center space-x-4 justify-center">
+                                    <a href="?route=addSudoku">
+                                        <span class="adminSpan">
+                                            Add Sudoku
+                                        </span>
+                                    </a>
+                                </span>
+                            </button>
+                            <button class="adminButton">
+                                <span class="relative flex items-center space-x-4 justify-center">
+                                    <a href="?route=editSudoku">
+                                        <span class="adminSpan">
+                                            Edit Sudoku
+                                        </span>
+                                    </a>
+                                </span>
+                            </button>
+                            <button class="adminButton">
+                                <span class="relative flex items-center space-x-4 justify-center">
+                                    <a href="?route=deleteSudoku">
+                                        <span class="adminSpan">
+                                            Delete Sudoku
+                                        </span>
+                                    </a>
+                                </span>
+                            </button>
+                            <button class="adminButton">
+                                <span class="relative flex items-center space-x-4 justify-center">
+                                    <a href="?route=addSetter">
+                                        <span class="adminSpan">
+                                            Add Setter
+                                        </span>
+                                    </a></span>
+                            </button>
+                            <button class="adminButton">
+                                <span class="relative flex items-center space-x-4 justify-center">
+                                    <a href="?route=addVariant">
+                                        <span class="adminSpan">
+                                            Add Variant
+                                        </span>
+                                    </a></span>
+                            </button>
+                            <button class="adminButton">
+                                <span class="relative flex items-center space-x-4 justify-center">
+                                    <a href="?route=viewLogs">
+                                        <span class="adminSpan">
+                                            View Connect Logs
+                                        </span>
+                                    </a></span>
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

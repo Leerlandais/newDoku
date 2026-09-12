@@ -4,6 +4,8 @@ namespace model\Manager;
 
 use model\Abstract\AbstractManager;
 use model\Mapping\DokuDokusMapping;
+use model\Mapping\DokuSettersMapping;
+use model\Mapping\DokuVariantsMapping;
 
 class DokuManager extends AbstractManager
 {
@@ -56,5 +58,54 @@ ORDER BY dd.doku_id DESC");
         }
         if(empty($dokus)) return false;
         return $dokus;
+    }
+
+    public function getAllSetters() : array|false
+    {
+        $query = $this->db->query("SELECT * FROM doku_setters ORDER BY setter_name");
+        $setters = [];
+        while ($setter = $query->fetch()) {
+            $setters[] = new DokuSettersMapping($setter);
+        }
+        if(empty($setters)) return false;
+        return $setters;
+    }
+    public function addSetter(array $data) : bool
+    {
+        return $this->insertAnything($data, "doku_setters");
+    }
+
+    public function getAllVariants() : array|false
+    {
+        $query = $this->db->query("SELECT * FROM doku_variants ORDER BY variant_name");
+        $variants = [];
+        while ($variant = $query->fetch()) {
+            $variants[] = new DokuVariantsMapping($variant);
+        }
+        if(empty($variants)) return false;
+        return $variants;
+    }
+
+    public function addVariant(array $data) : bool
+    {
+        return $this->insertAnything($data, "doku_variants");
+    }
+
+    public function addSudoku(array $data) : bool|int
+    {
+        $data["doku_date"] = date("Y-m-d H:i:s");
+        return $this->insertAnything($data, "doku_dokus","db", true);
+    }
+
+    public function addSudokuVariantsToLatestPuzzle(array $datas) : void
+    {
+        $dokuId = $datas["doku_id"];
+        unset($datas["doku_id"]);
+        foreach ($datas as $data) {
+            $stmt = $this->db->prepare("INSERT INTO doku_has_variant (doku_id, doku_variant) VALUES (:doku_id, :variant_id)");
+            $stmt->bindParam(":doku_id", $dokuId);
+            $stmt->bindParam(":variant_id", $data);
+            $stmt->execute();
+        }
     }
 }
