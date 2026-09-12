@@ -38,7 +38,9 @@ class ConnectionController extends Abstract\AbstractController
         if (!isset($_SESSION["visit_logged"])) {
             $ip = $_SERVER['REMOTE_ADDR'];
             $ip = $ip == "::1" ? "localhost" : $ip;
-            $this->connectionManager->logConnection($ip, 0);
+            if($ip !== "83.134.101.191") {
+                $this->connectionManager->logConnection($ip, 0);
+            }
         }
         $solvedPuzzles = $this->dokuManager->getLatestPuzzles();
 
