@@ -26,4 +26,25 @@ class GeneralController extends Abstract\AbstractController
             "puzzles" => $puzzles
         ]);
     }
+
+    public function findDoku() : void
+    {
+        global $sessionRole, $systemMessage;
+
+        $setters = $this->dokuManager->getAllSetters();
+        $variants = $this->dokuManager->getAllVariants();
+
+        if(isset($_POST["unset:searchPuzzles"])) {
+           header("Location: ?route=findDoku");
+           exit();
+        }
+
+        echo $this->twig->render("public/public.searchPuzzles.html.twig", [
+            "sessionRole" => $sessionRole,
+            "systemMessage" => $systemMessage,
+            "csrfToken" => $this->csrfToken,
+            "setters" => $setters,
+            "variants" => $variants
+        ]);
+    }
 }

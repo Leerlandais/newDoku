@@ -1,0 +1,167 @@
+{% extends 'template.html.twig' %}
+{% block title %}{{ parent() }}Search{% endblock %}
+{% block content %}
+
+<div class="w-full px-margin py-space-xl flex flex-col gap-space-xl max-w-7xl mx-auto">
+            <!-- Editorial Page Header -->
+            <section class="flex flex-col md:flex-row md:items-end justify-between gap-space-lg">
+                <div class="flex flex-col gap-space-xs max-w-2xl">
+                    <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+                        Search Puzzle Archive
+                    </h1>
+                </div>
+                <!-- Quick Stats Callout -->
+                <div class="flex items-center gap-space-md bg-surface-container-low px-space-lg py-space-sm shadow-sm self-start md:self-auto">
+                    <div class="flex flex-col">
+                        <span class="font-headline-md text-headline-md text-on-surface">148 Solved</span>
+                    </div>
+                    <div class="w-px h-8 bg-outline-variant"></div>
+                </div>
+            </section>
+            <!-- Master Search Query Form Panel -->
+            <section class="bg-surface-cream shadow-md p-space-lg md:p-space-xl relative overflow-hidden">
+                <!-- Structural Ink Rule along top -->
+                <div class="absolute top-0 left-0 right-0 h-1 bg-primary"></div>
+                <form class="flex flex-col gap-space-xl" id="archiveSearchForm" method="post">
+                    <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}"/>
+                    <!-- Row 1: Setter & Timing Constraints -->
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-space-lg">
+                        <!-- Setter Selection -->
+                        <div class="md:col-span-5 flex flex-col gap-space-xs">
+                            <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-space-xs" for="setterSelect">
+                                <span class="material-symbols-outlined text-sm text-primary">person_search</span>
+                                Setter Name
+                            </label>
+                            <div class="relative bg-surface-container-lowest">
+                                <select class="w-full bg-transparent font-label-md text-label-md text-on-surface py-space-sm px-space-md appearance-none focus:outline-none focus:bg-surface-container-high transition-colors cursor-pointer"
+                                        id="setterSelect" name="int:doku_setter_id">
+                                    <option selected disabled>All Setters</option>
+                                    {% for setter in setters %}
+                                    <option value="{{ setter.getSetterId }}">{{ setter.getSetterName }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="material-symbols-outlined absolute right-space-md top-1/2 -translate-y-1/2 pointer-events-none text-secondary text-lg">expand_more</span>
+                            </div>
+                        </div>
+                        <!-- Maximum Solve Duration -->
+                        <div class="md:col-span-3 flex flex-col gap-space-xs">
+                            <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-space-xs" for="maxSolveTime">
+                                <span class="material-symbols-outlined text-sm text-primary">timer</span>
+                                Max Solve Time
+                            </label>
+                            <div class="relative bg-surface-container-lowest flex items-center">
+                                <input class="w-full bg-transparent font-label-md text-label-md text-on-surface py-space-sm px-space-md focus:outline-none focus:bg-surface-container-high transition-colors"
+                                       id="maxSolveTime"
+                                       max="600"
+                                       min="1"
+                                       placeholder="e.g. 45"
+                                       type="number"
+                                       name="int:doku_duration"/>
+                                <span class="font-label-sm text-label-sm text-secondary pr-space-md select-none">MINUTES</span>
+                            </div>
+                        </div>
+                        <!-- Date Completed Range -->
+                        <div class="md:col-span-4 flex flex-col gap-space-xs">
+                            <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-space-xs">
+                                <span class="material-symbols-outlined text-sm text-primary">calendar_month</span>
+                                Solve Date Window
+                            </label>
+                            <div class="grid grid-cols-2 gap-space-sm">
+                                <div class="bg-surface-container-lowest">
+                                    <input class="w-full bg-transparent font-label-sm text-label-sm text-on-surface py-space-sm px-space-sm focus:outline-none focus:bg-surface-container-high transition-colors cursor-pointer"
+                                           id="fromDate"
+                                           title="From Date"
+                                           type="date" name="date:doku_start"/>
+                                </div>
+                                <div class="bg-surface-container-lowest">
+                                    <input class="w-full bg-transparent font-label-sm text-label-sm text-on-surface py-space-sm px-space-sm focus:outline-none focus:bg-surface-container-high transition-colors cursor-pointer"
+                                           id="toDate"
+                                           title="To Date"
+                                           type="date" name="date:doku_end"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Row 2: Logic Variants & Constraints (Multi-Select Matrix) -->
+                    <div class="flex flex-col gap-space-sm bg-surface-container-low p-space-md">
+                        <div class="flex items-center justify-between">
+                            <div class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-space-xs">
+                                <span class="material-symbols-outlined text-sm text-primary">grain</span>
+                                Variants (Select Any Amount)
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-space-sm pt-space-xs">
+                            <!-- Checkbox 1 -->
+                            {% for variant in variants %}
+                            <label class="flex items-center gap-space-sm p-space-sm bg-surface-cream hover:bg-surface-container transition-colors cursor-pointer select-none">
+                                <input class="variant-filter accent-primary w-4 h-4 cursor-pointer"
+                                       name="array:variant_id[]"
+                                       type="checkbox"
+                                       value="{{ variant.getVariantId }}"/>
+                                <span class="font-label-md text-label-md text-on-surface">{{ variant.getVariantName }}</span>
+                            </label>
+                            {% endfor %}
+                            </div>
+                    </div>
+                    {#
+                    <!-- Row 3: Logic Complexity Rating (Radio Strip) -->
+                    <div class="flex flex-col gap-space-xs">
+                        <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-space-xs">
+                            <span class="material-symbols-outlined text-sm text-primary">psychology</span>
+                            Logic Difficulty Classification
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-sm">
+                            <label class="flex items-center gap-space-sm p-space-sm bg-surface-container-lowest hover:bg-surface-container transition-colors cursor-pointer">
+                                <input checked="" class="accent-primary w-4 h-4" name="difficultyRating" type="radio" value="any"/>
+                                <div class="flex flex-col">
+                                    <span class="font-label-md text-label-md text-on-surface">Any Difficulty</span>
+                                    <span class="font-body-sm text-body-sm text-secondary">Entire rated corpus</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-space-sm p-space-sm bg-surface-container-lowest hover:bg-surface-container transition-colors cursor-pointer">
+                                <input class="accent-primary w-4 h-4" name="difficultyRating" type="radio" value="accessible"/>
+                                <div class="flex flex-col">
+                                    <span class="font-label-md text-label-md text-on-surface">Accessible (1–2★)</span>
+                                    <span class="font-body-sm text-body-sm text-secondary">Flow states &amp; warmups</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-space-sm p-space-sm bg-surface-container-lowest hover:bg-surface-container transition-colors cursor-pointer">
+                                <input class="accent-primary w-4 h-4" name="difficultyRating" type="radio" value="master"/>
+                                <div class="flex flex-col">
+                                    <span class="font-label-md text-label-md text-on-surface">Master (3–4★)</span>
+                                    <span class="font-body-sm text-body-sm text-secondary">Deep bifurcations &amp; parity</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-space-sm p-space-sm bg-surface-container-lowest hover:bg-surface-container transition-colors cursor-pointer">
+                                <input class="accent-primary w-4 h-4" name="difficultyRating" type="radio" value="fiendish"/>
+                                <div class="flex flex-col">
+                                    <span class="font-label-md text-label-md text-on-surface">Fiendish (5★)</span>
+                                    <span class="font-body-sm text-body-sm text-secondary">Tournament caliber break-ins</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                     #}
+                    <!-- Row 4: Action Buttons with Architectural Focus styling -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-sm">
+                        <div class="flex items-center gap-space-md w-full sm:w-auto">
+                            <!-- Reset Secondary Button -->
+                            <a href="?route=findDoku" class="w-full sm:w-auto font-label-md text-label-md px-space-lg py-space-sm bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 uppercase tracking-wider"
+                               id="resetBtn"
+                               type="button">
+                                Reset Filters
+                            </a>
+                            <!-- Primary Action Button -->
+                            <button class="w-full sm:w-auto font-label-md text-label-md px-space-xl py-space-sm bg-primary-container text-on-primary hover:bg-inverse-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 flex items-center justify-center gap-space-xs uppercase tracking-wider shadow-sm"
+                                    id="searchSubmitBtn"
+                                    type="submit"
+                                    name="unset:searchPuzzles">
+                                <span class="material-symbols-outlined text-lg">search</span>
+                                <span>Search Solved Puzzles</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+{% endblock %}

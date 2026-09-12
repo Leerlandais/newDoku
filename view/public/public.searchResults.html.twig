@@ -1,0 +1,165 @@
+{% extends 'template.html.twig' %}
+{% block title %}{{ parent() }}Results{% endblock %}
+{% block content %}
+
+
+<!-- Instant Search Results Section -->
+<section class="flex flex-col gap-space-md">
+    <!-- Ledger Head Controls & Metric -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm bg-surface-container-low px-space-lg py-space-md">
+        <div class="flex items-center gap-space-md">
+            <span class="font-headline-md text-headline-md text-on-surface" id="resultCountHeader">Found 18 matching puzzles</span>
+            <span class="h-4 w-px bg-outline-variant"></span>
+            <span class="font-label-sm text-label-sm bg-primary-fixed text-on-primary-fixed px-space-xs py-0.5">FILTER ACTIVE</span>
+        </div>
+        <div class="flex items-center gap-space-md">
+            <span class="font-label-sm text-label-sm text-secondary">SORTED BY: DATE SOLVED (DESC)</span>
+            <button class="text-secondary hover:text-on-surface transition-colors" title="Export matching CSV" type="button">
+                <span class="material-symbols-outlined text-lg">download</span>
+            </button>
+        </div>
+    </div>
+    <!-- High-Density Vision-Friendly Data Table -->
+    <div class="w-full overflow-x-auto shadow-sm bg-surface-cream">
+        <table class="w-full text-left border-collapse" id="archiveResultsTable">
+            <thead>
+            <tr class="bg-surface-container text-secondary font-label-sm text-label-sm tracking-wider uppercase">
+                <th class="py-space-md px-space-lg">ID</th>
+                <th class="py-space-md px-space-lg">Puzzle Designation</th>
+                <th class="py-space-md px-space-lg">Setter</th>
+                <th class="py-space-md px-space-lg">Variant Framework</th>
+                <th class="py-space-md px-space-lg text-right">Solve Time</th>
+                <th class="py-space-md px-space-lg text-right">Log Date</th>
+                <th class="py-space-md px-space-lg text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y-0 font-body-sm text-body-sm text-on-surface" id="resultsBody">
+            <!-- Row 1 -->
+            <tr class="hover:bg-surface-container-high/60 transition-colors group cursor-pointer">
+                <td class="py-space-md px-space-lg font-label-md text-label-md text-secondary">#VL-8902</td>
+                <td class="py-space-md px-space-lg">
+                    <div class="flex flex-col">
+                        <span class="font-label-md text-label-md font-semibold text-on-surface group-hover:text-primary transition-colors">Mirage in the Desert</span>
+                        <span class="font-label-sm text-label-sm text-secondary">CtC Episode #1402 • 9x9 Classic Frame</span>
+                    </div>
+                </td>
+                <td class="py-space-md px-space-lg font-label-md text-label-md">Philip Newman</td>
+                <td class="py-space-md px-space-lg">
+                    <div class="flex flex-wrap gap-space-xs">
+                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container text-on-surface">German Whisper</span>
+                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container text-on-surface">Killer Sudoku</span>
+                    </div>
+                </td>
+                <td class="py-space-md px-space-lg font-label-md text-label-md text-right text-primary font-semibold">24m 12s</td>
+                <td class="py-space-md px-space-lg font-label-sm text-label-sm text-right text-secondary">2024-05-18</td>
+                <td class="py-space-md px-space-lg text-center">
+                    <span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors text-lg">arrow_forward</span>
+                </td>
+            </tr>
+            <!-- Row 2 -->
+            <tr class="bg-surface-container-low/40 hover:bg-surface-container-high/60 transition-colors group cursor-pointer">
+                <td class="py-space-md px-space-lg font-label-md text-label-md text-secondary">#VL-8874</td>
+                <td class="py-space-md px-space-lg">
+                    <div class="flex flex-col">
+                        <span class="font-label-md text-label-md font-semibold text-on-surface group-hover:text-primary transition-colors">The Entropy Cage</span>
+                        <span class="font-label-sm text-label-sm text-secondary">Weekly Featured Masterpiece</span>
+                    </div>
+                </td>
+                <td class="py-space-md px-space-lg font-label-md text-label-md">BremSter</td>
+                <td class="py-space-md px-space-lg">
+                    <div class="flex flex-wrap gap-space-xs">
+                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container text-on-surface">German Whisper</span>
+                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container text-on-surface">Renban Lines</span>
+                    </div>
+                </td>
+                <td class="py-space-md px-space-lg font-label-md text-label-md text-right text-primary font-semibold">39m 45s</td>
+                <td class="py-space-md px-space-lg font-label-sm text-label-sm text-right text-secondary">2024-05-15</td>
+                <td class="py-space-md px-space-lg text-center">
+                    <span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors text-lg">arrow_forward</span>
+                </td>
+            </tr>
+            <!-- Row 3 -->
+            <tr class="hover:bg-surface-container-high/60 transition-colors group cursor-pointer">
+                <td class="py-space-md px-space-lg font-label-md text-label-md text-secondary">#VL-8821</td>
+                <td class="py-space-md px-space-lg">
+                    <div class="flex flex-col">
+                        <span class="font-label-md text-label-md font-semibold text-on-surface group-hover:text-primary transition-colors">Prismatic Serpent</span>
+                        <span class="font-label-sm text-label-sm text-secondary">LMD Special Collection</span>
+                    </div>
+                </td>
+                <td class="py-space-md px-space-lg font-label-md text-label-md">Mitchell Lee</td>
+                <td class="py-space-md px-space-lg">
+                    <div class="flex flex-wrap gap-space-xs">
+                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container text-on-surface">German Whisper</span>
+                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container text-on-surface">Arrow Sudoku</span>
+                    </div>
+                </td>
+                <td class="py-space-md px-space-lg font-label-md text-label-md text-right text-primary font-semibold">18m 04s</td>
+                <td class="py-space-md px-space-lg font-label-sm text-label-sm text-right text-secondary">2024-05-12</td>
+                <td class="py-space-md px-space-lg text-center">
+                    <span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors text-lg">arrow_forward</span>
+                </td>
+            </tr>
+            <!-- Row 4 -->
+            <tr class="bg-surface-container-low/40 hover:bg-surface-container-high/60 transition-colors group cursor-pointer">
+                <td class="py-space-md px-space-lg font-label-md text-label-md text-secondary">#VL-8790</td>
+                <td class="py-space-md px-space-lg">
+                    <div class="flex flex-col">
+                        <span class="font-label-md text-label-md font-semibold text-on-surface group-hover:text-primary transition-colors">Quiet Chambers</span>
+                        <span class="font-label-sm text-label-sm text-secondary">CtC Episode #1389</span>
+                    </div>
+                </td>
+                <td class="py-space-md px-space-lg font-label-md text-label-md">Clover</td>
+                <td class="py-space-md px-space-lg">
+                    <div class="flex flex-wrap gap-space-xs">
+                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container text-on-surface">Killer Sudoku</span>
+                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container text-on-surface">Sandwich Sudoku</span>
+                    </div>
+                </td>
+                <td class="py-space-md px-space-lg font-label-md text-label-md text-right text-primary font-semibold">31m 50s</td>
+                <td class="py-space-md px-space-lg font-label-sm text-label-sm text-right text-secondary">2024-05-09</td>
+                <td class="py-space-md px-space-lg text-center">
+                    <span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors text-lg">arrow_forward</span>
+                </td>
+            </tr>
+            <!-- Row 5 -->
+            <tr class="hover:bg-surface-container-high/60 transition-colors group cursor-pointer">
+                <td class="py-space-md px-space-lg font-label-md text-label-md text-secondary">#VL-8733</td>
+                <td class="py-space-md px-space-lg">
+                    <div class="flex flex-col">
+                        <span class="font-label-md text-label-md font-semibold text-on-surface group-hover:text-primary transition-colors">The Dutch Mill</span>
+                        <span class="font-label-sm text-label-sm text-secondary">Sudoku GP Round 4</span>
+                    </div>
+                </td>
+                <td class="py-space-md px-space-lg font-label-md text-label-md">Richard Stolk</td>
+                <td class="py-space-md px-space-lg">
+                    <div class="flex flex-wrap gap-space-xs">
+                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container text-on-surface">German Whisper</span>
+                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container text-on-surface">Kropki Dots</span>
+                    </div>
+                </td>
+                <td class="py-space-md px-space-lg font-label-md text-label-md text-right text-primary font-semibold">44m 20s</td>
+                <td class="py-space-md px-space-lg font-label-sm text-label-sm text-right text-secondary">2024-05-02</td>
+                <td class="py-space-md px-space-lg text-center">
+                    <span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors text-lg">arrow_forward</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Pagination & Bottom Ledger Foot -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-xs">
+<span class="font-label-sm text-label-sm text-secondary">
+          Displaying rows 1 – 5 of 18 archived solves
+        </span>
+        <div class="flex items-center gap-space-xs">
+            <button class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container text-outline opacity-50 cursor-not-allowed" disabled="" type="button">PREV</button>
+            <span class="font-label-sm text-label-sm px-space-md py-space-xs bg-primary-container text-on-primary">1</span>
+            <button class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" type="button">2</button>
+            <button class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" type="button">3</button>
+            <button class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" type="button">4</button>
+            <button class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" type="button">NEXT</button>
+        </div>
+    </div>
+</section>
+</div>
