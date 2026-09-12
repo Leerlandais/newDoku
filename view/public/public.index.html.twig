@@ -7,8 +7,9 @@
 
 
     {% endblock %}
-
+{% if puzzles|length < 3 %}
 <h1 class="text-6xl text-center mb-6 mt-12">The Variant Log</h1>
+    {% endif %}
 <div class="w-full px-margin py-space-xl flex flex-col gap-space-xl max-w-[1440px] mx-auto">
     <!-- Top Action & Date Anchor -->
     <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
