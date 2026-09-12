@@ -11,6 +11,7 @@ $router->registerRoute('home', ConnectionController::class, 'index');
 $router->registerRoute("logout", ConnectionController::class, "logout");
 $router->registerRoute('404', ErrorController::class, 'error404');
 $router->registerRoute("viewAll", GeneralController::class, "viewAll");
+$router->registerRoute('login', ConnectionController::class, 'login');
 
 // ADMIN ROUTES
 $router->registerRoute("admin", AdminController::class, "admin");

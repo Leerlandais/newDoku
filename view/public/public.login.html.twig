@@ -1,0 +1,53 @@
+{% extends "template.html.twig" %}
+{% block title %}{{ parent() }} | Login{% endblock %}
+{% block content %}
+    <div class="w-1/6 mx-auto text-center border border-blue-500 rounded-xl p-10 mt-12">
+        <form method="POST">
+            <h3 class="text-xl font-bold pb-4">
+                Login
+            </h3>
+            <label>
+                <input type="text" class="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
+            </label>
+            <div>
+                <label class="text-gray-600 font-bold inline-block pb-2"
+                       for="loginName">
+                    Username
+
+                </label>
+                <input class="border border-gray-400 focus:outline-slate-400 rounded-md w-full shadow-sm px-5 py-2"
+                       type="text"
+                       name="str:user_name"
+                       id="loginName"
+                       required
+                       autofocus>
+            </div>
+            <div>
+                <label class="text-gray-600 font-bold inline-block pb-2"
+                       for="loginPwd">
+                    Password
+                </label>
+                <input class="border border-gray-400 focus:outline-slate-400 rounded-md w-full shadow-sm px-5 py-2"
+                       type="password"
+                       name="pass:user_pass" id="loginPwd"
+                       required>
+            </div>
+            <div>
+                <button type="submit" name="unset:entryUser"
+                        class="bg-[#4F46E5] w-auto mt-3 p-2 rounded-md text-white font-bold cursor-pointer hover:bg-[#1811E5]">
+                    Submit
+                </button>
+            </div>
+        </form>
+        <div class="mt-4">
+            <a href="?route=forgotPassword" class="text-blue-500 hover:underline">
+                Forgot my password
+            </a>
+        </div>
+        <div class="mt-4">
+            <a href="?route=registerUser" class="text-blue-500 hover:underline">
+                Create account
+            </a>
+        </div>
+    </div>
+{% endblock %}

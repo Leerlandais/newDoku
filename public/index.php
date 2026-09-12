@@ -23,7 +23,7 @@ spl_autoload_register(function ($class) {
   $class = str_replace('\\', '/', $class);
   require PROJECT_DIRECTORY.'/' .$class . '.php';
 });
-require_once PROJECT_DIRECTORY.'/vendor/autoload.php';
+require_once PROJECT_DIRECTORY.'../../vendor/autoload.php';
 $loader = new FilesystemLoader(PROJECT_DIRECTORY.'/view/');
 // Dev version
 $twig = new Environment($loader, [
