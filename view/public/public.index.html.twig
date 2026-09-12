@@ -12,10 +12,11 @@
     {% endif %}
 <div class="w-full px-margin py-space-xl flex flex-col gap-space-xl max-w-[1440px] mx-auto">
     <!-- Top Action & Date Anchor -->
-    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+    <div class="flex flex-col justify-between gap-space-lg">
         <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
-            Today's Solved
+            Today's {{ puzzles|length }} Solved
             Puzzles</h1>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Time spent &lpar;minutes&rpar; : {{ totalTime }}</h2>
     </div>
 
 </div>

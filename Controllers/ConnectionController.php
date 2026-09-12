@@ -43,6 +43,7 @@ class ConnectionController extends Abstract\AbstractController
             }
         }
         $solvedPuzzles = $this->dokuManager->getLatestPuzzles();
+        $totalTime = $this->dokuManager->getTotalTime(true);
 
         echo $this->twig->render('public/public.index.html.twig', [
             "systemMessage" => $systemMessage,
@@ -50,6 +51,7 @@ class ConnectionController extends Abstract\AbstractController
             "csrfToken" => $this->csrfToken,
             "puzzles" => $solvedPuzzles,
             "location" => "home",
+            "totalTime" => $totalTime
         ]);
     }
 

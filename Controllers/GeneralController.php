@@ -20,10 +20,12 @@ class GeneralController extends Abstract\AbstractController
     {
         global $sessionRole, $systemMessage;
         $puzzles = $this->dokuManager->getAllPuzzles();
+        $totalTime = $this->dokuManager->getTotalTime();
         echo $this->twig->render("public/public.viewAll.html.twig", [
             "sessionRole" => $sessionRole,
             "systemMessage" => $systemMessage,
-            "puzzles" => $puzzles
+            "puzzles" => $puzzles,
+            "totalTime" => $totalTime,
         ]);
     }
 

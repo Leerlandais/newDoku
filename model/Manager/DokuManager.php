@@ -37,6 +37,16 @@ ORDER BY dd.doku_id DESC");
         return $dokus;
     }
 
+    public function getTotalTime($current = false) : int
+    {
+        $today = $current ? "WHERE doku_date LIKE '".date("Y-m-d")."%'" : "";
+        $query = $this->db->query("SELECT SUM(doku_duration) AS total_time FROM doku_dokus $today");
+        $query->execute();
+        $totalTime = $query->fetch();
+        $query->closeCursor();
+        return $totalTime["total_time"];
+    }
+
     public function getAllPuzzles() : array|false
     {
         $query = $this->db->query("SELECT 
