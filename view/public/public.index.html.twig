@@ -1,9 +1,7 @@
 {% extends 'template.html.twig' %}
 {% block title %}{{ parent() }}Welcome{% endblock %}
 {% block content %}
-{% block header %}
-{{ parent() }}
-{% endblock %}
+
 
 {% block dumpArea %}
 
@@ -83,7 +81,7 @@
                         <span class="material-symbols-outlined text-xs">open_in_new</span>
                     </a>
                 </td>
-                <td class="py-space-md px-space-lg border-r border-outline-variant font-grid-digit-sm text-label-md font-semibold text-right text-on-surface">
+                <td class="py-space-md px-space-lg border-r border-outline-variant font-grid-digit-sm text-label-md font-semibold  text-on-surface">
                     {{ puzzle.getDokuDuration }}
                 </td>
                 <td class="py-space-md px-space-lg text-center">
