@@ -34,4 +34,27 @@ ORDER BY dd.doku_id DESC");
 
         return $dokus;
     }
+
+    public function getAllPuzzles() : array|false
+    {
+        $query = $this->db->query("SELECT 
+    dd.*,
+    ds.setter_name AS doku_setter_name,
+    GROUP_CONCAT(dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
+FROM doku_dokus dd
+LEFT JOIN doku_setters ds 
+    ON dd.doku_setter_id = ds.setter_id
+LEFT JOIN doku_has_variant dhv 
+    ON dd.doku_id = dhv.doku_id
+LEFT JOIN doku_variants dv 
+    ON dhv.doku_variant = dv.variant_id
+GROUP BY dd.doku_id
+ORDER BY dd.doku_id DESC");
+        $dokus = [];
+        while ($doku = $query->fetch()) {
+            $dokus[] = new DokuDokusMapping($doku);
+        }
+        if(empty($dokus)) return false;
+        return $dokus;
+    }
 }

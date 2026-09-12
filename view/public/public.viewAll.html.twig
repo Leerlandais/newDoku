@@ -1,0 +1,124 @@
+{% extends 'template.html.twig' %}
+{% block title %}{{ parent() }}All Dokus{% endblock %}
+{% block content %}
+    {% block header %}
+        {{ parent() }}
+    {% endblock %}
+
+    {% block dumpArea %}
+
+
+    {% endblock %}
+
+    <h1 class="text-6xl text-center mb-6 mt-12">The Variant Log</h1>
+    <div class="w-full px-margin py-space-xl flex flex-col gap-space-xl max-w-[1440px] mx-auto">
+        <!-- Top Action & Date Anchor -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+            <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+                All Solved
+                Puzzles</h1>
+        </div>
+
+    </div>
+
+    <!-- Main Solves Log Data View -->
+    <div class="bg-surface-container-lowest border-2 border-on-surface flex flex-col w-[85%] mx-auto">
+
+        <!-- High-Contrast Analytical Table -->
+        <div class="overflow-x-auto w-full">
+            <table class="w-full text-center border-collapse">
+                <thead>
+                <tr class="border-b-2 border-on-surface bg-surface-cream text-secondary font-label-sm text-label-sm">
+                    <th class="py-space-md px-space-lg border-r border-outline-variant font-medium w-36"
+                        scope="col">PUZZLE ID
+                    </th>
+                    <th class="py-space-md px-space-lg border-r border-outline-variant font-medium w-36"
+                        scope="col">PUZZLE DATE
+                    </th>
+                    <th class="py-space-md px-space-lg border-r border-outline-variant font-medium" scope="col">
+                        PUZZLE / AUTHOR
+                    </th>
+                    <th class="py-space-md px-space-lg border-r border-outline-variant font-medium" scope="col">
+                        VARIANT CONSTRAINTS
+                    </th>
+                    <th class="py-space-md px-space-lg border-r border-outline-variant font-medium" scope="col">
+                        SOLVER SOURCE
+                    </th>
+                    <th class="py-space-md px-space-lg border-r border-outline-variant font-medium w-36"
+                        scope="col">TIME
+                    </th>
+                    <th class="py-space-md px-space-lg font-medium text-center w-28" scope="col">DETAILS</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant font-body-md text-body-md">
+
+                <!-- Row 2 (Highlighted Solve) -->
+                {% for puzzle in puzzles %}
+                    <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40">
+                        <td class="py-space-md px-space-lg border-r border-outline-variant font-label-md text-label-md text-on-surface-variant group-hover:text-primary font-semibold">
+                            {{ puzzle.getDokuId }}
+                        </td>
+                        <td class="py-space-md px-space-lg border-r border-outline-variant font-label-md text-label-md text-on-surface-variant group-hover:text-primary font-semibold">
+                            {{ puzzle.getDokuDate|date("d/m") }}
+                        </td>
+                        <td class="py-space-md px-space-lg border-r border-outline-variant">
+                            <div class="flex flex-col">
+                                <div class="flex items-center gap-space-xs">
+                                    <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">{{ puzzle.getDokuTitle }}</span>
+                                    {% if puzzle.getDokuDuration > 30 %}
+                                        <span class="font-label-sm text-label-sm px-1.5 py-0.2 bg-tertiary-fixed text-on-tertiary-fixed font-medium">HARD</span>
+                                    {% elseif puzzle.getDokuDuration < 18 %}
+                                        <span class="font-label-sm text-label-sm px-1.5 py-0.2 bg-green-200 text-on-tertiary-fixed font-medium">EASY</span>
+                                    {% endif %}
+                                </div>
+                                <span class="font-body-sm text-body-sm text-left text-secondary">by {{ puzzle.getDokuSetterName }}</span>
+                            </div>
+                        </td>
+                        <td class="py-space-md px-space-lg border-r border-outline-variant">
+                            <div class="flex flex-wrap gap-1.5">
+
+                                <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-on-surface">{{ puzzle.getDokuVariantNames }}</span>
+
+                            </div>
+                        </td>
+                        <td class="py-space-md px-space-lg border-r border-outline-variant">
+                            <a class="font-label-sm text-label-sm text-primary hover:text-inverse-surface inline-flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-primary underline decoration-outline-variant underline-offset-2"
+                               href="{{ puzzle.getDokuUrl }}" rel="noopener noreferrer"
+                               target="_blank">
+                                <span>{{ puzzle.getDokuUrl }}</span>
+                                <span class="material-symbols-outlined text-xs">open_in_new</span>
+                            </a>
+                        </td>
+                        <td class="py-space-md px-space-lg border-r border-outline-variant font-grid-digit-sm text-label-md font-semibold text-on-surface">
+                            {{ puzzle.getDokuDuration }}
+                        </td>
+                        <td class="py-space-md px-space-lg text-center">
+                            <a class="font-label-sm text-label-sm px-space-md py-1 border border-outline hover:border-primary hover:bg-primary hover:text-on-primary transition-all inline-block focus:outline-none focus:ring-2 focus:ring-primary"
+                               data-path="puzzle-details" href="#">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <!-- Action Group -->
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg ms-20 mt-12">
+        <a class="font-label-md text-label-md bg-primary text-on-primary px-space-lg py-space-sm transition-all duration-150 flex items-center gap-space-xs hover:bg-inverse-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+           data-path="all-solved-puzzles" href="?route=viewAllPuzzles">
+            <span>View All Solved Puzzles</span>
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </a>
+        {% if "ROLE_ADMIN" in sessionRole %}
+            <button class="font-label-md text-label-md bg-surface-container-low text-on-surface px-space-lg py-space-sm border border-outline-variant hover:bg-surface-container transition-all flex items-center gap-space-xs focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                    id="quick-log-btn">
+                <span class="material-symbols-outlined text-base text-primary">add_box</span>
+                <span>Log New Solve</span>
+            </button>
+        {% endif %}
+    </div>
+{% endblock %}

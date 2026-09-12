@@ -10,6 +10,7 @@ $router = new RouteManager($twig, $db);
 $router->registerRoute('home', ConnectionController::class, 'index');
 $router->registerRoute("logout", ConnectionController::class, "logout");
 $router->registerRoute('404', ErrorController::class, 'error404');
+$router->registerRoute("viewAll", GeneralController::class, "viewAll");
 
 // ADMIN ROUTES
 $router->registerRoute("admin", AdminController::class, "admin");
