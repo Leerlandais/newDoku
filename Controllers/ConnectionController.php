@@ -46,7 +46,8 @@ class ConnectionController extends Abstract\AbstractController
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
             "csrfToken" => $this->csrfToken,
-            "puzzles" => $solvedPuzzles
+            "puzzles" => $solvedPuzzles,
+            "location" => "home",
         ]);
     }
 

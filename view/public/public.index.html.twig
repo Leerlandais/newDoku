@@ -41,10 +41,10 @@
                 <th class="py-space-md px-space-lg border-r border-outline-variant font-medium" scope="col">
                     SOLVER SOURCE
                 </th>
-                <th class="py-space-md px-space-lg border-r border-outline-variant font-medium text-right w-36"
+                <th class="py-space-md px-space-lg border-r border-outline-variant font-medium w-36"
                     scope="col">TIME
                 </th>
-                <th class="py-space-md px-space-lg font-medium text-center w-28" scope="col">Details</th>
+                <th class="py-space-md px-space-lg font-medium text-center w-28" scope="col">DETAILS</th>
             </tr>
             </thead>
             <tbody class="divide-y divide-outline-variant font-body-md text-body-md">
@@ -59,16 +59,20 @@
                     <div class="flex flex-col">
                         <div class="flex items-center gap-space-xs">
                             <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">{{ puzzle.getDokuTitle }}</span>
+                            {% if puzzle.getDokuDuration > 30 %}
                             <span class="font-label-sm text-label-sm px-1.5 py-0.2 bg-tertiary-fixed text-on-tertiary-fixed font-medium">HARD</span>
+                                {% elseif puzzle.getDokuDuration < 18 %}
+                                    <span class="font-label-sm text-label-sm px-1.5 py-0.2 bg-green-200 text-on-tertiary-fixed font-medium">EASY</span>
+                            {% endif %}
                         </div>
                         <span class="font-body-sm text-body-sm text-left text-secondary">by {{ puzzle.getDokuSetterName }}</span>
                     </div>
                 </td>
                 <td class="py-space-md px-space-lg border-r border-outline-variant">
                     <div class="flex flex-wrap gap-1.5">
-                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-on-surface">Knight's Move</span>
-                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-on-surface">King's Move</span>
-                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-secondary">Orthogonal</span>
+
+                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-on-surface">{{ puzzle.getDokuVariantNames }}</span>
+
                     </div>
                 </td>
                 <td class="py-space-md px-space-lg border-r border-outline-variant">

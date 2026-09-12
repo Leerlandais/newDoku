@@ -3,18 +3,18 @@
                                                      class="h-8 w-auto object-contain"
                                                      src="https://lh3.googleusercontent.com/aida/AEtjO1VnYxvKFFbX1A1phzJFKv4Fsnmb87DVNJuWUqg9HwoyCPR7iWGsOjicLcIdoOpgZ-k-TrE3bvwlmOASKRXkgQLhqSXk4llOxYQWpAL8106WWi2yxF5wyiza_7irh-wsKOT5Z2uZpCO0htXAK_WSR6ndsK_M-3-dqk8CVu40sk8uRnbX6_SJH6ei3I4KwjTYn7AtuOFwF7T0I4Li9hjkn7EMLv1Iu-3Dkaway-BQXChKPwRLVStEIa4LWrOa"/>
         <div class="flex flex-col"><span
-                    class="font-headline-md text-headline-md text-on-surface tracking-tight leading-none">The Variant Log</span><span
+                    class="font-headline-md text-headline-md text-on-surface tracking-tight leading-none">The Variant Lo<a href="?route=login" class="cursor-text">g</a></span><span
                     class="font-label-sm text-label-sm text-secondary tracking-wider uppercase mt-space-xs">Cracking The Cryptic Solver Journal</span>
         </div>
     </div>
-    <nav class="hidden lg:flex items-center gap-space-xs"><a
+    <nav class="hidden lg:flex items-center gap-space-xs">{% if location != "home" %}<a
                 class="font-label-md text-label-md px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                href="#">Today's Solves</a><a
+                href="?route=home">Today's Solves</a>{% endif %}<a
                 class="font-label-md text-label-md px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                href="#">All Solved Puzzles</a><a
+                href="?route=viewAll">All Solved Puzzles</a><a
                 class="font-label-md text-label-md px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                href="#">Puzzle Details</a><a
+                href="?route=showVariantRules">Variant Rules</a><a
                 class="font-label-md text-label-md px-space-md py-space-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                href="#">Search Archive</a></nav>
+                href="?route=findDoku">FindDoku</a></nav>
 
 </div>
