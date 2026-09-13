@@ -43,16 +43,16 @@ class GeneralController extends Abstract\AbstractController
             $searchResults = $this->extractSearchParams($cleanedData);
             if(empty($searchResults)) {
                 $_SESSION["systemMessage"] = "No puzzles found fitting those parameters";
-                header("Location: ?route=searchPuzzles");
+                header("Location: ?route=findDoku");
                 exit();
             }
-
             echo $this->twig->render("public/public.searchResults.html.twig", [
                 "sessionRole" => $sessionRole,
                 "systemMessage" => $systemMessage,
                 "csrfToken" => $this->csrfToken,
                 "puzzles" => $searchResults,
             ]);
+            exit();
 
 
         }
