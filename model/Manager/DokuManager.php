@@ -166,13 +166,12 @@ LEFT JOIN doku_variants dv
     ON dhv.doku_variant = dv.variant_id WHERE dd.doku_setter_id = :setter_id");
         $stmt->bindParam(":setter_id", $setterId, \PDO::PARAM_INT);
         $stmt->execute();
-        $results = $stmt->fetchAll();
-        if(empty($results)) return false;
-        $puzzles = [];
-        foreach ($results as $result) {
-            $puzzles[] = new DokuDokusMapping($result);
+        $results = [];
+        while ($result = $stmt->fetch()) {
+            $results[] = new DokuDokusMapping($result);
         }
-        return $puzzles;
+        if(empty($results)) return false;
+        return $results;
     }
 
     public function getPuzzlesByDuration(int $duration) : array|false
