@@ -36,6 +36,7 @@ class GeneralController extends Abstract\AbstractController
 
         $setters = $this->dokuManager->getAllSetters();
         $variants = $this->dokuManager->getAllVariants();
+        $variantCounter = $this->dokuManager->countPuzzlesByVariant();
 
         if (isset($_POST["unset:searchPuzzles"])) {
             $cleanedData = $this->preparePostData($_POST);
@@ -46,6 +47,7 @@ class GeneralController extends Abstract\AbstractController
                 header("Location: ?route=findDoku");
                 exit();
             }
+
             echo $this->twig->render("public/public.searchResults.html.twig", [
                 "sessionRole" => $sessionRole,
                 "systemMessage" => $systemMessage,
@@ -62,7 +64,8 @@ class GeneralController extends Abstract\AbstractController
             "systemMessage" => $systemMessage,
             "csrfToken" => $this->csrfToken,
             "setters" => $setters,
-            "variants" => $variants
+            "variants" => $variants,
+            "variantCounter" => $variantCounter,
         ]);
     }
 

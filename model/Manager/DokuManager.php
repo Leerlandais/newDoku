@@ -200,4 +200,15 @@ ORDER BY dd.doku_id DESC");
         }
         return $puzzles;
     }
+
+    public function countPuzzlesByVariant() : array
+    {
+        $query = $this->db->query("SELECT COUNT(doku_id) AS count, doku_variant FROM doku_has_variant GROUP BY doku_variant");
+        $results = [];
+        while ($result = $query->fetch()) {
+            $results[] = $result;
+        }
+
+        return $results;
+    }
 }
