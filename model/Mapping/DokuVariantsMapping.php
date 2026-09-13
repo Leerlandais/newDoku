@@ -9,6 +9,7 @@ class DokuVariantsMapping extends AbstractMapping
     private int $variant_id;
     private string $variant_name;
     private string $variant_rules;
+    private ?int $variant_count;
 
     public function getVariantId(): int
     {
@@ -40,5 +41,13 @@ class DokuVariantsMapping extends AbstractMapping
         $this->variant_rules = $variant_rules;
     }
 
+    public function getVariantCount(): ?int
+    {
+        return $this->variant_count;
+    }
 
+    public function setVariantCount(?int $variant_count): void
+    {
+        $this->variant_count = $variant_count;
+    }
 }

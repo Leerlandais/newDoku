@@ -1,7 +1,7 @@
 {% extends 'template.html.twig' %}
 {% block title %}{{ parent() }}Search{% endblock %}
 {% block content %}
-{{ dump(variantCounter, variants) }}
+
 <div class="w-full px-margin py-space-xl flex flex-col gap-space-xl max-w-7xl mx-auto">
             <!-- Editorial Page Header -->
             <section class="flex flex-col md:flex-row md:items-end justify-between gap-space-lg">
@@ -94,15 +94,12 @@
                         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-space-sm pt-space-xs">
                             <!-- Checkbox 1 -->
                             {% for variant in variants %}
-                                {% for varCount in variantCounter %}
-                                    {% if varCount["doku_variant" == variant.getVariantId] %} {% set count = varCount  %}{% endif %}
-                                    {% endfor %}
                             <label class="flex items-center gap-space-sm p-space-sm bg-surface-cream hover:bg-surface-container transition-colors cursor-pointer select-none">
                                 <input class="variant-filter accent-primary w-4 h-4 cursor-pointer"
                                        name="array:variant_id[]"
                                        type="checkbox"
                                        value="{{ variant.getVariantId }}"/>
-                                <span class="font-label-md text-label-md text-on-surface">{{ variant.getVariantName }} &lpar;&rpar;</span>
+                                <span class="font-label-md text-label-md text-on-surface">{{ variant.getVariantName }} &lpar;{{ variant.getVariantCount }}&rpar;</span>
                             </label>
                             {% endfor %}
                             </div>

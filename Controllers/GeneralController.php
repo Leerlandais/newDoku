@@ -37,6 +37,19 @@ class GeneralController extends Abstract\AbstractController
         $setters = $this->dokuManager->getAllSetters();
         $variants = $this->dokuManager->getAllVariants();
         $variantCounter = $this->dokuManager->countPuzzlesByVariant();
+        $counts = [];
+
+        foreach ($variantCounter as $row) {
+            $counts[$row['doku_variant']] = $row['count'];
+        }
+
+// Set the count on each mapping object
+        foreach ($variants as $variant) {
+            $variantId = $variant->getVariantId();
+
+            $variant->setVariantCount($counts[$variantId] ?? 0);
+        }
+
 
         if (isset($_POST["unset:searchPuzzles"])) {
             $cleanedData = $this->preparePostData($_POST);
@@ -65,7 +78,7 @@ class GeneralController extends Abstract\AbstractController
             "csrfToken" => $this->csrfToken,
             "setters" => $setters,
             "variants" => $variants,
-            "variantCounter" => $variantCounter,
+
         ]);
     }
 
