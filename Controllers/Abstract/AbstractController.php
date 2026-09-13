@@ -91,6 +91,7 @@ abstract class AbstractController
             case "pass":
                 return $this->simpleTrim($cleanThis["value"]);
             case "date":
+                if($cleanThis["value"] == "") return null;
                 return $this->dateClean($cleanThis["value"]);
                 case "array":
                     $cleaned = [];

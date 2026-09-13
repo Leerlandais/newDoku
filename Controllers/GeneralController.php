@@ -16,7 +16,8 @@ class GeneralController extends Abstract\AbstractController
         parent::__construct($twig, $managerFactory);
         $this->dokuManager = $this->getManager(DokuManager::class);
     }
-    public function viewAll() : void
+
+    public function viewAll(): void
     {
         global $sessionRole, $systemMessage;
         $puzzles = $this->dokuManager->getAllPuzzles();
@@ -29,16 +30,31 @@ class GeneralController extends Abstract\AbstractController
         ]);
     }
 
-    public function findDoku() : void
+    public function findDoku(): void
     {
         global $sessionRole, $systemMessage;
 
         $setters = $this->dokuManager->getAllSetters();
         $variants = $this->dokuManager->getAllVariants();
 
-        if(isset($_POST["unset:searchPuzzles"])) {
-           header("Location: ?route=findDoku");
-           exit();
+        if (isset($_POST["unset:searchPuzzles"])) {
+            $cleanedData = $this->preparePostData($_POST);
+            $cleanedData = array_filter($cleanedData, fn($value) => $value !== null && $value !== 0);
+            $searchResults = $this->extractSearchParams($cleanedData);
+            if(empty($searchResults)) {
+                $_SESSION["systemMessage"] = "No puzzles found fitting those parameters";
+                header("Location: ?route=searchPuzzles");
+                exit();
+            }
+
+            echo $this->twig->render("public/public.searchResults.html.twig", [
+                "sessionRole" => $sessionRole,
+                "systemMessage" => $systemMessage,
+                "csrfToken" => $this->csrfToken,
+                "puzzles" => $searchResults,
+            ]);
+
+
         }
 
         echo $this->twig->render("public/public.searchPuzzles.html.twig", [
@@ -48,5 +64,48 @@ class GeneralController extends Abstract\AbstractController
             "setters" => $setters,
             "variants" => $variants
         ]);
+    }
+
+    private function extractSearchParams(array $data): array
+    {
+        if ($data["variant_id"]) {
+            $variantIds = $data["variant_id"];
+            unset($data["variant_id"]);
+        }
+        $puzzlesByVariant = null;
+        if (isset($variantIds)) {
+            $puzzlesByVariant = $this->dokuManager->getPuzzlesByVariant($variantIds);
+
+        }
+        $dataArray = [
+            "findBySetter" => $data["doku_setter_id"] ?? null,
+            "duration" => $data["doku_duration"] ?? null,
+            "startDate" => $data["doku_start"] ?? null,
+            "endDate" => $data["doku_end"] ?? null,
+        ];
+
+        $dataArray = array_filter($dataArray, fn($value) => $value !== null && $value !== 0);
+        $collectedPuzzles = [];
+        foreach ($dataArray as $key => $value) {
+            switch ($key) {
+                case "findBySetter":
+                    $collectedPuzzles[] = $this->dokuManager->getPuzzlesBySetter($value);
+                    break;
+                case "duration":
+                    $collectedPuzzles[] = $this->dokuManager->getPuzzlesByDuration($value);
+                    break;
+                case "startDate":
+                    //  $collectedPuzzles[] = $this->dokuManager->getPuzzlesByStartDate($value);
+                    break;
+                case "endDate":
+                    //  $collectedPuzzles[] = $this->dokuManager->getPuzzlesByEndDate($value);
+                    break;
+
+            }
+        }
+        foreach ($puzzlesByVariant as $puzzle) {
+            $collectedPuzzles[] = $puzzle;
+        }
+        return $collectedPuzzles;
     }
 }
