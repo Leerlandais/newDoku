@@ -44,7 +44,7 @@ ORDER BY dd.doku_id DESC");
         $query->execute();
         $totalTime = $query->fetch();
         $query->closeCursor();
-        return $totalTime["total_time"];
+        return $totalTime["total_time"] ?? 0;
     }
 
     public function getAllPuzzles() : array|false
