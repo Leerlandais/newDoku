@@ -68,7 +68,7 @@ class GeneralController extends Abstract\AbstractController
 
     private function extractSearchParams(array $data): array
     {
-        if ($data["variant_id"]) {
+        if (isset($data["variant_id"])) {
             $variantIds = $data["variant_id"];
             unset($data["variant_id"]);
         }
@@ -103,8 +103,10 @@ class GeneralController extends Abstract\AbstractController
 
             }
         }
-        foreach ($puzzlesByVariant as $puzzle) {
-            $collectedPuzzles[] = $puzzle;
+        if(isset($puzzlesByVariant)) {
+            foreach ($puzzlesByVariant as $puzzle) {
+                $collectedPuzzles[] = $puzzle;
+            }
         }
         return $collectedPuzzles;
     }

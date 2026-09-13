@@ -129,7 +129,7 @@ ORDER BY dd.doku_id DESC");
         if(empty($results)) return false;
         $puzzles = [];
             foreach ($results as $result) {
-            $stmt = $this->db->prepare("SELECT 
+                $stmt = $this->db->prepare("SELECT 
     dd.*,
     ds.setter_name AS doku_setter_name,
     GROUP_CONCAT(dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
@@ -143,10 +143,10 @@ LEFT JOIN doku_variants dv
 WHERE dd.doku_id = :doku_id
 GROUP BY dd.doku_id
 ORDER BY dd.doku_id DESC");
-            $stmt->bindParam(":doku_id", $result["doku_id"], \PDO::PARAM_INT);
-            $stmt->execute();
-            $puzzle = $stmt->fetch();
-            $puzzles[] = new DokuDokusMapping($puzzle);
+                $stmt->bindParam(":doku_id", $result["doku_id"], \PDO::PARAM_INT);
+                $stmt->execute();
+                $data = $stmt->fetch();
+                if($data) $puzzles[] = new DokuDokusMapping($data);
             }
             return $puzzles;
     }
