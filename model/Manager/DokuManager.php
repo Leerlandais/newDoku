@@ -12,7 +12,7 @@ class DokuManager extends AbstractManager
     public function getLatestPuzzles() : array|false
     {
         $date = date("Y-m-d");
-        $query = $this->db->query("SELECT 
+        $stmt = $this->db->prepare("SELECT 
     dd.*,
     ds.setter_name AS doku_setter_name,
     GROUP_CONCAT(DISTINCT dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
@@ -26,10 +26,12 @@ LEFT JOIN doku_variants dv
 WHERE dd.doku_date LIKE '$date%'
 GROUP BY dd.doku_id
 ORDER BY dd.doku_id DESC");
-
+$stmt->execute();
         $dokus = [];
-        while ($doku = $query->fetch()) {
-            $dokus[] = new DokuDokusMapping($doku);
+        while ($doku = $stmt->fetch()) {
+            if(!empty($doku)) {
+                $dokus[] = new DokuDokusMapping($doku);
+            }
         }
 
         if(empty($dokus)) return false;
@@ -217,5 +219,13 @@ ORDER BY dd.doku_id DESC");
         }
 
         return $results;
+    }
+
+    public function incremementSetterCount(int $setter) : void
+    {
+        $stmt = $this->db->prepare("UPDATE doku_setters SET setter_count = setter_count + 1 WHERE setter_id = :setter");
+        $stmt->bindParam(":setter", $setter, \PDO::PARAM_INT);
+        $stmt->execute();
+
     }
 }

@@ -87,6 +87,7 @@ class AdminController extends Abstract\AbstractController
             $cleanedData = $this->preparePostData($_POST);
             $addSoduku = $this->dokuManager->addSudoku($cleanedData);
             if($addSoduku) {
+                $this->dokuManager->incremementSetterCount($cleanedData["doku_setter_id"]);
                 $dokuVariants["doku_id"] = $addSoduku;
                 $this->dokuManager->addSudokuVariantsToLatestPuzzle($dokuVariants);
             }

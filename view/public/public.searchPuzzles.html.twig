@@ -38,7 +38,7 @@
                                         id="setterSelect" name="int:doku_setter_id">
                                     <option selected disabled>All Setters</option>
                                     {% for setter in setters %}
-                                    <option value="{{ setter.getSetterId }}">{{ setter.getSetterName }}</option>
+                                    <option value="{{ setter.getSetterId }}">{{ setter.getSetterName }} &lpar;{{ setter.getSetterCount }}&rpar;</option>
                                     {% endfor %}
                                 </select>
                                 <span class="material-symbols-outlined absolute right-space-md top-1/2 -translate-y-1/2 pointer-events-none text-secondary text-lg">expand_more</span>

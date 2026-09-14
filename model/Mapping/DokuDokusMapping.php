@@ -12,7 +12,7 @@ class DokuDokusMapping extends AbstractMapping
     private string $doku_url;
     private int $doku_setter_id;
     private string $doku_setter_name;
-    private string $doku_variant_names;
+    private ?string $doku_variant_names;
 
     private DateTime $doku_date;
     private ?int $doku_duration;
@@ -90,15 +90,17 @@ class DokuDokusMapping extends AbstractMapping
         $this->doku_duration = $doku_duration;
     }
 
-    public function getDokuVariantNames(): string
+    public function getDokuVariantNames(): ?string
     {
         return $this->doku_variant_names;
     }
 
-    public function setDokuVariantNames(string $doku_variant_names): void
+    public function setDokuVariantNames(?string $doku_variant_names): void
     {
         $this->doku_variant_names = $doku_variant_names;
     }
+
+
 
 
 
