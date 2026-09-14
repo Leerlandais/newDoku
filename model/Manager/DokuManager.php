@@ -218,4 +218,12 @@ ORDER BY dd.doku_id DESC");
 
         return $results;
     }
+
+    public function incremementSetterCount(int $setter) : void
+    {
+        $stmt = $this->db->prepare("UPDATE doku_setters SET setter_count = setter_count + 1 WHERE setter_id = :setter");
+        $stmt->bindParam(":setter", $setter, \PDO::PARAM_INT);
+        $stmt->execute();
+
+    }
 }
