@@ -57,7 +57,7 @@
                 {% endfor %}
             </div>
             <label for="setterName"></label>
-            <select name="int:doku_setter_id" id="setterName" class="select-standard">
+            <select name="int:doku_setter_id" id="setterName" class="select-standard" required>
                 <option value="" disabled selected>Choose Setter</option>
                 {% for setter in setters %}
                     <option value="{{ setter.getSetterId }}">{{ setter.getSetterName }}</option>
