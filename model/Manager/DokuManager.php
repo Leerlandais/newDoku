@@ -156,16 +156,23 @@ ORDER BY dd.doku_id DESC");
         $stmt = $this->db->prepare("SELECT 
     dd.*,
     ds.setter_name AS doku_setter_name,
-    GROUP_CONCAT(DISTINCT dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
+    GROUP_CONCAT(
+        DISTINCT dv.variant_name 
+        ORDER BY dv.variant_name 
+        SEPARATOR ', '
+    ) AS doku_variant_names
 FROM doku_dokus dd
 LEFT JOIN doku_setters ds 
     ON dd.doku_setter_id = ds.setter_id
 LEFT JOIN doku_has_variant dhv 
     ON dd.doku_id = dhv.doku_id
 LEFT JOIN doku_variants dv 
-    ON dhv.doku_variant = dv.variant_id WHERE dd.doku_setter_id = :setter_id");
+    ON dhv.doku_variant = dv.variant_id
+WHERE dd.doku_setter_id = :setter_id
+GROUP BY dd.doku_id;");
         $stmt->bindParam(":setter_id", $setterId, \PDO::PARAM_INT);
         $stmt->execute();
+
         $results = [];
         while ($result = $stmt->fetch()) {
             $results[] = new DokuDokusMapping($result);

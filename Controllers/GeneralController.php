@@ -106,6 +106,7 @@ class GeneralController extends Abstract\AbstractController
             switch ($key) {
                 case "findBySetter":
                     $collectedPuzzles = $this->dokuManager->getPuzzlesBySetter($value);
+
                     break;
                 case "duration":
                     $collectedPuzzles = $this->dokuManager->getPuzzlesByDuration($value);
