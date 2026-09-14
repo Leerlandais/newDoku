@@ -15,7 +15,7 @@ class DokuManager extends AbstractManager
         $query = $this->db->query("SELECT 
     dd.*,
     ds.setter_name AS doku_setter_name,
-    GROUP_CONCAT(dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
+    GROUP_CONCAT(DISTINCT dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
 FROM doku_dokus dd
 LEFT JOIN doku_setters ds 
     ON dd.doku_setter_id = ds.setter_id
@@ -52,7 +52,7 @@ ORDER BY dd.doku_id DESC");
         $query = $this->db->query("SELECT 
     dd.*,
     ds.setter_name AS doku_setter_name,
-    GROUP_CONCAT(dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
+    GROUP_CONCAT(DISTINCT dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
 FROM doku_dokus dd
 LEFT JOIN doku_setters ds 
     ON dd.doku_setter_id = ds.setter_id
@@ -132,7 +132,7 @@ ORDER BY dd.doku_id DESC");
                 $stmt = $this->db->prepare("SELECT 
     dd.*,
     ds.setter_name AS doku_setter_name,
-    GROUP_CONCAT(dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
+    GROUP_CONCAT(DISTINCT dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
 FROM doku_dokus dd
 LEFT JOIN doku_setters ds 
     ON dd.doku_setter_id = ds.setter_id
@@ -156,7 +156,7 @@ ORDER BY dd.doku_id DESC");
         $stmt = $this->db->prepare("SELECT 
     dd.*,
     ds.setter_name AS doku_setter_name,
-    GROUP_CONCAT(dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
+    GROUP_CONCAT(DISTINCT dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
 FROM doku_dokus dd
 LEFT JOIN doku_setters ds 
     ON dd.doku_setter_id = ds.setter_id
@@ -179,7 +179,7 @@ LEFT JOIN doku_variants dv
         $stmt = $this->db->prepare("SELECT 
     dd.*,
     ds.setter_name AS doku_setter_name,
-    GROUP_CONCAT(dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
+    GROUP_CONCAT(DISTINCT dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
     FROM doku_dokus dd
 LEFT JOIN doku_setters ds 
 ON dd.doku_setter_id = ds.setter_id

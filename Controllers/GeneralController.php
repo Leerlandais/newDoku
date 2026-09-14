@@ -105,10 +105,10 @@ class GeneralController extends Abstract\AbstractController
         foreach ($dataArray as $key => $value) {
             switch ($key) {
                 case "findBySetter":
-                    $collectedPuzzles[] = $this->dokuManager->getPuzzlesBySetter($value);
+                    $collectedPuzzles = $this->dokuManager->getPuzzlesBySetter($value);
                     break;
                 case "duration":
-                    $collectedPuzzles[] = $this->dokuManager->getPuzzlesByDuration($value);
+                    $collectedPuzzles = $this->dokuManager->getPuzzlesByDuration($value);
                     break;
                 case "startDate":
                     //  $collectedPuzzles[] = $this->dokuManager->getPuzzlesByStartDate($value);
