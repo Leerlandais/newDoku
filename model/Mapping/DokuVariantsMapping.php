@@ -23,7 +23,7 @@ class DokuVariantsMapping extends AbstractMapping
 
     public function getVariantName(): string
     {
-        return $this->variant_name;
+        return htmlspecialchars_decode($this->variant_name);
     }
 
     public function setVariantName(string $variant_name): void
@@ -33,7 +33,7 @@ class DokuVariantsMapping extends AbstractMapping
 
     public function getVariantRules(): string
     {
-        return $this->variant_rules;
+        return htmlspecialchars_decode($this->variant_rules);
     }
 
     public function setVariantRules(string $variant_rules): void
