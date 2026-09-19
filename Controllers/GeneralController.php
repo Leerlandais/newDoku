@@ -92,7 +92,7 @@ class GeneralController extends Abstract\AbstractController
         ]);
     }
 
-    private function extractSearchParams(array $data): array
+    private function extractSearchParams(array $data): array|false
     {
         if (isset($data["variant_id"])) {
             $variantIds = $data["variant_id"];
