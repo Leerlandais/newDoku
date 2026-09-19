@@ -10,7 +10,7 @@ class DokuConnectionLogsMapping extends AbstractMapping
     private int $log_id;
     private DateTime $log_date;
     private string $log_ip;
-    private int $log_page_visited;
+    private string $log_page_visited;
     private ?int $log_user;
 
     public function getLogId(): int
@@ -46,12 +46,12 @@ class DokuConnectionLogsMapping extends AbstractMapping
         $this->log_ip = $log_ip;
     }
 
-    public function getLogPageVisited(): int
+    public function getLogPageVisited(): string
     {
-        return $this->log_page_visited;
+        return htmlspecialchars_decode($this->log_page_visited);
     }
 
-    public function setLogPageVisited(int $log_page_visited): void
+    public function setLogPageVisited(string $log_page_visited): void
     {
         $this->log_page_visited = $log_page_visited;
     }

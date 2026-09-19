@@ -39,8 +39,9 @@ class ConnectionManager extends AbstractManager
         return false;
     }
 
-    public function logConnection(string $ip, int $location) : void
+    public function logConnection(string $ip, string $location) : void
     {
+
         $insertData = [
             "log_ip" => $ip,
             "log_page_visited" => $location,

@@ -4,22 +4,29 @@ namespace Controllers;
 
 use Controllers\Abstract\AbstractController;
 use Factory\ManagerFactory;
+use model\Manager\ConnectionManager;
 use model\Manager\DokuManager;
 use Twig\Environment;
 
 class GeneralController extends Abstract\AbstractController
 {
     private DokuManager $dokuManager;
+    private ConnectionManager $connectionManager;
 
     public function __construct(Environment $twig, ManagerFactory $managerFactory)
     {
         parent::__construct($twig, $managerFactory);
         $this->dokuManager = $this->getManager(DokuManager::class);
+        $this->connectionManager = $this->getManager(ConnectionManager::class);
     }
 
     public function viewAll(): void
     {
         global $sessionRole, $systemMessage;
+        $ip = $_SERVER['REMOTE_ADDR'];
+        if($ip !== MAIN_IP) {
+            $this->connectionManager->logConnection($ip, "View All");
+        }
         $puzzles = $this->dokuManager->getAllPuzzles();
         $totalTime = $this->dokuManager->getTotalTime();
         echo $this->twig->render("public/public.viewAll.html.twig", [
@@ -33,7 +40,10 @@ class GeneralController extends Abstract\AbstractController
     public function findDoku(): void
     {
         global $sessionRole, $systemMessage;
-
+        $ip = $_SERVER['REMOTE_ADDR'];
+        if($ip !== MAIN_IP) {
+            $this->connectionManager->logConnection($ip, "FindDoku");
+        }
         $setters = $this->dokuManager->getAllSetters();
         $variants = $this->dokuManager->getAllVariants();
         $variantCounter = $this->dokuManager->countPuzzlesByVariant();
