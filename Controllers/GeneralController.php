@@ -20,20 +20,24 @@ class GeneralController extends Abstract\AbstractController
         $this->connectionManager = $this->getManager(ConnectionManager::class);
     }
 
-    public function viewAll(): void
+    public function viewAll(array $getParams): void
     {
         global $sessionRole, $systemMessage;
         $ip = $_SERVER['REMOTE_ADDR'];
         if($ip !== MAIN_IP) {
             $this->connectionManager->logConnection($ip, "View All");
         }
-        $puzzles = $this->dokuManager->getAllPuzzles();
+        $pageCounter = $this->intClean($_GET["pageCounter"] ?? 1);
+        $puzzles = $this->dokuManager->getAllPuzzles($pageCounter);
+        $puzzleCount = $this->dokuManager->getPuzzleCount();
         $totalTime = $this->dokuManager->getTotalTime();
         echo $this->twig->render("public/public.viewAll.html.twig", [
             "sessionRole" => $sessionRole,
             "systemMessage" => $systemMessage,
             "puzzles" => $puzzles,
             "totalTime" => $totalTime,
+            "puzzleCount" => $puzzleCount,
+            "pageCounter" => $pageCounter,
         ]);
     }
 

@@ -8,15 +8,16 @@
 
     {% endblock %}
     {% if puzzles|length < 3 %}
-    <h1 class="text-6xl text-center mb-6 mt-12">The Variant Log</h1>
+        <h1 class="text-6xl text-center mb-6 mt-12">The Variant Log</h1>
     {% endif %}
     <div class="w-full px-margin py-space-xl flex flex-col gap-space-xl max-w-[1440px] mx-auto">
         <!-- Top Action & Date Anchor -->
         <div class="flex flex-col justify-between gap-space-lg">
             <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
-                All {{ puzzles|length}} Solved
+                All {{ puzzles|length }} Solved
                 Puzzles</h1>
-            <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Time spent &lpar;minutes&rpar; : {{ totalTime }}</h2>
+            <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Time spent &lpar;minutes&rpar;
+                : {{ totalTime }}</h2>
         </div>
 
     </div>
@@ -104,7 +105,34 @@
                 </tbody>
             </table>
         </div>
-
+    </div>
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-xs ps-12 pe-28">
+<span class="font-label-sm text-label-sm text-secondary">
+        {#
+    {% if pageCounter == 1 %}
+          Displaying rows {{ pageCounter }} – {{ pageCounter + 9 }} of {{ puzzleCount }} archived solves
+    {% else %}
+        {% if (((pageCounter - 1) * 10)) + 10 < puzzleCount %}
+    Displaying rows {{ ((pageCounter - 1) * 10) + 1 }} – {{ ((pageCounter - 1) * 10) + 10 }} of {{ puzzleCount}} archived solves
+            {% else %}
+                Displaying rows {{ (pageCounter - 1) * 10 }} – {{ puzzleCount + 1 }} of {{ puzzleCount}} archived solves
+                {% endif %}
+    {% endif %}
+        #}
+        </span>
+        <div class="flex items-center gap-space-xs">
+            {% set i = (puzzleCount / 10) %}
+            {% set i = (i|round(0, 'ceil')) %}
+            {% for j in range(1, i) %}
+                {% if j == pageCounter %}
+                    <a href="?route=viewAll&pageCounter={{ j }}"><span class="font-label-sm text-label-sm px-space-md py-space-xs bg-primary-container text-on-primary">{{ j }}</span></a>
+                {% else %}
+            <a href="?route=viewAll&pageCounter={{ j }}"><button class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors"
+                            type="button">{{ j }}
+                </button></a>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
     <!-- Action Group -->
     <div class="flex flex-col lg:flex-row gap-space-lg ms-20 mt-12">
@@ -115,7 +143,7 @@
         </a>
         {% if "ROLE_ADMIN" in sessionRole %}
             <a class="font-label-md text-label-md bg-surface-container-low text-on-surface px-space-lg py-space-sm border border-outline-variant hover:bg-surface-container transition-all flex items-center gap-space-xs focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                    id="quick-log-btn" href="?route=addSudoku">
+               id="quick-log-btn" href="?route=addSudoku">
                 <span class="material-symbols-outlined text-base text-primary">add_box</span>
                 <span>Log New Solve</span>
             </a>

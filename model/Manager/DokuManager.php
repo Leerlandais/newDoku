@@ -49,9 +49,11 @@ $stmt->execute();
         return $totalTime["total_time"] ?? 0;
     }
 
-    public function getAllPuzzles() : array|false
+    public function getAllPuzzles(int $pageCounter) : array|false
     {
-        $query = $this->db->query("SELECT 
+        $offset = ($pageCounter - 1) * 10;
+
+        $query = $this->db->prepare("SELECT 
     dd.*,
     ds.setter_name AS doku_setter_name,
     GROUP_CONCAT(DISTINCT dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
@@ -62,8 +64,11 @@ LEFT JOIN doku_has_variant dhv
     ON dd.doku_id = dhv.doku_id
 LEFT JOIN doku_variants dv 
     ON dhv.doku_variant = dv.variant_id
+WHERE dd.doku_id > :offset
 GROUP BY dd.doku_id
-ORDER BY dd.doku_id DESC");
+ORDER BY dd.doku_id LIMIT 10");
+        $query->bindParam(":offset", $offset, \PDO::PARAM_INT);
+        $query->execute();
         $dokus = [];
         while ($doku = $query->fetch()) {
             $dokus[] = new DokuDokusMapping($doku);
@@ -227,5 +232,12 @@ ORDER BY dd.doku_id DESC");
         $stmt->bindParam(":setter", $setter, \PDO::PARAM_INT);
         $stmt->execute();
 
+    }
+
+    public function getPuzzleCount() : int
+    {
+        $query = $this->db->query("SELECT COUNT(doku_id) AS count FROM doku_dokus");
+        $result = $query->fetch();
+        return $result["count"];
     }
 }
