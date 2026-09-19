@@ -34,7 +34,7 @@ class ConnectionController extends Abstract\AbstractController
 
     public function index(): void
     {
-        global $systemMessage, $sessionRole;
+        global $systemMessage, $sessionRole, $sessionExpiresAt;
         if (!isset($_SESSION["visit_logged"])) {
             $ip = $_SERVER['REMOTE_ADDR'];
             $ip = $ip == "::1" ? "localhost" : $ip;
@@ -51,13 +51,14 @@ class ConnectionController extends Abstract\AbstractController
             "csrfToken" => $this->csrfToken,
             "puzzles" => $solvedPuzzles,
             "location" => "home",
-            "totalTime" => $totalTime
+            "totalTime" => $totalTime,
+            "sessionExpiresAt" => $sessionExpiresAt
         ]);
     }
 
     public function login(): void
     {
-        global $systemMessage, $sessionRole;
+        global $systemMessage, $sessionRole, $sessionExpiresAt;
         if(!empty($sessionRole)) {
             header("Location: ./");
             exit();
@@ -83,7 +84,9 @@ class ConnectionController extends Abstract\AbstractController
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
             "csrfToken" => $this->csrfToken,
-            "puzzles" => $puzzles
+            "puzzles" => $puzzles,
+            "location" => "login",
+            "sessionExpiresAt" => $sessionExpiresAt
         ]);
     }
 

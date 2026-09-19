@@ -22,7 +22,7 @@ class GeneralController extends Abstract\AbstractController
 
     public function viewAll(array $getParams): void
     {
-        global $sessionRole, $systemMessage;
+        global $sessionRole, $systemMessage, $sessionExpiresAt;
         $ip = $_SERVER['REMOTE_ADDR'];
         if($ip !== MAIN_IP) {
             $this->connectionManager->logConnection($ip, "View All");
@@ -38,12 +38,13 @@ class GeneralController extends Abstract\AbstractController
             "totalTime" => $totalTime,
             "puzzleCount" => $puzzleCount,
             "pageCounter" => $pageCounter,
+            "sessionExpiresAt" => $sessionExpiresAt
         ]);
     }
 
     public function findDoku(): void
     {
-        global $sessionRole, $systemMessage;
+        global $sessionRole, $systemMessage, $sessionExpiresAt;
         $ip = $_SERVER['REMOTE_ADDR'];
         if($ip !== MAIN_IP) {
             $this->connectionManager->logConnection($ip, "FindDoku");
@@ -80,6 +81,7 @@ class GeneralController extends Abstract\AbstractController
                 "systemMessage" => $systemMessage,
                 "csrfToken" => $this->csrfToken,
                 "puzzles" => $searchResults,
+                "sessionExpiresAt" => $sessionExpiresAt,
             ]);
             exit();
 
@@ -92,6 +94,7 @@ class GeneralController extends Abstract\AbstractController
             "csrfToken" => $this->csrfToken,
             "setters" => $setters,
             "variants" => $variants,
+            "sessionExpiresAt" => $sessionExpiresAt,
 
         ]);
     }

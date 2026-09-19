@@ -1,5 +1,5 @@
 console.log("tableSorter loaded ");
-console.log(document.querySelectorAll("table").length);
+console.log("Tables on current page : ", document.querySelectorAll("table").length);
 const currentOrder = new WeakMap();
 
 function sortTable(table, columnIndex) {

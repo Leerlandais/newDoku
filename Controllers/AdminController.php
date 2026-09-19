@@ -20,18 +20,19 @@ class AdminController extends Abstract\AbstractController
     }
     public function admin() : void
     {
-        global $sessionRole, $systemMessage;
+        global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
         echo $this->twig->render("private/private.admin.html.twig", [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
             "csrfToken" => $this->csrfToken,
+            "sessionExpiresAt" => $sessionExpiresAt
         ]);
     }
 
     public function addSetter() : void
     {
-        global $sessionRole, $systemMessage;
+        global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
         $setters = $this->dokuManager->getAllSetters();
 
@@ -47,13 +48,14 @@ class AdminController extends Abstract\AbstractController
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
             "csrfToken" => $this->csrfToken,
-            "setters" => $setters
+            "setters" => $setters,
+            "sessionExpiresAt" => $sessionExpiresAt
         ]);
     }
 
     public function addVariant() : void
     {
-        global $sessionRole, $systemMessage;
+        global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
 
         $variants = $this->dokuManager->getAllVariants();
@@ -69,13 +71,14 @@ class AdminController extends Abstract\AbstractController
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
             "csrfToken" => $this->csrfToken,
-            "variants" => $variants
+            "variants" => $variants,
+            "sessionExpiresAt" => $sessionExpiresAt
         ]);
     }
 
     public function addSudoku() : void
     {
-        global $sessionRole, $systemMessage;
+        global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
         $setters = $this->dokuManager->getAllSetters();
         $variants = $this->dokuManager->getAllVariants();
@@ -101,13 +104,14 @@ class AdminController extends Abstract\AbstractController
             "sessionRole" => $sessionRole,
             "csrfToken" => $this->csrfToken,
             "setters" => $setters,
-            "variants" => $variants
+            "variants" => $variants,
+            "sessionExpiresAt" => $sessionExpiresAt
         ]);
     }
 
     public function viewLogs() : void
     {
-        global $sessionRole, $systemMessage;
+        global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
 
         $logs = $this->connectionManager->getAllLogs();
@@ -115,7 +119,8 @@ class AdminController extends Abstract\AbstractController
         echo $this->twig->render("private/private.viewLogs.html.twig", [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
-            "logs" => $logs
+            "logs" => $logs,
+            "sessionExpiresAt" => $sessionExpiresAt
         ]);
     }
 

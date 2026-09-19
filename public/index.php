@@ -7,6 +7,7 @@ if (isset($_SESSION["activity"]) && time() - $_SESSION["activity"] > 1800) {
     exit();
 }
 $_SESSION["activity"] = time();
+$sessionExpiresAt = $_SESSION["activity"] + 1800;
 if (isset($_SESSION["systemMessage"])) {
     $systemMessage = $_SESSION["systemMessage"];
     unset($_SESSION["systemMessage"]);

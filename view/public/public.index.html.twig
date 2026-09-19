@@ -29,9 +29,7 @@
         <table class="w-full text-center border-collapse">
             <thead>
             <tr class="border-b-2 border-on-surface bg-surface-cream text-secondary font-label-sm text-label-sm">
-                <th class="py-space-md px-space-lg border-r border-outline-variant font-medium w-36"
-                    scope="col">PUZZLE ID
-                </th>
+
                 <th class="py-space-md px-space-lg border-r border-outline-variant font-medium" scope="col">
                     PUZZLE / AUTHOR
                 </th>
@@ -52,9 +50,7 @@
             <!-- Row 2 (Highlighted Solve) -->
                  {% for puzzle in puzzles %}
              <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40">
-                <td class="py-space-md px-space-lg border-r border-outline-variant font-label-md text-label-md text-on-surface-variant group-hover:text-primary font-semibold">
-                    {{ puzzle.getDokuId }}
-                </td>
+
                 <td class="py-space-md px-space-lg border-r border-outline-variant">
                     <div class="flex flex-col">
                         <div class="flex items-center gap-space-xs">

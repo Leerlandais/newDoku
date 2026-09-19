@@ -14,8 +14,10 @@
 {% block bodyClass %}bg-gray-200{% endblock %}
 {% block header %}
     {% include "inc/_header.html.twig" %}
+    <span class="hidden" id="sessionExpiresAt">{{ sessionExpiresAt * 1000 }}</span>
 {% endblock %}
 
 {% block javascript %}
 <script src="{{ PUB_DIR }}scripts/tableSorter.js"></script>
+<script src="{{ PUB_DIR }}scripts/pageRefresher.js"></script>
 {% endblock %}

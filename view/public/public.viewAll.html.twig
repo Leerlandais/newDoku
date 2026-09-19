@@ -14,7 +14,7 @@
         <!-- Top Action & Date Anchor -->
         <div class="flex flex-col justify-between gap-space-lg">
             <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
-                All {{ puzzles|length }} Solved
+                All Solved
                 Puzzles</h1>
             <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Time spent &lpar;minutes&rpar;
                 : {{ totalTime }}</h2>
@@ -108,17 +108,17 @@
     </div>
     <div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-xs ps-12 pe-28">
 <span class="font-label-sm text-label-sm text-secondary">
-        {#
+
     {% if pageCounter == 1 %}
           Displaying rows {{ pageCounter }} – {{ pageCounter + 9 }} of {{ puzzleCount }} archived solves
     {% else %}
         {% if (((pageCounter - 1) * 10)) + 10 < puzzleCount %}
     Displaying rows {{ ((pageCounter - 1) * 10) + 1 }} – {{ ((pageCounter - 1) * 10) + 10 }} of {{ puzzleCount}} archived solves
             {% else %}
-                Displaying rows {{ (pageCounter - 1) * 10 }} – {{ puzzleCount + 1 }} of {{ puzzleCount}} archived solves
+                Displaying rows {{ (pageCounter - 1) * 10 }} – {{ puzzleCount }} of {{ puzzleCount}} archived solves
                 {% endif %}
     {% endif %}
-        #}
+
         </span>
         <div class="flex items-center gap-space-xs">
             {% set i = (puzzleCount / 10) %}
