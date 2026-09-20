@@ -86,6 +86,7 @@ class GeneralController extends Abstract\AbstractController
                 "csrfToken" => $this->csrfToken,
                 "puzzles" => $searchResults,
                 "sessionExpiresAt" => $sessionExpiresAt,
+                "foundPuzzles" => true
             ]);
             exit();
 
