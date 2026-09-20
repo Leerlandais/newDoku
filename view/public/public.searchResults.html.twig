@@ -6,7 +6,7 @@
     <section class="flex flex-col md:flex-row md:items-end justify-between gap-space-lg">
         <div class="flex flex-col gap-space-xs max-w-2xl">
             <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
-                Search Puzzle Archive
+                Puzzles Found : {{ puzzles|length }}
             </h1>
             <span class="font-headline-md text-headline-md text-on-surface">{{ systemMessage ? systemMessage : "" }}</span>
         </div>
@@ -19,13 +19,7 @@
 <!-- Instant Search Results Section -->
 <section class="flex flex-col gap-space-md">
     <!-- Ledger Head Controls & Metric -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm bg-surface-container-low px-space-lg py-space-md">
 
-        <div class="flex items-center gap-space-md">
-            <span class="font-label-sm text-label-sm text-secondary">SORTED BY: DATE SOLVED (DESC)</span>
-
-        </div>
-    </div>
     <!-- High-Density Vision-Friendly Data Table -->
     <div class="w-full overflow-x-auto shadow-sm bg-surface-cream">
         <table class="w-full text-left border-collapse" id="archiveResultsTable">
@@ -37,7 +31,7 @@
                 <th class="py-space-md px-space-lg">Variants</th>
                 <th class="py-space-md px-space-lg text-right">Solve Time</th>
                 <th class="py-space-md px-space-lg text-right">Log Date</th>
-                <th class="py-space-md px-space-lg text-center">Details</th>
+                <th class="py-space-md px-space-lg text-center">URL</th>
             </tr>
             </thead>
             <tbody class="divide-y-0 font-body-sm text-body-sm text-on-surface" id="resultsBody">
@@ -76,9 +70,14 @@
                     <td class="py-space-md px-space-lg border-r border-outline-variant font-grid-digit-sm text-label-md font-semibold  text-on-surface">
                         {{ puzzle.getDokuDate|date("d/m") }}
                     </td>
+                    <td class="py-space-md px-space-lg border-r border-outline-variant font-grid-digit-sm text-label-md font-semibold  text-on-surface">
+                        <a class="font-label-sm text-label-sm text-primary hover:text-inverse-surface inline-flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-primary underline decoration-outline-variant underline-offset-2" href="{{ puzzle.getDokuUrl }}" target="_blank">Goto Puzzle</a>
+                    </td>
+                    {#
                     <td class="py-space-md px-space-lg text-center">
                         <a href="#"><span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors text-lg">arrow_forward</span></a>
                     </td>
+                    #}
                 </tr>
 
             {% endfor %}
