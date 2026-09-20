@@ -240,4 +240,41 @@ ORDER BY dd.doku_id DESC");
         $result = $query->fetch();
         return $result["count"];
     }
+
+    public function getPuzzlesByDate(?string $start, ?string $end) : array|false
+    {
+        if(!$start || !$end) {
+            if (!$start) $start = "2026-09-06";
+            if (!$end) $end = date("Y-m-d");
+        }else {
+            $start = date("Y-m-d", strtotime($start));
+            $end = date("Y-m-d", strtotime($end));
+        }
+        $stmt = $this->db->prepare("SELECT 
+    dd.*,
+    ds.setter_name AS doku_setter_name,
+    GROUP_CONCAT(
+        DISTINCT dv.variant_name 
+        ORDER BY dv.variant_name 
+        SEPARATOR ', '
+    ) AS doku_variant_names
+FROM doku_dokus dd
+LEFT JOIN doku_setters ds 
+    ON dd.doku_setter_id = ds.setter_id
+LEFT JOIN doku_has_variant dhv 
+    ON dd.doku_id = dhv.doku_id
+LEFT JOIN doku_variants dv 
+    ON dhv.doku_variant = dv.variant_id
+WHERE dd.doku_date >= :start AND dd.doku_date <= :end
+GROUP BY dd.doku_id");
+        $stmt->bindParam(":start", $start, \PDO::PARAM_STR);
+        $stmt->bindParam(":end", $end, \PDO::PARAM_STR);
+        $stmt->execute();
+        $results = [];
+        while ($result = $stmt->fetch()) {
+            $results[] = new DokuDokusMapping($result);
+        }
+        if(empty($results)) return false;
+        return $results;
+    }
 }

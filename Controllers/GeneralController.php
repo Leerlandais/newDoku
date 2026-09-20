@@ -6,6 +6,7 @@ use Controllers\Abstract\AbstractController;
 use Factory\ManagerFactory;
 use model\Manager\ConnectionManager;
 use model\Manager\DokuManager;
+use model\Mapping\DokuDokusMapping;
 use Twig\Environment;
 
 class GeneralController extends Abstract\AbstractController
@@ -52,6 +53,7 @@ class GeneralController extends Abstract\AbstractController
         $setters = $this->dokuManager->getAllSetters();
         $variants = $this->dokuManager->getAllVariants();
         $variantCounter = $this->dokuManager->countPuzzlesByVariant();
+        $puzzleCount = $this->dokuManager->getPuzzleCount();
         $counts = [];
 
         foreach ($variantCounter as $row) {
@@ -69,7 +71,9 @@ class GeneralController extends Abstract\AbstractController
         if (isset($_POST["unset:searchPuzzles"])) {
             $cleanedData = $this->preparePostData($_POST);
             $cleanedData = array_filter($cleanedData, fn($value) => $value !== null && $value !== 0);
+
             $searchResults = $this->extractSearchParams($cleanedData);
+
             if(empty($searchResults)) {
                 $_SESSION["systemMessage"] = "No puzzles found fitting those parameters";
                 header("Location: ?route=findDoku");
@@ -95,11 +99,12 @@ class GeneralController extends Abstract\AbstractController
             "setters" => $setters,
             "variants" => $variants,
             "sessionExpiresAt" => $sessionExpiresAt,
+            "puzzleCount" => $puzzleCount,
 
         ]);
     }
 
-    private function extractSearchParams(array $data): array|false
+    private function extractSearchParams(array $data): array|false|DokuDokusMapping
     {
         if (isset($data["variant_id"])) {
             $variantIds = $data["variant_id"];
@@ -113,9 +118,10 @@ class GeneralController extends Abstract\AbstractController
         $dataArray = [
             "findBySetter" => $data["doku_setter_id"] ?? null,
             "duration" => $data["doku_duration"] ?? null,
-            "startDate" => $data["doku_start"] ?? null,
-            "endDate" => $data["doku_end"] ?? null,
+            "date" => [$data["doku_start"] ?? null, $data["doku_end"] ?? null]
+
         ];
+        if($dataArray["date"][0] == null && $dataArray["date"][1] == null) unset($dataArray["date"]);
 
         $dataArray = array_filter($dataArray, fn($value) => $value !== null && $value !== 0);
         $collectedPuzzles = [];
@@ -128,8 +134,8 @@ class GeneralController extends Abstract\AbstractController
                 case "duration":
                     $collectedPuzzles = $this->dokuManager->getPuzzlesByDuration($value);
                     break;
-                case "startDate":
-                    //  $collectedPuzzles[] = $this->dokuManager->getPuzzlesByStartDate($value);
+                case "date":
+                      $collectedPuzzles[] = $this->dokuManager->getPuzzlesByDate($value[0], $value[1]);
                     break;
                 case "endDate":
                     //  $collectedPuzzles[] = $this->dokuManager->getPuzzlesByEndDate($value);
@@ -142,6 +148,15 @@ class GeneralController extends Abstract\AbstractController
                 $collectedPuzzles[] = $puzzle;
             }
         }
+        if (empty($collectedPuzzles)) {
+            return false;
+        }
+     //   die(var_dump(get_debug_type($collectedPuzzles)));
+
+        if (is_array($collectedPuzzles) && is_array($collectedPuzzles[0])) {
+            $collectedPuzzles = $collectedPuzzles[0];
+        }
+
         return $collectedPuzzles;
     }
 }
