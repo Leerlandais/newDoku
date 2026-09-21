@@ -24,9 +24,14 @@ class GeneralController extends Abstract\AbstractController
     public function viewAll(array $getParams): void
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
-        $ip = $_SERVER['REMOTE_ADDR'];
-        if($ip !== MAIN_IP) {
-            $this->connectionManager->logConnection($ip, "View All");
+
+        if (!isset($_SESSION["viewAll_logged"])) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = $ip == "::1" ? "localhost" : $ip;
+       //     if($ip !== MAIN_IP) {
+                $this->connectionManager->logConnection($ip, "View All");
+                $_SESSION["viewAll_logged"] = true;
+      //      }
         }
         $pageCounter = $this->intClean($_GET["pageCounter"] ?? 1);
         $puzzles = $this->dokuManager->getAllPuzzles($pageCounter);
@@ -46,9 +51,13 @@ class GeneralController extends Abstract\AbstractController
     public function findDoku(): void
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
-        $ip = $_SERVER['REMOTE_ADDR'];
-        if($ip !== MAIN_IP) {
-            $this->connectionManager->logConnection($ip, "FindDoku");
+        if (!isset($_SESSION["findDoku_logged"])) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = $ip == "::1" ? "localhost" : $ip;
+          //  if($ip !== MAIN_IP) {
+                $this->connectionManager->logConnection($ip, "Find Doku");
+                $_SESSION["findDoku_logged"] = true;
+          //  }
         }
         $setters = $this->dokuManager->getAllSetters();
         $variants = $this->dokuManager->getAllVariants();
