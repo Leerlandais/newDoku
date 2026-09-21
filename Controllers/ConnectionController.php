@@ -38,7 +38,7 @@ class ConnectionController extends Abstract\AbstractController
         if (!isset($_SESSION["visit_logged"])) {
             $ip = $_SERVER['REMOTE_ADDR'];
             $ip = $ip == "::1" ? "localhost" : $ip;
-            if($ip !== MAIN_IP) {
+            if ($ip !== MAIN_IP) {
                 $this->connectionManager->logConnection($ip, "Home");
             }
         }
@@ -59,7 +59,7 @@ class ConnectionController extends Abstract\AbstractController
     public function login(): void
     {
         global $systemMessage, $sessionRole, $sessionExpiresAt;
-        if(!empty($sessionRole)) {
+        if (!empty($sessionRole)) {
             header("Location: ./");
             exit();
         }
@@ -69,16 +69,16 @@ class ConnectionController extends Abstract\AbstractController
             //  $this->verifyCsrfToken($_POST['csrf:csrf_token']);
             $cleanPostData = $this->preparePostData($_POST);
             $userLogin = $this->connectionManager->loginUser($cleanPostData);
-            if($userLogin) {
+            if ($userLogin) {
                 header("Location: ?route=admin");
-            }else{
+            } else {
                 $_SESSION["systemMessage"] = "Not the right credentials";
                 header("Location: ./");
             }
             exit();
         }
 
-        $puzzles =$this->dokuManager->getLatestPuzzles();
+        $puzzles = $this->dokuManager->getLatestPuzzles();
 
         echo $this->twig->render('public/public.login.html.twig', [
             "systemMessage" => $systemMessage,
@@ -93,13 +93,20 @@ class ConnectionController extends Abstract\AbstractController
     public function testPage(): void
     {
         global $systemMessage, $sessionRole, $sessionExpiresAt;
-        echo $this->twig->render('public/thisIsATest.html.twig', [
-            "systemMessage" => $systemMessage,
-            "sessionRole" => $sessionRole,
-            "csrfToken" => $this->csrfToken,
-            "location" => "test",
-            "sessionExpiresAt" => $sessionExpiresAt
-        ]);
+        if (!isset($_SESSION["testPage_logged"])) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = $ip == "::1" ? "localhost" : $ip;
+            if ($ip !== MAIN_IP) {
+                $this->connectionManager->logConnection($ip, "testPage");
+                $_SESSION["viewAll_logged"] = true;
+            }
+            echo $this->twig->render('public/thisIsATest.html.twig', [
+                "systemMessage" => $systemMessage,
+                "sessionRole" => $sessionRole,
+                "csrfToken" => $this->csrfToken,
+                "location" => "test",
+                "sessionExpiresAt" => $sessionExpiresAt
+            ]);
+        }
     }
-
 }
