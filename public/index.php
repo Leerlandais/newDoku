@@ -33,6 +33,7 @@ $twig = new Environment($loader, [
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 $twig->addGlobal('PUB_DIR', PUB_DIR);
+$twig->addGlobal('IMG_DIR', IMG_DIR);
 $twig->addGlobal('PROJ_DIR', PROJECT_DIRECTORY);
 $twig->addGlobal("ENV", ENV_MODE);
 // // Prod version

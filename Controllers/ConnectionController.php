@@ -93,7 +93,7 @@ class ConnectionController extends Abstract\AbstractController
     public function testPage(): void
     {
         global $systemMessage, $sessionRole, $sessionExpiresAt;
-        echo $this->twig->render('public/thisIsATest.html', [
+        echo $this->twig->render('public/thisIsATest.html.twig', [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
             "csrfToken" => $this->csrfToken,
