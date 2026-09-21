@@ -90,5 +90,16 @@ class ConnectionController extends Abstract\AbstractController
         ]);
     }
 
+    public function testPage(): void
+    {
+        global $systemMessage, $sessionRole, $sessionExpiresAt;
+        echo $this->twig->render('public/thisIsATest.html', [
+            "systemMessage" => $systemMessage,
+            "sessionRole" => $sessionRole,
+            "csrfToken" => $this->csrfToken,
+            "location" => "test",
+            "sessionExpiresAt" => $sessionExpiresAt
+        ]);
+    }
 
 }
