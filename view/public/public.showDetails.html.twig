@@ -30,18 +30,17 @@
                                     <span class="font-label-sm text-label-sm text-secondary ml-1.5 font-semibold">4 / 5</span>
                                 </div>
                             </div>
-                            <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">Whispering
-                                Whispers</h1>
+                            <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">{{ puzzle.getDokuTitle }}</h1>
                             <div class="flex items-center gap-space-md text-secondary font-label-md text-label-md flex-wrap pt-1">
                                 <span>Setter: <strong
-                                            class="text-on-surface font-semibold">Philip Newman</strong></span>
+                                            class="text-on-surface font-semibold">{{ puzzle.getDokuSetterName }}</strong></span>
                                 <span>•</span>
                                 <span>Solved: <strong
-                                            class="text-on-surface font-semibold">October 24, 2023</strong></span>
+                                            class="text-on-surface font-semibold">{{ puzzle.getDokuDate|date("d/m") }}</strong></span>
                                 <span>•</span>
                                 <span class="flex items-center gap-1">
 <span class="material-symbols-outlined text-sm text-primary">timer</span>
-              Solve Time: <strong class="text-primary font-semibold">42:15</strong>
+              Solve Time: <strong class="text-primary font-semibold">{{ puzzle.getDokuDuration }} minutes</strong>
 </span>
                             </div>
                         </div>

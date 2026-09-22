@@ -305,10 +305,12 @@ GROUP BY dd.doku_id");
     {
         $target_dir = ".." . IMG_DIR;
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-        $uploadOk = 1;
+        $uploadOk = false;
 
 
-            move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)){
+                $uploadOk = true;
+            }
 
 
         return $uploadOk;

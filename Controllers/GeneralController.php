@@ -149,6 +149,7 @@ class GeneralController extends Abstract\AbstractController
                     "img_location" => $filePath,
                     "img_alt" => $altText,
                 ];
+                $this->dokuManager->addImageToDatabase($insertInfo);
 
             }
             header("Location: ?route=showDetails&id=$id");
