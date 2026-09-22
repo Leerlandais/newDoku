@@ -17,6 +17,8 @@ class DokuDokusMapping extends AbstractMapping
     private DateTime $doku_date;
     private ?int $doku_duration;
 
+    private ?string $doku_img_location;
+
     public function getDokuId(): int
     {
         return $this->doku_id;
@@ -98,6 +100,16 @@ class DokuDokusMapping extends AbstractMapping
     public function setDokuVariantNames(?string $doku_variant_names): void
     {
         $this->doku_variant_names = $doku_variant_names;
+    }
+
+    public function getDokuImgLocation(): ?string
+    {
+        return $this->doku_img_location;
+    }
+
+    public function setDokuImgLocation(?string $doku_img_location): void
+    {
+        $this->doku_img_location = $doku_img_location;
     }
 
 

@@ -77,6 +77,29 @@ ORDER BY dd.doku_id LIMIT 10");
         return $dokus;
     }
 
+    public function getPuzzleById(int $id) : DokuDokusMapping|false
+    {
+        $stmt = $this->db->prepare("SELECT 
+    dd.*, dhi.img_location AS doku_img_location,
+    ds.setter_name AS doku_setter_name,
+    GROUP_CONCAT(DISTINCT dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
+FROM doku_dokus dd
+LEFT JOIN doku_setters ds 
+    ON dd.doku_setter_id = ds.setter_id
+LEFT JOIN doku_has_variant dhv 
+    ON dd.doku_id = dhv.doku_id
+LEFT JOIN doku_variants dv 
+    ON dhv.doku_variant = dv.variant_id
+LEFT JOIN doku_has_image dhi 
+ON dd.doku_id = dhi.doku_id
+    WHERE dd.doku_id = :id");
+        $stmt->bindParam(":id", $id, \PDO::PARAM_INT);
+        $stmt->execute();
+        $doku = $stmt->fetch();
+        if(!$doku) return false;
+        return new DokuDokusMapping($doku);
+    }
+
     public function getAllSetters() : array|false
     {
         $query = $this->db->query("SELECT * FROM doku_setters ORDER BY setter_name");

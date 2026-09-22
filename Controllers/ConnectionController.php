@@ -90,23 +90,5 @@ class ConnectionController extends Abstract\AbstractController
         ]);
     }
 
-    public function testPage(): void
-    {
-        global $systemMessage, $sessionRole, $sessionExpiresAt;
-        if (!isset($_SESSION["testPage_logged"])) {
-            $ip = $_SERVER['REMOTE_ADDR'];
-            $ip = $ip == "::1" ? "localhost" : $ip;
-            if ($ip !== MAIN_IP) {
-                $this->connectionManager->logConnection($ip, "testPage");
-                $_SESSION["testPage_logged"] = true;
-            }
-            echo $this->twig->render('public/thisIsATest.html.twig', [
-                "systemMessage" => $systemMessage,
-                "sessionRole" => $sessionRole,
-                "csrfToken" => $this->csrfToken,
-                "location" => "test",
-                "sessionExpiresAt" => $sessionExpiresAt
-            ]);
-        }
-    }
+
 }

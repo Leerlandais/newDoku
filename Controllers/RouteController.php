@@ -8,7 +8,6 @@ $router = new RouteManager($twig, $db);
 // Register routes
 // GENERAL ROUTES
 
-$router->registerRoute('testPage', ConnectionController::class, 'testPage');
 
 $router->registerRoute('home', ConnectionController::class, 'index');
 $router->registerRoute("logout", ConnectionController::class, "logout");
@@ -17,6 +16,7 @@ $router->registerRoute("viewAll", GeneralController::class, "viewAll");
 $router->registerRoute('login', ConnectionController::class, 'login');
 $router->registerRoute("findDoku", GeneralController::class, "findDoku");
 $router->registerRoute("searchResults", GeneralController::class, "searchResults");
+$router->registerRoute('showDetails', GeneralController::class, 'showDetails');
 // ADMIN ROUTES
 
 $router->registerRoute("admin", AdminController::class, "admin");

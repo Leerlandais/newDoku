@@ -114,6 +114,36 @@ class GeneralController extends Abstract\AbstractController
         ]);
     }
 
+
+    public function showDetails(array $getParams): void
+    {
+        global $systemMessage, $sessionRole, $sessionExpiresAt;
+        if (!isset($_SESSION["testPage_logged"])) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = $ip == "::1" ? "localhost" : $ip;
+            if ($ip !== MAIN_IP) {
+                $this->connectionManager->logConnection($ip, "testPage");
+                $_SESSION["testPage_logged"] = true;
+            }
+        }
+
+        if(!isset($getParams["id"])) {
+            header("Location: ?route=home");
+            exit();
+        }
+        $id = $this->intClean($getParams["id"]);
+        $puzzle = $this->dokuManager->getPuzzleById($id);
+        $variants = $this->dokuManager->getAllVariants();
+        echo $this->twig->render('public/public.showDetails.html.twig', [
+            "systemMessage" => $systemMessage,
+            "sessionRole" => $sessionRole,
+            "csrfToken" => $this->csrfToken,
+            "location" => "test",
+            "sessionExpiresAt" => $sessionExpiresAt,
+            "puzzle" => $puzzle,
+            "variants" => $variants
+        ]);
+    }
     private function extractSearchParams(array $data): array|false|DokuDokusMapping
     {
         if (isset($data["variant_id"])) {
@@ -169,4 +199,6 @@ class GeneralController extends Abstract\AbstractController
 
         return $collectedPuzzles;
     }
+
+
 }
