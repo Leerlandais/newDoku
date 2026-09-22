@@ -300,4 +300,22 @@ GROUP BY dd.doku_id");
         if(empty($results)) return false;
         return $results;
     }
+
+    public function uploadImage($data): bool
+    {
+        $target_dir = ".." . IMG_DIR;
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $uploadOk = 1;
+
+
+            move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+
+
+        return $uploadOk;
+    }
+
+    public function addImageToDatabase(array $insertInfo) : void
+    {
+        $this->insertAnything($insertInfo, "doku_has_image");
+    }
 }

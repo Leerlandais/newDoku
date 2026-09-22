@@ -47,8 +47,25 @@
                         </div>
                         <!-- Primary CTC CTA -->
                         <div class="flex items-center gap-space-sm self-start lg:self-center">
+                            {% if "ROLE_SUPER" in sessionRole and puzzle.getDokuImgLocation|length < 1 %}
+                                <div class="flex flex-col items-center justify-center h-3/6">
+                                    <form method="post" enctype="multipart/form-data" class="flex flex-col gap-y-4">
+                                        <label>
+                                            <input type="hidden" name="csrf:csrf_token" value="{{ csrf_token }}">
+                                        </label>
+                                        Sélectionnez l'image à téléverser :
+                                        <input type="file" name="fileToUpload" id="fileToUpload" required>
+                                        <label for="altText" class="label-bold">Alt Text : </label>
+                                        <input type="text" name="altText" id="altText" class="input-style index-shadow-input
+                                      input-fx h-10 w-[300px] lg:w-[460px] px-2.5 mb-1" required autofocus>
+                                        <input type="submit"
+                                               value="Téléverser Image"
+                                               class="inline-flex items-center justify-center gap-space-xs bg-primary-container text-on-primary font-label-md text-label-md px-space-lg py-space-sm hover:bg-inverse-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                                    </form>
+                                </div>
+                            {% endif %}
                             <a class="inline-flex items-center justify-center gap-space-xs bg-primary-container text-on-primary font-label-md text-label-md px-space-lg py-space-sm hover:bg-inverse-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                               href="https://app.crackingthecryptic.com" rel="noopener noreferrer" target="_blank">
+                               href="{{ puzzle.getDokuUrl }}" rel="noopener noreferrer" target="_blank">
                                 <span>Play on CTC Web App</span>
                                 <span class="material-symbols-outlined text-base">open_in_new</span>
                             </a>
@@ -70,7 +87,8 @@
                             <!-- The Given Puzzle Image -->
                             <div class="w-full aspect-square bg-surface-cream overflow-hidden p-2">
                                 <img alt="Whispering Whispers initial unsolved grid featuring German Whisper line, Killer Cages with sums 14 and 19, and Arrow Sudoku"
-                                     class="w-full h-full select-none" src="{{ IMG_DIR }}/{{ puzzle.getDokuImgLocation }}.png"/>
+                                     class="w-full h-full select-none"
+                                     src="{{ IMG_DIR }}/{{ puzzle.getDokuImgLocation }}.png"/>
                             </div>
                             -
                         </div>

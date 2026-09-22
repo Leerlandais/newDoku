@@ -127,22 +127,44 @@ class GeneralController extends Abstract\AbstractController
             }
         }
 
-        if(!isset($getParams["id"])) {
+        if (!isset($getParams["id"])) {
             header("Location: ?route=home");
             exit();
         }
         $id = $this->intClean($getParams["id"]);
         $puzzle = $this->dokuManager->getPuzzleById($id);
         $variants = $this->dokuManager->getAllVariants();
-        echo $this->twig->render('public/public.showDetails.html.twig', [
-            "systemMessage" => $systemMessage,
-            "sessionRole" => $sessionRole,
-            "csrfToken" => $this->csrfToken,
-            "location" => "test",
-            "sessionExpiresAt" => $sessionExpiresAt,
-            "puzzle" => $puzzle,
-            "variants" => $variants
-        ]);
+
+        if (isset($_FILES["fileToUpload"])) {
+            /*
+             * Handles the uploading of a new Logo
+             */
+            $file = $_FILES["fileToUpload"];
+            $uploadImage = $this->dokuManager->uploadImage($file);
+            if ($uploadImage) {
+                $filePath = pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_FILENAME);
+                $altText = $this->standardClean($_POST["altText"]);
+                $insertInfo = [
+                    "doku_id" => $id,
+                    "img_location" => $filePath,
+                    "img_alt" => $altText,
+                ];
+
+            }
+            header("Location: ?route=showDetails&id=$id");
+            exit();
+
+        }
+
+            echo $this->twig->render('public/public.showDetails.html.twig', [
+                "systemMessage" => $systemMessage,
+                "sessionRole" => $sessionRole,
+                "csrfToken" => $this->csrfToken,
+                "location" => "test",
+                "sessionExpiresAt" => $sessionExpiresAt,
+                "puzzle" => $puzzle,
+                "variants" => $variants
+            ]);
     }
     private function extractSearchParams(array $data): array|false|DokuDokusMapping
     {
