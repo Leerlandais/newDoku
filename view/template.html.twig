@@ -17,6 +17,19 @@
     <span class="hidden" id="sessionExpiresAt">{{ sessionExpiresAt * 1000 }}</span>
 {% endblock %}
 
+
+{% block footer %}
+    <footer class="border-t border-border bg-surface-card py-4 text-xs font-mono text-text-muted mt-auto">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <span>© {{ date|date(("Y")) }} THE VARIANT LOG by Leerlandais</span>
+                <span class="text-border">|</span>
+                <a href="https://crackingthecryptic.com/latest" target="_blank" class="hover:text-primary underline">CTC Latest</a>
+                <a href="https://crackingthecryptic.com/sudokus" target="_blank" class="hover:text-primary underline">CTC Archive</a>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
 {% block javascript %}
 <script src="{{ PUB_DIR }}scripts/tableSorter.js"></script>
 <script src="{{ PUB_DIR }}scripts/pageRefresher.js"></script>
