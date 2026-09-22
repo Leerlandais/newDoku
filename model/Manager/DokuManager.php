@@ -303,7 +303,7 @@ GROUP BY dd.doku_id");
 
     public function uploadImage($data): bool
     {
-        $target_dir = ".." . IMG_DIR;
+        $target_dir = IMG_DIR . "/";
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
         $uploadOk = false;
 
