@@ -190,12 +190,17 @@
                                 <span class="material-symbols-outlined text-error text-xl shrink-0 mt-0.5">warning</span>
                                 <div class="flex flex-col">
 <span class="font-label-md text-label-md font-semibold text-error uppercase tracking-wide">
-                Spoilers Ahead: Solutions &amp; Step-by-Step Logic
+                Spoilers Ahead
               </span>
                                     <p class="font-body-sm text-body-sm text-on-error-container mt-0.5">
-                                        The sections below reveal exact pencil-mark deductions, parity bifurcations, and
-                                        killer cage combinations. Click individual toggles to inspect specific
-                                        breakthroughs.
+                                        The sections below reveal slight to major spoilers...
+                                    </p>
+                                    <p class="font-body-sm text-body-sm text-on-error-container mt-0.5">
+                                        - "Nudge" means "Look at this cell, or row/whatever. How is it interacting with this, other, cell?", or some other, gentle hint</p>
+                                    <p class="font-body-sm text-body-sm text-on-error-container mt-0.5">
+                                        - "Critical Bottleneck" means "This is the most important step in solving this puzzle."</p>
+                                    <p class="font-body-sm text-body-sm text-on-error-container mt-0.5">
+                                        - Everything else is somewhere in-between
                                     </p>
                                 </div>
                             </div>
@@ -208,7 +213,7 @@
 
 
                                         <!-- Clue Submission Form -->
-                                        <form action="/puzzle/clues/create" method="POST" class="bg-surface-card border border-border rounded-lg shadow-sm overflow-hidden font-sans">
+                                        <form method="POST" class="bg-surface-card border border-border rounded-lg shadow-sm overflow-hidden font-sans">
 
                                             <div class="p-6 md:p-8 space-y-6">
                                                 <!-- 1. clue_level -->
@@ -221,7 +226,7 @@
 
                                                     <div class="relative">
                                                         <select id="clue_level"
-                                                                name="clue_level"
+                                                                name="int:clue_level"
                                                                 required
                                                                 class="w-full px-4 py-2.5 bg-white border border-border rounded text-text font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors appearance-none cursor-pointer">
                                                             <option value="" disabled selected>Select clue severity level...</option>
@@ -249,7 +254,7 @@
                                                     </div>
 
                                                     <textarea id="clue_description"
-                                                              name="clue_description"
+                                                              name="str:doku_clue_description"
                                                               rows="6"
                                                               required
                                                               class="w-full px-4 py-3 bg-white border border-border rounded text-text font-sans text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors placeholder:text-text-muted/60 leading-relaxed"></textarea>
@@ -258,8 +263,10 @@
                                             <!-- Form Actions -->
                                             <div class="px-6 md:px-8 py-4 bg-slate-50 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
                                                 <div class="flex items-center gap-3 w-full sm:w-auto order-1 sm:order-2">
-
-                                                    <button type="submit" class="w-1/2 sm:w-auto px-6 py-2.5 bg-primary text-white font-bold rounded hover:bg-primary-dark transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                                                    <input type="hidden" name="int:doku_id" value="{{ puzzle.getDokuId }}">
+                                                    <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
+                                                    <button type="submit" class="w-1/2 sm:w-auto px-6 py-2.5 bg-primary text-white font-bold rounded hover:bg-primary-dark transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                                                            name="unset:addClue">
                                                         + Save Clue Deduction
                                                     </button>
                                                 </div>

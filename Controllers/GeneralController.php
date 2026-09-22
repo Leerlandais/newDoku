@@ -156,6 +156,9 @@ class GeneralController extends Abstract\AbstractController
             header("Location: ?route=showDetails&id=$id");
             exit();
 
+        }elseif (isset($_POST["unset:addClue"])) {
+            $cleanedData = $this->preparePostData($_POST);
+            die(var_dump($_POST, $cleanedData));
         }
 
             echo $this->twig->render('public/public.showDetails.html.twig', [
