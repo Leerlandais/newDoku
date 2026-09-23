@@ -273,6 +273,8 @@ ORDER BY dd.doku_id DESC");
             $start = date("Y-m-d", strtotime($start));
             $end = date("Y-m-d", strtotime($end));
         }
+        $start = $start . "%";
+        $end = $end . "%";
         $stmt = $this->db->prepare("SELECT 
     dd.*,
     ds.setter_name AS doku_setter_name,
@@ -288,7 +290,7 @@ LEFT JOIN doku_has_variant dhv
     ON dd.doku_id = dhv.doku_id
 LEFT JOIN doku_variants dv 
     ON dhv.doku_variant = dv.variant_id
-WHERE dd.doku_date >= :start AND dd.doku_date <= :end
+WHERE dd.doku_date LIKE :start AND dd.doku_date LIKE :end
 GROUP BY dd.doku_id");
         $stmt->bindParam(":start", $start, \PDO::PARAM_STR);
         $stmt->bindParam(":end", $end, \PDO::PARAM_STR);
