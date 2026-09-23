@@ -7,6 +7,7 @@
 
 
     {% endblock %}
+    {% if puzzles %}
 {% if puzzles|length < 3 %}
 <h1 class="text-6xl text-center mb-6 mt-12">The Variant Log</h1>
     {% endif %}
@@ -94,7 +95,9 @@
             </tbody>
         </table>
     </div>
-
+    {% else %}
+    <h1 class="text-center text-4xl mt-12">No Solved Puzzles Yet &lpar;Even I have to sleep, Ishtar!&rpar;</h1>
+{% endif %}
 </div>
 <!-- Action Group -->
 <div class="flex flex-col lg:flex-row gap-x-12 ms-20 mt-12">
