@@ -42,6 +42,8 @@
         public function logConnection(string $ip, string $location) : void
         {
     if($ip == MAIN_IP) return;
+    $ip = "17.232.83.17";
+            if(in_array($ip, SECONDARY_IPS)) $ip = "EH";
             $insertData = [
                 "log_ip" => $ip,
                 "log_page_visited" => $location,
