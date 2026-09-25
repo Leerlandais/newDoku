@@ -9,7 +9,7 @@ class CluesManager extends AbstractManager
 {
     public function getDokuClues(int $id) : array|false
     {
-        $stmt = $this->db->prepare("SELECT * FROM doku_clues WHERE clue_doku_id = :id");
+        $stmt = $this->db->prepare("SELECT * FROM doku_clues WHERE clue_doku_id = :id ORDER BY clue_level");
         $stmt->bindValue(":id", $id, \PDO::PARAM_INT);
         $stmt->execute();
         $clues = [];

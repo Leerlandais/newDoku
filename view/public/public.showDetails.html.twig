@@ -228,12 +228,12 @@
                                         </div>
                                         <button aria-expanded="false"
                                                 class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container hover:bg-primary hover:text-on-primary text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
-                                                onclick="toggleClue('clue-1', this)" type="button">
+                                                onclick="toggleClue('clue-{{ clue.getClueId }}', this)" type="button">
                                             Reveal Step
                                         </button>
                                     </div>
                                     <div class="hidden mt-space-md pt-space-sm bg-surface-container-lowest p-space-md font-body-sm text-body-sm text-on-surface-variant leading-relaxed"
-                                         id="clue-1">
+                                         id="clue-{{ clue.getClueId }}">
                                         <p class="mb-2">
                                             {# <strong class="text-primary font-medium">Parity Segregation:</strong> #}
                                             {{ clue.getClueText }}
