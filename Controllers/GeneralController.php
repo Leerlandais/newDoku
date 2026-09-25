@@ -44,7 +44,8 @@ class GeneralController extends Abstract\AbstractController
             "totalTime" => $totalTime,
             "puzzleCount" => $puzzleCount,
             "pageCounter" => $pageCounter,
-            "sessionExpiresAt" => $sessionExpiresAt
+            "sessionExpiresAt" => $sessionExpiresAt,
+            "location" => "viewAll"
         ]);
     }
 
