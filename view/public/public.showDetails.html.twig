@@ -206,88 +206,25 @@
                             </div>
                             <!-- Collapsible Clue Items -->
                             <div class="flex flex-col gap-space-sm">
-                                {% if "ROLE_SUPER" in sessionRole and puzzle.getDokuClues|length < 1 %}
 
-                                    <div class="flex-1 max-w-3xl w-full mx-auto px-6 py-8">
-                                        <!-- Page Heading & Context -->
-
-
-                                        <!-- Clue Submission Form -->
-                                        <form method="POST" class="bg-surface-card border border-border rounded-lg shadow-sm overflow-hidden font-sans">
-
-                                            <div class="p-6 md:p-8 space-y-6">
-                                                <!-- 1. clue_level -->
-                                                <div>
-                                                    <div class="flex items-baseline justify-between mb-2">
-                                                        <label for="clue_level" class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
-                                                            Clue Level <span class="text-primary">*</span>
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="relative">
-                                                        <select id="clue_level"
-                                                                name="int:clue_level"
-                                                                required
-                                                                class="w-full px-4 py-2.5 bg-white border border-border rounded text-text font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors appearance-none cursor-pointer">
-                                                            <option value="" disabled selected>Select clue severity level...</option>
-                                                            <option value="1">Level 1 — Gentle Nudge (Point towards a specific row, box, or variant line)</option>
-                                                            <option value="2">Level 2 — Focused Observation (Highlight candidate restriction or parity balance)</option>
-                                                            <option value="3">Level 3 — Significant Breakthrough (Key deduction unlocking several cells)</option>
-                                                            <option value="4">Level 4 — Critical Bottleneck / Break-in (Primary core solve deduction)</option>
-                                                            <option value="5">Level 5 — Full Resolution Step (Exact digits &amp; chain walkthrough)</option>
-                                                        </select>
-                                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-text-muted font-mono text-xs">
-                                                            ▼
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-
-                                                <!-- 3. clue_description -->
-                                                <div>
-                                                    <div class="flex items-baseline justify-between mb-2">
-                                                        <label for="clue_description" class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
-                                                            Clue Description <span class="text-primary">*</span>
-                                                        </label>
-
-                                                    </div>
-
-                                                    <textarea id="clue_description"
-                                                              name="str:doku_clue_description"
-                                                              rows="6"
-                                                              required
-                                                              class="w-full px-4 py-3 bg-white border border-border rounded text-text font-sans text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors placeholder:text-text-muted/60 leading-relaxed"></textarea>
-                                                </div>
-                                            </div>
-                                            <!-- Form Actions -->
-                                            <div class="px-6 md:px-8 py-4 bg-slate-50 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
-                                                <div class="flex items-center gap-3 w-full sm:w-auto order-1 sm:order-2">
-                                                    <input type="hidden" name="int:doku_id" value="{{ puzzle.getDokuId }}">
-                                                    <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
-                                                    <button type="submit" class="w-1/2 sm:w-auto px-6 py-2.5 bg-primary text-white font-bold rounded hover:bg-primary-dark transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                                                            name="unset:addClue">
-                                                        + Save Clue Deduction
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                {% elseif puzzle.getDokuClues < 1 %}
+                                {% if clues < 1 %}
                                     <div class="bg-surface-container-low p-space-md transition-colors">
                                         <div class="flex items-center justify-between gap-space-md">
                                             <div class="flex items-center gap-space-sm">
-                                                <span class="font-label-md text-label-md font-semibold text-on-surface">No clues added just yet. Sorry, these things take time</span>
+                                                <span class="font-label-md text-label-md font-semibold text-on-surface">
+                                                    No clues added just yet. Sorry, these things take time
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                     {% else %}
                                 <!-- Clue 1 -->
+                                        {% for clue in clues %}
                                 <div class="bg-surface-container-low p-space-md transition-colors">
                                     <div class="flex items-center justify-between gap-space-md">
                                         <div class="flex items-center gap-space-sm">
-                                            <span class="font-label-sm text-label-sm bg-surface-container px-2 py-0.5 text-on-surface font-bold">01</span>
-                                            <span class="font-label-md text-label-md font-semibold text-on-surface">The Break-in Step (Row 1 &amp; Row 9 Parity)</span>
+                                            <span class="font-label-sm text-label-sm bg-surface-container px-2 py-0.5 text-on-surface font-bold">{{ clue.getClueLevel }} : {{ clue.getClueHeader }}</span>
+                                  {#           <span class="font-label-md text-label-md font-semibold text-on-surface">The Break-in Step (Row 1 &amp; Row 9 Parity)</span> #}
                                         </div>
                                         <button aria-expanded="false"
                                                 class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container hover:bg-primary hover:text-on-primary text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
@@ -298,22 +235,88 @@
                                     <div class="hidden mt-space-md pt-space-sm bg-surface-container-lowest p-space-md font-body-sm text-body-sm text-on-surface-variant leading-relaxed"
                                          id="clue-1">
                                         <p class="mb-2">
-                                            <strong class="text-primary font-medium">Parity Segregation:</strong> In Row
-                                            1, digits 5 and 2 are fixed, while Row 9 fixes 7 and 5. The German Whisper
-                                            ribbon traverses box 1 and immediately forces an alternating high/low
-                                            sequence (<span class="font-mono">{1,2,3,4}</span> vs <span
-                                                    class="font-mono">{6,7,8,9}</span>).
-                                        </p>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
-                                            Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at
-                                            nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec
-                                            tellus sed augue semper porta. Mauris massa.
+                                            {# <strong class="text-primary font-medium">Parity Segregation:</strong> #}
+                                            {{ clue.getClueText }}
                                         </p>
                                     </div>
                                 </div>
+                                        {% endfor %}
                                 {% endif %}
+                                {% if "ROLE_SUPER" in sessionRole %}
 
+                                <div class="flex-1 max-w-3xl w-full mx-auto px-6 py-8">
+                                    <!-- Page Heading & Context -->
+
+
+                                    <!-- Clue Submission Form -->
+                                    <form method="POST" class="bg-surface-card border border-border rounded-lg shadow-sm overflow-hidden font-sans">
+
+                                        <div class="p-6 md:p-8 space-y-6">
+                                            <!-- 1. clue_level -->
+                                            <div>
+                                                <div class="flex items-baseline justify-between mb-2">
+                                                    <label for="clue_level" class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
+                                                        Clue Level <span class="text-primary">*</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="relative">
+                                                    <select id="clue_level"
+                                                            name="int:clue_level"
+                                                            required
+                                                            class="w-full px-4 py-2.5 bg-white border border-border rounded text-text font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors appearance-none cursor-pointer">
+                                                        <option value="" disabled selected>Select clue severity level...</option>
+                                                        <option value="1">Level 1 — Gentle Nudge (Point towards a specific row, box, or variant line)</option>
+                                                        <option value="2">Level 2 — Focused Observation (Highlight candidate restriction or parity balance)</option>
+                                                        <option value="3">Level 3 — Significant Breakthrough (Key deduction unlocking several cells)</option>
+                                                        <option value="4">Level 4 — Critical Bottleneck / Break-in (Primary core solve deduction)</option>
+                                                        <option value="5">Level 5 — Full Resolution Step (Exact digits &amp; chain walkthrough)</option>
+                                                    </select>
+                                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-text-muted font-mono text-xs">
+                                                        ▼
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                            <!-- 3. clue_description -->
+                                            <div>
+                                                <div class="flex items-baseline justify-between mb-2">
+                                                    <label for="clue_header" class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
+                                                        Clue Header <span class="text-primary">*</span>
+                                                    </label>
+                                                    <input type="text" id="clue_header" name="str:clue_header" class="border border-gray-300 rounded-md px-2 py-1">
+
+                                                </div>
+                                                <div class="flex items-baseline justify-between mb-2">
+                                                    <label for="clue_description" class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
+                                                        Clue Description <span class="text-primary">*</span>
+                                                    </label>
+
+                                                </div>
+
+                                                <textarea id="clue_description"
+                                                          name="str:clue_text"
+                                                          rows="6"
+                                                          required
+                                                          class="w-full px-4 py-3 bg-white border border-border rounded text-text font-sans text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors placeholder:text-text-muted/60 leading-relaxed"></textarea>
+                                            </div>
+                                        </div>
+                                        <!-- Form Actions -->
+                                        <div class="px-6 md:px-8 py-4 bg-slate-50 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
+                                            <div class="flex items-center gap-3 w-full sm:w-auto order-1 sm:order-2">
+                                                <input type="hidden" name="int:clue_doku_id" value="{{ puzzle.getDokuId }}">
+                                                <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
+                                                <button type="submit" class="w-1/2 sm:w-auto px-6 py-2.5 bg-primary text-white font-bold rounded hover:bg-primary-dark transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                                                        name="unset:addClue">
+                                                    + Save Clue Deduction
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                {% endif %}
                                     </div>
                                 </div>
 

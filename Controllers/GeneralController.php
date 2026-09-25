@@ -4,6 +4,8 @@ namespace Controllers;
 
 use Controllers\Abstract\AbstractController;
 use Factory\ManagerFactory;
+use model\Manager\AdminManager;
+use model\Manager\CluesManager;
 use model\Manager\ConnectionManager;
 use model\Manager\DokuManager;
 use model\Mapping\DokuDokusMapping;
@@ -13,12 +15,16 @@ class GeneralController extends Abstract\AbstractController
 {
     private DokuManager $dokuManager;
     private ConnectionManager $connectionManager;
+    private AdminManager $adminManager;
+    private CluesManager $cluesManager;
 
     public function __construct(Environment $twig, ManagerFactory $managerFactory)
     {
         parent::__construct($twig, $managerFactory);
         $this->dokuManager = $this->getManager(DokuManager::class);
         $this->connectionManager = $this->getManager(ConnectionManager::class);
+        $this->adminManager = $this->getManager(AdminManager::class);
+        $this->cluesManager = $this->getManager(CluesManager::class);
     }
 
     public function viewAll(array $getParams): void
@@ -159,9 +165,12 @@ class GeneralController extends Abstract\AbstractController
 
         }elseif (isset($_POST["unset:addClue"])) {
             $cleanedData = $this->preparePostData($_POST);
-            die(var_dump($_POST, $cleanedData));
+            $addClue = $this->adminManager->addClue($cleanedData);
+            $_SESSION["systemMessage"] = $addClue ? "Clue added" : "Clue not added";
+            header("Location: ?route=showDetails&id=$id");
+            exit();
         }
-
+            $dokuClues = $this->cluesManager->getDokuClues($id);
             echo $this->twig->render('public/public.showDetails.html.twig', [
                 "systemMessage" => $systemMessage,
                 "sessionRole" => $sessionRole,
@@ -169,7 +178,8 @@ class GeneralController extends Abstract\AbstractController
                 "location" => "test",
                 "sessionExpiresAt" => $sessionExpiresAt,
                 "puzzle" => $puzzle,
-                "variants" => $variants
+                "variants" => $variants,
+                "clues" => $dokuClues,
             ]);
     }
     private function extractSearchParams(array $data): array|false|DokuDokusMapping
