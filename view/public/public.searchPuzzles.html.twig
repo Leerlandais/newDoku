@@ -6,15 +6,15 @@
             <!-- Editorial Page Header -->
             <section class="flex flex-col md:flex-row md:items-end justify-between gap-space-lg">
                 <div class="flex flex-col gap-space-xs max-w-2xl">
-                    <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+                    <h1 class="h1-style">
                         Search Puzzle Archive
                     </h1>
-                    <span class="font-headline-md text-headline-md text-on-surface text-red-400 italic">{{ systemMessage ? systemMessage : "" }}</span>
+                    <span class="span-style text-red-400 italic">{{ systemMessage ? systemMessage : "" }}</span>
                 </div>
                 <!-- Quick Stats Callout -->
                 <div class="flex items-center gap-space-md bg-surface-container-low px-space-lg py-space-sm shadow-sm self-start md:self-auto">
                     <div class="flex flex-col">
-                        <span class="font-headline-md text-headline-md text-on-surface">{{ puzzleCount }} Solved</span>
+                        <span class="span-style">{{ puzzleCount }} Solved</span>
                     </div>
                     <div class="w-px h-8 bg-outline-variant"></div>
                 </div>
@@ -29,7 +29,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-12 gap-space-lg">
                         <!-- Setter Selection -->
                         <div class="md:col-span-5 flex flex-col gap-space-xs">
-                            <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-space-xs" for="setterSelect">
+                            <label class="label-style" for="setterSelect">
                                 <span class="material-symbols-outlined text-sm text-primary">person_search</span>
                                 Setter Name
                             </label>
@@ -46,7 +46,7 @@
                         </div>
                         <!-- Maximum Solve Duration -->
                         <div class="md:col-span-3 flex flex-col gap-space-xs">
-                            <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-space-xs" for="maxSolveTime">
+                            <label class="label-style" for="maxSolveTime">
                                 <span class="material-symbols-outlined text-sm text-primary">timer</span>
                                 Max Solve Time
                             </label>
@@ -63,7 +63,7 @@
                         </div>
                         <!-- Date Completed Range -->
                         <div class="md:col-span-4 flex flex-col gap-space-xs">
-                            <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-space-xs">
+                            <label class="label-style">
                                 <span class="material-symbols-outlined text-sm text-primary">calendar_month</span>
                                 Solve Date Window
                             </label>
@@ -107,7 +107,7 @@
                     {#
                     <!-- Row 3: Logic Complexity Rating (Radio Strip) -->
                     <div class="flex flex-col gap-space-xs">
-                        <label class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-space-xs">
+                        <label class="label-style">
                             <span class="material-symbols-outlined text-sm text-primary">psychology</span>
                             Logic Difficulty Classification
                         </label>

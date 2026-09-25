@@ -5,10 +5,10 @@
 
     <section class="flex flex-col md:flex-row md:items-end justify-between gap-space-lg">
         <div class="flex flex-col gap-space-xs max-w-2xl">
-            <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+            <h1 class="h1-style">
                 Puzzles Found : {{ puzzles|length }}
             </h1>
-            <span class="font-headline-md text-headline-md text-on-surface">{{ systemMessage ? systemMessage : "" }}</span>
+            <span class="span-style">{{ systemMessage ? systemMessage : "" }}</span>
         </div>
         <!-- Quick Stats Callout -->
         <div class="flex items-center gap-space-md bg-surface-container-low px-space-lg py-space-sm shadow-sm self-start md:self-auto">
@@ -25,22 +25,22 @@
         <table class="w-full text-left border-collapse" id="archiveResultsTable">
             <thead>
             <tr class="bg-surface-container text-secondary font-label-sm text-label-sm tracking-wider uppercase">
-                <th class="py-space-md px-space-lg">ID</th>
-                <th class="py-space-md px-space-lg">Puzzle Designation</th>
-                <th class="py-space-md px-space-lg">Setter</th>
-                <th class="py-space-md px-space-lg">Variants</th>
-                <th class="py-space-md px-space-lg text-right">Solve Time</th>
-                <th class="py-space-md px-space-lg text-right">Log Date</th>
-                <th class="py-space-md px-space-lg text-center">URL</th>
+                <th class="th-small">ID</th>
+                <th class="th-small">Puzzle Designation</th>
+                <th class="th-small">Setter</th>
+                <th class="th-small">Variants</th>
+                <th class="th-small text-right">Solve Time</th>
+                <th class="th-small text-right">Log Date</th>
+                <th class="th-small text-center">URL</th>
             </tr>
             </thead>
             <tbody class="divide-y-0 font-body-sm text-body-sm text-on-surface" id="resultsBody">
             {% for puzzle in puzzles %}
-                <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40">
-                    <td class="py-space-md px-space-lg border-r border-outline-variant font-label-md text-label-md text-on-surface-variant group-hover:text-primary font-semibold">
+                <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40;">
+                    <td class="td-style font-label-md text-label-md text-on-surface-variant group-hover:text-primary font-semibold">
                         {{ puzzle.getDokuId }}
                     </td>
-                    <td class="py-space-md px-space-lg border-r border-outline-variant">
+                    <td class="td-style">
                         <div class="flex flex-col">
                             <div class="flex items-center gap-space-xs">
                                 <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">{{ puzzle.getDokuTitle }}</span>
@@ -52,29 +52,29 @@
                             </div>
                         </div>
                     </td>
-                    <td class="py-space-md px-space-lg border-r border-outline-variant">
+                    <td class="td-style">
                         <div class="flex flex-wrap gap-1.5">
-                            <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-on-surface">{{ puzzle.getDokuSetterName }}</span>
+                            <span class="span-extra">{{ puzzle.getDokuSetterName }}</span>
                         </div>
                     </td>
-                    <td class="py-space-md px-space-lg border-r border-outline-variant">
+                    <td class="td-style">
                         <div class="flex flex-wrap gap-1.5">
-                            <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-on-surface">{{ puzzle.getDokuVariantNames }}</span>
+                            <span class="span-extra">{{ puzzle.getDokuVariantNames }}</span>
                         </div>
                     </td>
-                    <td class="py-space-md px-space-lg border-r border-outline-variant">
+                    <td class="td-style">
                         <div class="flex flex-wrap gap-1.5">
-                            <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-on-surface">{{ puzzle.getDokuDuration }}</span>
+                            <span class="span-extra">{{ puzzle.getDokuDuration }}</span>
                         </div>
                     </td>
-                    <td class="py-space-md px-space-lg border-r border-outline-variant font-grid-digit-sm text-label-md font-semibold  text-on-surface">
+                    <td class="td-style font-grid-digit-sm text-label-md font-semibold  text-on-surface">
                         {{ puzzle.getDokuDate|date("d/m") }}
                     </td>
-                    <td class="py-space-md px-space-lg border-r border-outline-variant font-grid-digit-sm text-label-md font-semibold  text-on-surface">
-                        <a class="font-label-sm text-label-sm text-primary hover:text-inverse-surface inline-flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-primary underline decoration-outline-variant underline-offset-2" href="{{ puzzle.getDokuUrl }}" target="_blank">Goto Puzzle</a>
+                    <td class="td-style font-grid-digit-sm text-label-md font-semibold  text-on-surface">
+                        <a class="a-style" href="{{ puzzle.getDokuUrl }}" target="_blank">Goto Puzzle</a>
                     </td>
                     {#
-                    <td class="py-space-md px-space-lg text-center">
+                    <td class="th-small text-center">
                         <a href="#"><span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors text-lg">arrow_forward</span></a>
                     </td>
                     #}
@@ -91,12 +91,12 @@
           Displaying rows 1 – 5 of 18 archived solves
         </span>
         <div class="flex items-center gap-space-xs">
-            <button class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container text-outline opacity-50 cursor-not-allowed" disabled="" type="button">PREV</button>
+            <button class="button-style text-outline opacity-50 cursor-not-allowed" disabled="" type="button">PREV</button>
             <span class="font-label-sm text-label-sm px-space-md py-space-xs bg-primary-container text-on-primary">1</span>
-            <button class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" type="button">2</button>
-            <button class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" type="button">3</button>
-            <button class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" type="button">4</button>
-            <button class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" type="button">NEXT</button>
+            <button class="button-style text-on-surface hover:bg-surface-container-high transition-colors" type="button">2</button>
+            <button class="button-style text-on-surface hover:bg-surface-container-high transition-colors" type="button">3</button>
+            <button class="button-style text-on-surface hover:bg-surface-container-high transition-colors" type="button">4</button>
+            <button class="button-style text-on-surface hover:bg-surface-container-high transition-colors" type="button">NEXT</button>
         </div>
     </div>
     {% endif %}

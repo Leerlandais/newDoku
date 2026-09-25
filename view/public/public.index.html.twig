@@ -14,10 +14,10 @@
 <div class="w-full px-margin py-space-xl flex flex-col gap-space-xl max-w-[1440px] mx-auto">
     <!-- Top Action & Date Anchor -->
     <div class="flex flex-col justify-between gap-space-lg">
-        <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+        <h1 class="h1-style">
             Today's {{ puzzles|length }} Solved
             Puzzles</h1>
-        <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Time spent &lpar;minutes&rpar; : {{ totalTime }}</h2>
+        <h2 class="h2-style">Time spent &lpar;minutes&rpar; : {{ totalTime }}</h2>
     </div>
 
 </div>
@@ -31,28 +31,28 @@
             <thead>
             <tr class="border-b-2 border-on-surface bg-surface-cream text-secondary font-label-sm text-label-sm">
 
-                <th class="py-space-md px-space-lg border-r border-outline-variant font-medium" scope="col">
+                <th class="th-style" scope="col">
                     PUZZLE / AUTHOR
                 </th>
-                <th class="py-space-md px-space-lg border-r border-outline-variant font-medium" scope="col">
+                <th class="th-style" scope="col">
                     VARIANT CONSTRAINTS
                 </th>
-                <th class="py-space-md px-space-lg border-r border-outline-variant font-medium" scope="col">
+                <th class="th-style" scope="col">
                     SOLVER SOURCE
                 </th>
-                <th class="py-space-md px-space-lg border-r border-outline-variant font-medium w-36"
+                <th class="th-style w-36"
                     scope="col">TIME
                 </th>
-                <th class="py-space-md px-space-lg font-medium text-center w-28" scope="col">DETAILS</th>
+                <th class="th-small font-medium text-center w-28" scope="col">DETAILS</th>
             </tr>
             </thead>
             <tbody class="divide-y divide-outline-variant font-body-md text-body-md">
 
             <!-- Row 2 (Highlighted Solve) -->
                  {% for puzzle in puzzles %}
-             <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40">
+             <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40;">
 
-                <td class="py-space-md px-space-lg border-r border-outline-variant">
+                <td class="td-style">
                     <div class="flex flex-col">
                         <div class="flex items-center gap-space-xs">
                             <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">{{ puzzle.getDokuTitle }}</span>
@@ -65,25 +65,25 @@
                         <span class="font-body-sm text-body-sm text-left text-secondary">by {{ puzzle.getDokuSetterName }}</span>
                     </div>
                 </td>
-                <td class="py-space-md px-space-lg border-r border-outline-variant">
+                <td class="td-style">
                     <div class="flex flex-wrap gap-1.5">
 
-                        <span class="font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-on-surface">{{ puzzle.getDokuVariantNames }}</span>
+                        <span class="span-extra">{{ puzzle.getDokuVariantNames }}</span>
 
                     </div>
                 </td>
-                <td class="py-space-md px-space-lg border-r border-outline-variant">
-                    <a class="font-label-sm text-label-sm text-primary hover:text-inverse-surface inline-flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-primary underline decoration-outline-variant underline-offset-2"
+                <td class="td-style">
+                    <a class="a-style"
                        href="{{ puzzle.getDokuUrl }}" rel="noopener noreferrer"
                        target="_blank">
                         <span>{{ puzzle.getDokuUrl }}</span>
                         <span class="material-symbols-outlined text-xs">open_in_new</span>
                     </a>
                 </td>
-                <td class="py-space-md px-space-lg border-r border-outline-variant font-grid-digit-sm text-label-md font-semibold  text-on-surface">
+                <td class="td-style font-grid-digit-sm text-label-md font-semibold  text-on-surface">
                     {{ puzzle.getDokuDuration }}
                 </td>
-                <td class="py-space-md px-space-lg text-center">
+                <td class="th-small text-center">
                     <a class="font-label-sm text-label-sm px-space-md py-1 border border-outline hover:border-primary hover:bg-primary hover:text-on-primary transition-all inline-block focus:outline-none focus:ring-2 focus:ring-primary"
                        data-path="puzzle-details" href="?route=showDetails&id={{ puzzle.getDokuId }}">
                         Details

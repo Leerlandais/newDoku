@@ -18,6 +18,12 @@
     @apply text-center text-4xl font-bold my-6;
 }
 
+.h1-style {
+    @apply font-headline-xl text-headline-xl text-on-surface tracking-tight;
+}
+.h2-style {
+    @apply font-headline-lg text-headline-lg text-on-surface tracking-tight;
+}
 .h2-default {
     @apply text-left text-2xl font-bold ps-6 my-4;
 }
@@ -46,4 +52,39 @@
     outline-blue-800 px-4 py-2 text-sm
     rounded-md my-2 bg-white dark:bg-gray-700
     text-gray-900 dark:text-white;
+}
+
+.th-style {
+    @apply py-space-md px-space-lg border-r border-outline-variant font-medium;
+}
+.th-small {
+    @apply py-space-md px-space-lg;
+}
+
+
+.td-style {
+    @apply py-space-md px-space-lg border-r border-outline-variant;
+}
+
+.a-style {
+    @apply font-label-sm text-label-sm text-primary hover:text-inverse-surface inline-flex items-center gap-1 focus:outline-none focus:ring-1 focus:ring-primary underline decoration-outline-variant underline-offset-2;
+}
+
+.span-style {
+    @apply font-headline-md text-headline-md text-on-surface;
+}
+.span-extra {
+    @apply font-label-sm text-label-sm px-space-xs py-0.5 border border-outline-variant bg-surface text-on-surface;
+}
+
+.label-style {
+    @apply font-label-sm text-label-sm text-on-surface uppercase tracking-wider flex items-center gap-space-xs;
+}
+
+.button-style {
+    @apply font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container;
+}
+
+.p-style {
+    @apply font-body-sm text-body-sm text-on-error-container mt-0.5;
 }

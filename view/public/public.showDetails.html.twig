@@ -30,7 +30,7 @@
                                     <span class="font-label-sm text-label-sm text-secondary ml-1.5 font-semibold">4 / 5</span>
                                 </div>
                             </div>
-                            <h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">{{ puzzle.getDokuTitle }}</h1>
+                            <h1 class="h1-style">{{ puzzle.getDokuTitle }}</h1>
                             <div class="flex items-center gap-space-md text-secondary font-label-md text-label-md flex-wrap pt-1">
                                 <span>Setter: <strong
                                             class="text-on-surface font-semibold">{{ puzzle.getDokuSetterName }}</strong></span>
@@ -85,7 +85,7 @@
                             </div>
                             <!-- The Given Puzzle Image -->
                             <div class="w-full aspect-square bg-surface-cream overflow-hidden p-2">
-                                <img alt="Whispering Whispers initial unsolved grid featuring German Whisper line, Killer Cages with sums 14 and 19, and Arrow Sudoku"
+                                <img alt="Image for {{ puzzle.getDokuTitle }} missing"
                                      class="w-full h-full select-none"
                                      src="{{ IMG_DIR }}/{{ puzzle.getDokuImgLocation }}.png"/>
                             </div>
@@ -124,7 +124,7 @@
                             <div class="grid grid-cols-2 gap-space-sm">
                                 <div class="bg-surface-container-low p-space-sm">
                                     <span class="font-label-sm text-label-sm text-secondary block">Community Avg</span>
-                                    <span class="font-headline-md text-headline-md text-on-surface font-semibold">51:30</span>
+                                    <span class="span-style font-semibold">51:30</span>
                                 </div>
                                 <div class="bg-surface-container-low p-space-sm">
                                     <span class="font-label-sm text-label-sm text-secondary block">Your Difference</span>
@@ -138,7 +138,7 @@
                         <!-- Specifications & Rules Card -->
                         <div class="bg-surface-container-lowest p-space-lg shadow-sm">
                             <div class="flex items-center justify-between pb-space-sm mb-space-md bg-surface-container-low px-space-md py-2">
-                                <h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Puzzle
+                                <h2 class="span-style font-semibold">Puzzle
                                     Specifications</h2>
                                 <span class="font-label-sm text-label-sm text-secondary">VARIANT HYBRID</span>
                             </div>
@@ -178,7 +178,7 @@
                         <!-- SPOILERS & LOGICAL BREAKTHROUGHS SECTION -->
                         <div class="bg-surface-container-lowest p-space-lg shadow-sm flex flex-col gap-space-md">
                             <div class="flex items-center justify-between flex-wrap gap-space-xs">
-                                <h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Logic
+                                <h2 class="span-style font-semibold">Logic
                                     Breakthroughs</h2>
                                 <button class="font-label-sm text-label-sm text-primary hover:text-inverse-surface underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-primary"
                                         onclick="revealAllClues()" type="button">
@@ -192,14 +192,14 @@
 <span class="font-label-md text-label-md font-semibold text-error uppercase tracking-wide">
                 Spoilers Ahead
               </span>
-                                    <p class="font-body-sm text-body-sm text-on-error-container mt-0.5">
+                                    <p class="p-style">
                                         The sections below reveal slight to major spoilers...
                                     </p>
-                                    <p class="font-body-sm text-body-sm text-on-error-container mt-0.5">
+                                    <p class="p-style">
                                         - "Nudge" means "Look at this cell, or row/whatever. How is it interacting with this, other, cell?", or some other, gentle hint</p>
-                                    <p class="font-body-sm text-body-sm text-on-error-container mt-0.5">
+                                    <p class="p-style">
                                         - "Critical Bottleneck" means "This is the most important step in solving this puzzle."</p>
-                                    <p class="font-body-sm text-body-sm text-on-error-container mt-0.5">
+                                    <p class="p-style">
                                         - Everything else is somewhere in-between
                                     </p>
                                 </div>
