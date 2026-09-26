@@ -127,9 +127,10 @@
                                     <span class="font-label-sm text-label-sm text-secondary block">My average</span>
                                     <span class="span-style font-semibold">{{ averageTime }} minutes</span>
                                 </div>
+
                                 <div class="bg-surface-container-low p-space-sm">
                                     <span class="font-label-sm text-label-sm text-secondary block">Difference</span>
-                                    <span class="font-headline-md text-headline-md text-primary font-semibold">{{ puzzle.getDokuDuration - averageTime > 0 ? "+" : ""}}{{ puzzle.getDokuDuration - averageTime }} minutes</span>
+                                    <span class="font-headline-md text-headline-md text-primary font-semibold">{{ puzzle.getDokuDuration - averageTime > 0 ? "+ " : "- "}}{{ puzzle.getDokuDuration - averageTime }} minutes</span>
                                 </div>
                             </div>
                         </div>
@@ -164,10 +165,10 @@
                                 {% for variant in variants %}
                                     {% if variant.getVariantName in puzzle.getDokuVariantNames %}
                                         <div>
-                                            <h3 class="font-label-md text-label-md text-primary font-semibold uppercase tracking-wide flex items-center gap-1.5 mb-1">
+                                            <a  href="?route=getVariant&id={{ variant.getVariantId }}" class="font-label-md text-label-md text-primary font-semibold uppercase tracking-wide flex items-center gap-1.5 mb-1">
                                                 <span class="material-symbols-outlined text-sm">linear_scale</span>
                                                 {{ variant.getVariantName }}
-                                            </h3>
+                                            </a>
                                             <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
                                                 {{ variant.getVariantRules }}
                                             </p>

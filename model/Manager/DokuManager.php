@@ -151,6 +151,7 @@ ON dd.doku_id = dhi.doku_id
     
     public function getPuzzlesByVariant(array $variantIds) : array|false
     {
+
         $stmt = $this->db->prepare("SELECT * FROM doku_has_variant WHERE doku_variant IN (:variant_ids)");
         $implode = implode(", ", $variantIds);
         $stmt->bindParam(":variant_ids", $implode, \PDO::PARAM_STR);
@@ -178,6 +179,7 @@ ORDER BY dd.doku_id DESC");
                 $data = $stmt->fetch();
                 if($data) $puzzles[] = new DokuDokusMapping($data);
             }
+
             return $puzzles;
     }
 

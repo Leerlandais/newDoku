@@ -180,6 +180,22 @@ class GeneralController extends Abstract\AbstractController
                 "averageTime" => $averageTime,
             ]);
     }
+    public function getVariant(array $getParams): void
+    {
+        global $systemMessage, $sessionRole, $sessionExpiresAt;
+        $id[] = $this->intClean($getParams["id"]);
+        $puzzles = $this->dokuManager->getPuzzlesByVariant($id);
+
+        echo $this->twig->render('public/public.searchResults.html.twig', [
+            "systemMessage" => $systemMessage,
+            "sessionRole" => $sessionRole,
+            "csrfToken" => $this->csrfToken,
+            "puzzles" => $puzzles,
+            "foundPuzzles" => true,
+            "sessionExpiresAt" => $sessionExpiresAt,
+        ]);
+
+    }
     private function extractSearchParams(array $data): array|false|DokuDokusMapping
     {
         if (isset($data["variant_id"])) {
