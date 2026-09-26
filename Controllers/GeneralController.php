@@ -135,7 +135,6 @@ class GeneralController extends Abstract\AbstractController
         $ip = $ip == "::1" ? "localhost" : $ip;
         if ($ip !== MAIN_IP) {
             $this->connectionManager->logConnection($ip, "Puzzle :" . $id);
-            $_SESSION["testPage_logged"] = true;
         }
         $puzzle = $this->dokuManager->getPuzzleById($id);
         $variants = $this->dokuManager->getAllVariants();

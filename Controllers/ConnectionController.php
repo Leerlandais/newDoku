@@ -40,6 +40,7 @@ class ConnectionController extends Abstract\AbstractController
             $ip = $ip == "::1" ? "localhost" : $ip;
             if ($ip !== MAIN_IP) {
                 $this->connectionManager->logConnection($ip, "Home");
+                $_SESSION["visit_logged"] = true;
             }
         }
         $solvedPuzzles = $this->dokuManager->getLatestPuzzles();

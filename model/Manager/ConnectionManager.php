@@ -49,7 +49,7 @@
                 "log_user" => $_SESSION["user_id"] ?? null
             ];
             $this->insertAnything($insertData, "doku_connection_logs");
-            $_SESSION["visit_logged"] = true;
+
 
         }
 
