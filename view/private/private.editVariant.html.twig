@@ -1,0 +1,47 @@
+{% extends "template.html.twig" %}
+{% block title %}{{ parent() }}Variant Rules{% endblock %}
+{% block content %}
+    {% for variant in variants %}
+    <div class="flex flex-row w-full justify-evenly mx-auto px-6 py-2">
+        <form method="POST" >
+            <input type="hidden" name="int:variant_id" value="{{ variant.getVariantId }}">
+            <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
+            <div class="flex flex-row mb-2 gap-x-4">
+                    <div class="flex flex-row items-baseline justify-between mb-2">
+                        <label for="variant_name"
+                               class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
+                            Name :
+                        </label>
+                        <input type="text" id="variant_name" name="str:variant_name"
+                               class="border border-gray-300 rounded-md px-2 py-1" value="{{ variant.getVariantName }}">
+                    </div>
+                    <div class="flex items-baseline justify-between mb-2">
+                        <label for="variant_rules"
+                               class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
+                            Rules :
+                        </label>
+                        <input type="text" id="variant_rules" name="str:variant_rules"
+                               class="border border-gray-300 rounded-md px-2 py-1" value="{{ variant.getVariantRules }}">
+                    </div>
+                    <div class="flex items-baseline justify-between mb-2">
+                        <label for="variant_hint"
+                               class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
+                            Hint :
+                        </label>
+                        <input type="text" id="variant_hint"
+                               name="str:variant_hint"
+                               value="{{ variant.getVariantHint }}"
+                               class="border border-gray-300 rounded-md px-2 py-1">
+                    </div>
+                <div class="flex items-baseline justify-between mb-2 ms-4">
+                    <button type="submit"
+                            name="unset:editVariant"
+                            class="w-fit sm:w-auto px-4 py-1 bg-primary text-white font-bold rounded hover:bg-primary-dark transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">Submit
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% endfor %}
+{% endblock %}

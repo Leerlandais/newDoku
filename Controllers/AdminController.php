@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Controllers\Abstract\AbstractController;
 use Factory\ManagerFactory;
+use model\Manager\AdminManager;
 use model\Manager\ConnectionManager;
 use model\Manager\DokuManager;
 use Twig\Environment;
@@ -12,11 +13,13 @@ class AdminController extends Abstract\AbstractController
 {
     private DokuManager $dokuManager;
     private ConnectionManager $connectionManager;
+    private AdminManager $adminManager;
     public function __construct(Environment $twig, ManagerFactory $managerFactory)
     {
         parent::__construct($twig, $managerFactory);
         $this->dokuManager = $this->getManager(DokuManager::class);
         $this->connectionManager = $this->getManager(ConnectionManager::class);
+        $this->adminManager = $this->getManager(AdminManager::class);
     }
     public function admin() : void
     {
@@ -39,7 +42,7 @@ class AdminController extends Abstract\AbstractController
         if(isset($_POST["unset:addSetter"])) {
             // $this->verifyCsrfToken($_POST['csrf:csrf_token']);
             $cleanedData = $this->preparePostData($_POST);
-            $addSetter = $this->dokuManager->addSetter($cleanedData);
+            $addSetter = $this->adminManager->addSetter($cleanedData);
             $_SESSION["systemMessage"] = $addSetter ? "Setter added" : "Setter not added";
             header("Location: ?route=addSetter");
             exit();
@@ -62,7 +65,7 @@ class AdminController extends Abstract\AbstractController
 
         if(isset($_POST["unset:addVariant"])) {
             $cleanedData = $this->preparePostData($_POST);
-            $addVariant = $this->dokuManager->addVariant($cleanedData);
+            $addVariant = $this->adminManager->addVariant($cleanedData);
             $_SESSION["systemMessage"] = $addVariant ? "Variant added" : "Variant not added";
             header("Location: ?route=addVariant");
             exit();
@@ -88,11 +91,11 @@ class AdminController extends Abstract\AbstractController
             $dokuVariants = $_POST["int:variant"];
             unset($_POST["int:variant"]);
             $cleanedData = $this->preparePostData($_POST);
-            $addSoduku = $this->dokuManager->addSudoku($cleanedData);
+            $addSoduku = $this->adminManager->addSudoku($cleanedData);
             if($addSoduku) {
-                $this->dokuManager->incremementSetterCount($cleanedData["doku_setter_id"]);
+                $this->adminManager->incremementSetterCount($cleanedData["doku_setter_id"]);
                 $dokuVariants["doku_id"] = $addSoduku;
-                $this->dokuManager->addSudokuVariantsToLatestPuzzle($dokuVariants);
+                $this->adminManager->addSudokuVariantsToLatestPuzzle($dokuVariants);
             }
             $_SESSION["systemMessage"] = $addSoduku ? "Sudoku added" : "Sudoku not added";
             header("Location: ?route=showDetails&id=$addSoduku");
@@ -124,5 +127,26 @@ class AdminController extends Abstract\AbstractController
         ]);
     }
 
+    public function editVariant() : void
+    {
+        global $sessionRole, $systemMessage, $sessionExpiresAt;
+        $this->checkPermissions("ROLE_ADMIN", $sessionRole);
+        $variants = $this->dokuManager->getAllVariants();
+
+        if(isset($_POST["unset:editVariant"])) {
+            $cleanedData = $this->preparePostData($_POST);
+            $editVariant = $this->adminManager->editVariant($cleanedData);
+            $_SESSION["systemMessage"] = $editVariant ? "Variant edited" : "Variant not edited";
+            header("Location: ?route=editVariant");
+            exit();
+        }
+        echo $this->twig->render("private/private.editVariant.html.twig", [
+            "systemMessage" => $systemMessage,
+            "sessionRole" => $sessionRole,
+            "csrfToken" => $this->csrfToken,
+            "variants" => $variants,
+            "sessionExpiresAt" => $sessionExpiresAt
+        ]);
+    }
 
 }

@@ -25,7 +25,7 @@ $router->registerRoute("addSetter", AdminController::class, "addSetter");
 $router->registerRoute("addVariant", AdminController::class, "addVariant");
 $router->registerRoute("addSudoku", AdminController::class, "addSudoku");
 $router->registerRoute("viewLogs", AdminController::class, "viewLogs");
-
+$router->registerRoute("editVariant", AdminController::class, "editVariant");
 
 
 // Handle request

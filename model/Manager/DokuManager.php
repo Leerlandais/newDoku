@@ -126,29 +126,6 @@ ON dd.doku_id = dhi.doku_id
         return $variants;
     }
 
-    public function addVariant(array $data) : bool
-    {
-        return $this->insertAnything($data, "doku_variants");
-    }
-
-    public function addSudoku(array $data) : bool|int
-    {
-        $data["doku_date"] = date("Y-m-d H:i:s");
-        return $this->insertAnything($data, "doku_dokus","db", true);
-    }
-
-    public function addSudokuVariantsToLatestPuzzle(array $datas) : void
-    {
-        $dokuId = $datas["doku_id"];
-        unset($datas["doku_id"]);
-        foreach ($datas as $data) {
-            $stmt = $this->db->prepare("INSERT INTO doku_has_variant (doku_id, doku_variant) VALUES (:doku_id, :variant_id)");
-            $stmt->bindParam(":doku_id", $dokuId);
-            $stmt->bindParam(":variant_id", $data);
-            $stmt->execute();
-        }
-    }
-    
     public function getPuzzlesByVariant(array $variantIds) : array|false
     {
 
@@ -251,13 +228,7 @@ ORDER BY dd.doku_id DESC");
         return $results;
     }
 
-    public function incremementSetterCount(int $setter) : void
-    {
-        $stmt = $this->db->prepare("UPDATE doku_setters SET setter_count = setter_count + 1 WHERE setter_id = :setter");
-        $stmt->bindParam(":setter", $setter, \PDO::PARAM_INT);
-        $stmt->execute();
 
-    }
 
     public function getPuzzleCount() : int
     {
@@ -305,30 +276,4 @@ GROUP BY dd.doku_id");
         return $results;
     }
 
-    public function uploadImage($data): bool
-    {
-        $target_dir = IMG_DIR . "/";
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-        $uploadOk = false;
-
-
-            if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)){
-                $uploadOk = true;
-            }
-
-
-        return $uploadOk;
-    }
-
-    public function addImageToDatabase(array $insertInfo) : void
-    {
-        $this->insertAnything($insertInfo, "doku_has_image");
-    }
-
-    public function getAverageTime() : float
-    {
-        $query = $this->db->query("SELECT ROUND(AVG(doku_duration), 2) AS average_time FROM doku_dokus");
-        $result = $query->fetch();
-        return $result["average_time"];
-    }
 }

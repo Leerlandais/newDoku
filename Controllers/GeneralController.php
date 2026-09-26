@@ -34,10 +34,10 @@ class GeneralController extends Abstract\AbstractController
         if (!isset($_SESSION["viewAll_logged"])) {
             $ip = $_SERVER['REMOTE_ADDR'];
             $ip = $ip == "::1" ? "localhost" : $ip;
-       //     if($ip !== MAIN_IP) {
-                $this->connectionManager->logConnection($ip, "View All");
-                $_SESSION["viewAll_logged"] = true;
-      //      }
+            //     if($ip !== MAIN_IP) {
+            $this->connectionManager->logConnection($ip, "View All");
+            $_SESSION["viewAll_logged"] = true;
+            //      }
         }
         $pageCounter = $this->intClean($_GET["pageCounter"] ?? 1);
         $puzzles = $this->dokuManager->getAllPuzzles($pageCounter);
@@ -61,10 +61,10 @@ class GeneralController extends Abstract\AbstractController
         if (!isset($_SESSION["findDoku_logged"])) {
             $ip = $_SERVER['REMOTE_ADDR'];
             $ip = $ip == "::1" ? "localhost" : $ip;
-          //  if($ip !== MAIN_IP) {
-                $this->connectionManager->logConnection($ip, "Find Doku");
-                $_SESSION["findDoku_logged"] = true;
-          //  }
+            //  if($ip !== MAIN_IP) {
+            $this->connectionManager->logConnection($ip, "Find Doku");
+            $_SESSION["findDoku_logged"] = true;
+            //  }
         }
         $setters = $this->dokuManager->getAllSetters();
         $variants = $this->dokuManager->getAllVariants();
@@ -90,7 +90,7 @@ class GeneralController extends Abstract\AbstractController
 
             $searchResults = $this->extractSearchParams($cleanedData);
 
-            if(empty($searchResults)) {
+            if (empty($searchResults)) {
                 $_SESSION["systemMessage"] = "No puzzles found fitting those parameters";
                 header("Location: ?route=findDoku");
                 exit();
@@ -160,26 +160,27 @@ class GeneralController extends Abstract\AbstractController
             header("Location: ?route=showDetails&id=$id");
             exit();
 
-        }elseif (isset($_POST["unset:addClue"])) {
+        } elseif (isset($_POST["unset:addClue"])) {
             $cleanedData = $this->preparePostData($_POST);
             $addClue = $this->adminManager->addClue($cleanedData);
             $_SESSION["systemMessage"] = $addClue ? "Clue added" : "Clue not added";
             header("Location: ?route=showDetails&id=$id");
             exit();
         }
-            $dokuClues = $this->cluesManager->getDokuClues($id);
-            echo $this->twig->render('public/public.showDetails.html.twig', [
-                "systemMessage" => $systemMessage,
-                "sessionRole" => $sessionRole,
-                "csrfToken" => $this->csrfToken,
-                "location" => "test",
-                "sessionExpiresAt" => $sessionExpiresAt,
-                "puzzle" => $puzzle,
-                "variants" => $variants,
-                "clues" => $dokuClues,
-                "averageTime" => $averageTime,
-            ]);
+        $dokuClues = $this->cluesManager->getDokuClues($id);
+        echo $this->twig->render('public/public.showDetails.html.twig', [
+            "systemMessage" => $systemMessage,
+            "sessionRole" => $sessionRole,
+            "csrfToken" => $this->csrfToken,
+            "location" => "test",
+            "sessionExpiresAt" => $sessionExpiresAt,
+            "puzzle" => $puzzle,
+            "variants" => $variants,
+            "clues" => $dokuClues,
+            "averageTime" => $averageTime,
+        ]);
     }
+
     public function getVariant(array $getParams): void
     {
         global $systemMessage, $sessionRole, $sessionExpiresAt;
@@ -196,6 +197,7 @@ class GeneralController extends Abstract\AbstractController
         ]);
 
     }
+
     private function extractSearchParams(array $data): array|false|DokuDokusMapping
     {
         if (isset($data["variant_id"])) {
@@ -213,7 +215,7 @@ class GeneralController extends Abstract\AbstractController
             "date" => [$data["doku_start"] ?? null, $data["doku_end"] ?? null]
 
         ];
-        if($dataArray["date"][0] == null && $dataArray["date"][1] == null) unset($dataArray["date"]);
+        if ($dataArray["date"][0] == null && $dataArray["date"][1] == null) unset($dataArray["date"]);
 
         $dataArray = array_filter($dataArray, fn($value) => $value !== null && $value !== 0);
         $collectedPuzzles = [];
@@ -227,7 +229,7 @@ class GeneralController extends Abstract\AbstractController
                     $collectedPuzzles = $this->dokuManager->getPuzzlesByDuration($value);
                     break;
                 case "date":
-                      $collectedPuzzles[] = $this->dokuManager->getPuzzlesByDate($value[0], $value[1]);
+                    $collectedPuzzles[] = $this->dokuManager->getPuzzlesByDate($value[0], $value[1]);
                     break;
                 case "endDate":
                     //  $collectedPuzzles[] = $this->dokuManager->getPuzzlesByEndDate($value);
@@ -235,7 +237,7 @@ class GeneralController extends Abstract\AbstractController
 
             }
         }
-        if(isset($puzzlesByVariant)) {
+        if (isset($puzzlesByVariant)) {
             foreach ($puzzlesByVariant as $puzzle) {
                 $collectedPuzzles[] = $puzzle;
             }
@@ -243,7 +245,7 @@ class GeneralController extends Abstract\AbstractController
         if (empty($collectedPuzzles)) {
             return false;
         }
-     //   die(var_dump(get_debug_type($collectedPuzzles)));
+        //   die(var_dump(get_debug_type($collectedPuzzles)));
 
         if (is_array($collectedPuzzles) && is_array($collectedPuzzles[0])) {
             $collectedPuzzles = $collectedPuzzles[0];

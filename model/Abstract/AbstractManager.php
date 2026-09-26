@@ -23,11 +23,11 @@ abstract class AbstractManager
         if($returnId === true) return $this->$dbType->lastInsertId();
         return (int)$this->$dbType->lastInsertId() > 0; // Turns out insert and a rowCount() check is not always valid. Better to use a lastInsertId check
     }
-    protected function updateAnything(array $data, string $uniqueField, int $responseId, string $dbName, string $dbType = "db"): bool
+    protected function updateAnything(array $data, string $uniqueField, int $uniqueId, string $dbName, string $dbType = "db"): bool
     {
         $dataSet = implode(", ", array_map(fn($key) => "$key = :$key", array_keys($data)));
         $stmt = $this->$dbType->prepare("UPDATE $dbName SET $dataSet WHERE `$uniqueField` = :id");
-        $stmt->execute(array_merge($data, ["id" => $responseId]));
+        $stmt->execute(array_merge($data, ["id" => $uniqueId]));
         return $stmt->rowCount() > 0; // rather than if($stmt->rowCount() === 0) return false; return true; This does it in one line
     }
         protected function selectAnything(array $data, string $dbName, string $dbType = "db"): array|false
