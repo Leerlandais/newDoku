@@ -124,12 +124,12 @@
                                 Solver Benchmarks</h3>
                             <div class="grid grid-cols-2 gap-space-sm">
                                 <div class="bg-surface-container-low p-space-sm">
-                                    <span class="font-label-sm text-label-sm text-secondary block">Community Avg</span>
-                                    <span class="span-style font-semibold">51:30</span>
+                                    <span class="font-label-sm text-label-sm text-secondary block">My average</span>
+                                    <span class="span-style font-semibold">{{ averageTime }} minutes</span>
                                 </div>
                                 <div class="bg-surface-container-low p-space-sm">
-                                    <span class="font-label-sm text-label-sm text-secondary block">Your Difference</span>
-                                    <span class="font-headline-md text-headline-md text-primary font-semibold">-09:15</span>
+                                    <span class="font-label-sm text-label-sm text-secondary block">Difference</span>
+                                    <span class="font-headline-md text-headline-md text-primary font-semibold">{{ puzzle.getDokuDuration - averageTime > 0 ? "+" : ""}}{{ puzzle.getDokuDuration - averageTime }} minutes</span>
                                 </div>
                             </div>
                         </div>

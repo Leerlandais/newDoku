@@ -126,9 +126,6 @@ class GeneralController extends Abstract\AbstractController
     {
         global $systemMessage, $sessionRole, $sessionExpiresAt;
 
-
-
-
         if (!isset($getParams["id"])) {
             header("Location: ?route=home");
             exit();
@@ -142,7 +139,7 @@ class GeneralController extends Abstract\AbstractController
         }
         $puzzle = $this->dokuManager->getPuzzleById($id);
         $variants = $this->dokuManager->getAllVariants();
-
+        $averageTime = $this->dokuManager->getAverageTime();
         if (isset($_FILES["fileToUpload"])) {
             /*
              * Handles the uploading of a new Logo
@@ -180,6 +177,7 @@ class GeneralController extends Abstract\AbstractController
                 "puzzle" => $puzzle,
                 "variants" => $variants,
                 "clues" => $dokuClues,
+                "averageTime" => $averageTime,
             ]);
     }
     private function extractSearchParams(array $data): array|false|DokuDokusMapping
