@@ -70,11 +70,5 @@ class AdminManager extends AbstractManager
         $this->insertAnything($insertInfo, "doku_has_image");
     }
 
-    public function getAverageTime() : float
-    {
-        $query = $this->db->query("SELECT ROUND(AVG(doku_duration), 2) AS average_time FROM doku_dokus");
-        $result = $query->fetch();
-        return $result["average_time"];
-    }
 
 }
