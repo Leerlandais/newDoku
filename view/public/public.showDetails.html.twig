@@ -87,7 +87,7 @@
                             <div class="w-full aspect-square bg-surface-cream overflow-hidden p-2">
                                 <a href="{{ puzzle.getDokuUrl }}" target="_blank"><img alt="Image for {{ puzzle.getDokuTitle }} missing"
                                      class="w-full h-full select-none"
-                                     src="{{ IMG_DIR }}{{ puzzle.getDokuImgLocation }}.png"/>
+                                     src="{{ IMG_DIR }}/{{ puzzle.getDokuImgLocation }}.png"/>
                                 </a>
                             </div>
                             -
@@ -130,7 +130,7 @@
 
                                 <div class="bg-surface-container-low p-space-sm">
                                     <span class="font-label-sm text-label-sm text-secondary block">Difference</span>
-                                    <span class="font-headline-md text-headline-md text-primary font-semibold">{{ puzzle.getDokuDuration - averageTime }} minutes</span>
+                                    <span class="font-headline-md text-headline-md text-primary font-semibold">{{ (puzzle.getDokuDuration - averageTime)|round(2, "ceil") }} minutes</span>
                                 </div>
                             </div>
                         </div>
