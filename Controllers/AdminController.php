@@ -95,7 +95,7 @@ class AdminController extends Abstract\AbstractController
                 $this->dokuManager->addSudokuVariantsToLatestPuzzle($dokuVariants);
             }
             $_SESSION["systemMessage"] = $addSoduku ? "Sudoku added" : "Sudoku not added";
-            header("Location: ?route=addSudoku");
+            header("Location: ?route=showDetails&id=$addSoduku");
             exit();
 
         }
