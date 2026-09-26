@@ -201,6 +201,14 @@ class GeneralController extends Abstract\AbstractController
     public function showVariantRules(): void
     {
         global $systemMessage, $sessionRole, $sessionExpiresAt;
+        if (!isset($_SESSION["variant_logged"])) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = $ip == "::1" ? "localhost" : $ip;
+            if ($ip !== MAIN_IP) {
+                $this->connectionManager->logConnection($ip, "Variant Rules");
+            }
+            $_SESSION["variant_logged"] = true;
+        }
         $variants = $this->dokuManager->getAllVariants();
         echo $this->twig->render('public/public.showVariantRules.html.twig', [
             "systemMessage" => $systemMessage,

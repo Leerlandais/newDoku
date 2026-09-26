@@ -29,7 +29,10 @@ class AdminManager extends AbstractManager
         $data["doku_date"] = date("Y-m-d H:i:s");
         return $this->insertAnything($data, "doku_dokus","db", true);
     }
-
+    public function addSetter(array $data) : bool
+    {
+        return $this->insertAnything($data, "doku_setters");
+    }
     public function addSudokuVariantsToLatestPuzzle(array $datas) : void
     {
         $dokuId = $datas["doku_id"];

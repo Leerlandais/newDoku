@@ -63,6 +63,11 @@ class ConnectionController extends Abstract\AbstractController
             header("Location: ./");
             exit();
         }
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = $ip == "::1" ? "localhost" : $ip;
+            if ($ip !== MAIN_IP) {
+                $this->connectionManager->logConnection($ip, "Login");
+            }
         if (isset($_POST['unset:entryUser'])) {
             //  var_dump($_POST);
             //  die();

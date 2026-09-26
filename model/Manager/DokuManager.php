@@ -110,10 +110,7 @@ ON dd.doku_id = dhi.doku_id
         if(empty($setters)) return false;
         return $setters;
     }
-    public function addSetter(array $data) : bool
-    {
-        return $this->insertAnything($data, "doku_setters");
-    }
+
 
     public function getAllVariants() : array|false
     {
