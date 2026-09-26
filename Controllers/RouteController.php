@@ -18,6 +18,7 @@ $router->registerRoute("findDoku", GeneralController::class, "findDoku");
 $router->registerRoute("searchResults", GeneralController::class, "searchResults");
 $router->registerRoute('showDetails', GeneralController::class, 'showDetails');
 $router->registerRoute('getVariant', GeneralController::class, 'getVariant');
+$router->registerRoute('showVariantRules', GeneralController::class, 'showVariantRules');
 // ADMIN ROUTES
 
 $router->registerRoute("admin", AdminController::class, "admin");

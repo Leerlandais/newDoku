@@ -198,6 +198,18 @@ class GeneralController extends Abstract\AbstractController
 
     }
 
+    public function showVariantRules(): void
+    {
+        global $systemMessage, $sessionRole, $sessionExpiresAt;
+        $variants = $this->dokuManager->getAllVariants();
+        echo $this->twig->render('public/public.showVariantRules.html.twig', [
+            "systemMessage" => $systemMessage,
+            "sessionRole" => $sessionRole,
+            "variants" => $variants,
+            "sessionExpiresAt" => $sessionExpiresAt,
+        ]);
+    }
+
     private function extractSearchParams(array $data): array|false|DokuDokusMapping
     {
         if (isset($data["variant_id"])) {

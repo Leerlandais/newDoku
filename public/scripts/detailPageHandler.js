@@ -5,13 +5,13 @@ function toggleClue(id, btn) {
     const isHidden = el.classList.contains('hidden');
     if (isHidden) {
         el.classList.remove('hidden');
-        btn.textContent = 'Hide Step';
+        btn.textContent = 'Hide';
         btn.setAttribute('aria-expanded', 'true');
         btn.classList.add('bg-primary', 'text-on-primary');
         btn.classList.remove('bg-surface-container', 'text-on-surface');
     } else {
         el.classList.add('hidden');
-        btn.textContent = 'Reveal Step';
+        btn.textContent = 'Reveal';
         btn.setAttribute('aria-expanded', 'false');
         btn.classList.remove('bg-primary', 'text-on-primary');
         btn.classList.add('bg-surface-container', 'text-on-surface');

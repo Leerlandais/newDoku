@@ -1,0 +1,72 @@
+{% extends "template.html.twig" %}
+
+{% block content %}
+    <h1 class="text-6xl text-center mb-6 mt-12">The Variant Rules</h1>
+<div class="bg-surface-container-lowest border-2 border-on-surface flex flex-col w-[85%] mx-auto">
+<table class="w-full text-center border-collapse">
+    <thead>
+    <tr class="border-b-2 border-on-surface bg-surface-cream text-secondary font-label-sm text-label-sm">
+
+        <th class="th-style" scope="col">
+            Variant Name
+        </th>
+        <th class="th-style" scope="col">
+            VARIANT Rules
+        </th>
+        <th class="th-style" scope="col">
+            Variant Hint
+        </th>
+    </tr>
+    </thead>
+    <tbody class="divide-y divide-outline-variant font-body-md text-body-md">
+    {% for variant in variants %}
+    <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40;">
+        <td class="td-style">
+            <div class="flex flex-col">
+                <div class="flex items-center gap-space-xs">
+                    <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">{{ variant.getVariantName }}</span>
+                </div>
+            </div>
+        </td>
+        <td class="td-style">
+            <div class="flex flex-col">
+                <div class="flex items-center gap-space-xs">
+                    <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">{{ variant.getVariantRules }}</span>
+                </div>
+            </div>
+            <div class="hidden mt-space-md pt-space-sm bg-surface-container-lowest p-space-md font-body-sm text-body-sm text-on-surface-variant leading-relaxed"
+                 id="clue-{{ variant.getVariantId }}">
+                <p class="mb-2">
+                    {# <strong class="text-primary font-medium">Parity Segregation:</strong> #}
+                    {{ variant.getVariantHint }}
+                </p>
+            </div>
+        </td>
+        <td class="td-style">
+            {% if variant.getVariantHint|length > 1 %}
+            <button aria-expanded="false"
+                    class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container hover:bg-primary hover:text-on-primary text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+                    onclick="toggleClue('clue-{{ variant.getVariantId }}', this)" type="button">
+                Reveal
+            </button>
+            <div class="hidden mt-space-md pt-space-sm bg-surface-container-lowest p-space-md font-body-sm text-body-sm text-on-surface-variant leading-relaxed"
+                 id="clue-{{ variant.getVariantId }}">
+                <p class="mb-2">
+                    {# <strong class="text-primary font-medium">Parity Segregation:</strong> #}
+                    {{ variant.getVariantHint }}
+                </p>
+            </div>
+                {% else %}
+                <p class="mb-2">No Hint</p>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+{% endblock %}
+    {% block javascript %}
+    {{ parent() }}
+    <script src="{{ PUB_DIR }}scripts/detailPageHandler.js"></script>
+{% endblock %}
