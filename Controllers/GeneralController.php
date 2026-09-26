@@ -145,7 +145,7 @@ class GeneralController extends Abstract\AbstractController
              * Handles the uploading of a new Logo
              */
             $file = $_FILES["fileToUpload"];
-            $uploadImage = $this->dokuManager->uploadImage($file);
+            $uploadImage = $this->adminManager->uploadImage($file);
             if ($uploadImage) {
                 $filePath = pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_FILENAME);
                 $altText = $this->standardClean($_POST["altText"]);
@@ -154,7 +154,7 @@ class GeneralController extends Abstract\AbstractController
                     "img_location" => $filePath,
                     "img_alt" => $altText,
                 ];
-                $this->dokuManager->addImageToDatabase($insertInfo);
+                $this->adminManager->addImageToDatabase($insertInfo);
 
             }
             header("Location: ?route=showDetails&id=$id");
