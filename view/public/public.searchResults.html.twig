@@ -31,7 +31,7 @@
                 <th class="th-small">Variants</th>
                 <th class="th-small text-right">Solve Time</th>
                 <th class="th-small text-right">Log Date</th>
-                <th class="th-small text-center">URL</th>
+                <th class="th-small text-center">Details</th>
             </tr>
             </thead>
             <tbody class="divide-y-0 font-body-sm text-body-sm text-on-surface" id="resultsBody">
@@ -71,7 +71,10 @@
                         {{ puzzle.getDokuDate|date("d/m") }}
                     </td>
                     <td class="td-style font-grid-digit-sm text-label-md font-semibold  text-on-surface">
-                        <a class="a-style" href="{{ puzzle.getDokuUrl }}" target="_blank">Goto Puzzle</a>
+                        <a class="font-label-sm text-label-sm px-space-md py-1 border border-outline hover:border-primary hover:bg-primary hover:text-on-primary transition-all inline-block focus:outline-none focus:ring-2 focus:ring-primary"
+                           data-path="puzzle-details" href="?route=showDetails&id={{ puzzle.getDokuId }}">
+                            Details
+                        </a>
                     </td>
                     {#
                     <td class="th-small text-center">

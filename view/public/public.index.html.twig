@@ -16,7 +16,7 @@
     <div class="flex flex-col justify-between gap-space-lg">
         <h1 class="h1-style">
             Today's {{ puzzles|length }} Solved
-            Puzzles</h1>
+            Puzzle{{ puzzles|length > 1 ? "s" : "" }}</h1>
         <h2 class="h2-style">Time spent &lpar;minutes&rpar; : {{ totalTime }}</h2>
     </div>
 
