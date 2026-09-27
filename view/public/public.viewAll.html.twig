@@ -83,7 +83,7 @@
                             </div>
                         </td>
                         <td class="td-style">
-                            <a class="a-style"
+                            <a class="a-style track-link"
                                href="{{ puzzle.getDokuUrl }}" rel="noopener noreferrer"
                                target="_blank">
                                 <span>{{ puzzle.getDokuUrl }}</span>
@@ -110,13 +110,13 @@
 <span class="font-label-sm text-label-sm text-secondary">
 
     {% if pageCounter == 1 %}
-          Displaying rows {{ pageCounter }} – {{ pageCounter + 9 }} of {{ puzzleCount }} archived solves
+        Displaying rows {{ pageCounter }} – {{ pageCounter + 9 }} of {{ puzzleCount }} archived solves
     {% else %}
         {% if (((pageCounter - 1) * 10)) + 10 < puzzleCount %}
-    Displaying rows {{ ((pageCounter - 1) * 10) + 1 }} – {{ ((pageCounter - 1) * 10) + 10 }} of {{ puzzleCount}} archived solves
-            {% else %}
-                Displaying rows {{ (pageCounter - 1) * 10 }} – {{ puzzleCount }} of {{ puzzleCount}} archived solves
-                {% endif %}
+            Displaying rows {{ ((pageCounter - 1) * 10) + 1 }} – {{ ((pageCounter - 1) * 10) + 10 }} of {{ puzzleCount }} archived solves
+        {% else %}
+            Displaying rows {{ (pageCounter - 1) * 10 }} – {{ puzzleCount }} of {{ puzzleCount }} archived solves
+        {% endif %}
     {% endif %}
 
         </span>
@@ -125,11 +125,14 @@
             {% set i = (i|round(0, 'ceil')) %}
             {% for j in range(1, i) %}
                 {% if j == pageCounter %}
-                    <a href="?route=viewAll&pageCounter={{ j }}"><span class="font-label-sm text-label-sm px-space-md py-space-xs bg-primary-container text-on-primary">{{ j }}</span></a>
+                    <a href="?route=viewAll&pageCounter={{ j }}"><span
+                                class="font-label-sm text-label-sm px-space-md py-space-xs bg-primary-container text-on-primary">{{ j }}</span></a>
                 {% else %}
-            <a href="?route=viewAll&pageCounter={{ j }}"><button class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors"
-                            type="button">{{ j }}
-                </button></a>
+                    <a href="?route=viewAll&pageCounter={{ j }}">
+                        <button class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors"
+                                type="button">{{ j }}
+                        </button>
+                    </a>
                 {% endif %}
             {% endfor %}
         </div>
@@ -149,4 +152,8 @@
             </a>
         {% endif %}
     </div>
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ PUB_DIR }}scripts/linkTracker.js"></script>
 {% endblock %}

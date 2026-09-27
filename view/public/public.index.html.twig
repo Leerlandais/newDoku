@@ -3,116 +3,120 @@
 {% block content %}
 
 
-{% block dumpArea %}
+    {% block dumpArea %}
 
 
     {% endblock %}
     {% if puzzles %}
-{% if puzzles|length < 3 %}
-<h1 class="text-6xl text-center mb-6 mt-12">The Variant Log</h1>
-    {% endif %}
-<div class="w-full px-margin py-space-xl flex flex-col gap-space-xl max-w-[1440px] mx-auto">
-    <!-- Top Action & Date Anchor -->
-    <div class="flex flex-col justify-between gap-space-lg">
-        <h1 class="h1-style">
-            Today's {{ puzzles|length }} Solved
-            Puzzle{{ puzzles|length > 1 ? "s" : "" }}</h1>
-        <h2 class="h2-style">Time spent &lpar;minutes&rpar; : {{ totalTime }}</h2>
-    </div>
+        {% if puzzles|length < 3 %}
+            <h1 class="text-6xl text-center mb-6 mt-12">The Variant Log</h1>
+        {% endif %}
+        <div class="w-full px-margin py-space-xl flex flex-col gap-space-xl max-w-[1440px] mx-auto">
+            <!-- Top Action & Date Anchor -->
+            <div class="flex flex-col justify-between gap-space-lg">
+                <h1 class="h1-style">
+                    Today's {{ puzzles|length }} Solved
+                    Puzzle{{ puzzles|length > 1 ? "s" : "" }}</h1>
+                <h2 class="h2-style">Time spent &lpar;minutes&rpar; : {{ totalTime }}</h2>
+            </div>
 
-</div>
+        </div>
 
-<!-- Main Solves Log Data View -->
-<div class="bg-surface-container-lowest border-2 border-on-surface flex flex-col w-[85%] mx-auto">
+        <!-- Main Solves Log Data View -->
+        <div class="bg-surface-container-lowest border-2 border-on-surface flex flex-col w-[85%] mx-auto">
 
-    <!-- High-Contrast Analytical Table -->
-    <div class="overflow-x-auto w-full">
-        <table class="w-full text-center border-collapse">
-            <thead>
-            <tr class="border-b-2 border-on-surface bg-surface-cream text-secondary font-label-sm text-label-sm">
+        <!-- High-Contrast Analytical Table -->
+        <div class="overflow-x-auto w-full">
+            <table class="w-full text-center border-collapse">
+                <thead>
+                <tr class="border-b-2 border-on-surface bg-surface-cream text-secondary font-label-sm text-label-sm">
 
-                <th class="th-style" scope="col">
-                    PUZZLE / AUTHOR
-                </th>
-                <th class="th-style" scope="col">
-                    VARIANT CONSTRAINTS
-                </th>
-                <th class="th-style" scope="col">
-                    SOLVER SOURCE
-                </th>
-                <th class="th-style w-36"
-                    scope="col">TIME
-                </th>
-                <th class="th-small font-medium text-center w-28" scope="col">DETAILS</th>
-            </tr>
-            </thead>
-            <tbody class="divide-y divide-outline-variant font-body-md text-body-md">
+                    <th class="th-style" scope="col">
+                        PUZZLE / AUTHOR
+                    </th>
+                    <th class="th-style" scope="col">
+                        VARIANT CONSTRAINTS
+                    </th>
+                    <th class="th-style" scope="col">
+                        SOLVER SOURCE
+                    </th>
+                    <th class="th-style w-36"
+                        scope="col">TIME
+                    </th>
+                    <th class="th-small font-medium text-center w-28" scope="col">DETAILS</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant font-body-md text-body-md">
 
-            <!-- Row 2 (Highlighted Solve) -->
-                 {% for puzzle in puzzles %}
-             <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40;">
+                <!-- Row 2 (Highlighted Solve) -->
+                {% for puzzle in puzzles %}
+                    <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40;">
 
-                <td class="td-style">
-                    <div class="flex flex-col">
-                        <div class="flex items-center gap-space-xs">
-                            <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">{{ puzzle.getDokuTitle }}</span>
-                            {% if puzzle.getDokuDuration > 35 %}
-                            <span class="font-label-sm text-label-sm px-1.5 py-0.2 bg-tertiary-fixed text-on-tertiary-fixed font-medium">HARD</span>
-                                {% elseif puzzle.getDokuDuration < 18 %}
-                                    <span class="font-label-sm text-label-sm px-1.5 py-0.2 bg-green-200 text-on-tertiary-fixed font-medium">EASY</span>
-                            {% endif %}
-                        </div>
-                        <span class="font-body-sm text-body-sm text-left text-secondary">by {{ puzzle.getDokuSetterName }}</span>
-                    </div>
-                </td>
-                <td class="td-style">
-                    <div class="flex flex-wrap gap-1.5">
+                        <td class="td-style">
+                            <div class="flex flex-col">
+                                <div class="flex items-center gap-space-xs">
+                                    <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">{{ puzzle.getDokuTitle }}</span>
+                                    {% if puzzle.getDokuDuration > 35 %}
+                                        <span class="font-label-sm text-label-sm px-1.5 py-0.2 bg-tertiary-fixed text-on-tertiary-fixed font-medium">HARD</span>
+                                    {% elseif puzzle.getDokuDuration < 18 %}
+                                        <span class="font-label-sm text-label-sm px-1.5 py-0.2 bg-green-200 text-on-tertiary-fixed font-medium">EASY</span>
+                                    {% endif %}
+                                </div>
+                                <span class="font-body-sm text-body-sm text-left text-secondary">by {{ puzzle.getDokuSetterName }}</span>
+                            </div>
+                        </td>
+                        <td class="td-style">
+                            <div class="flex flex-wrap gap-1.5">
 
-                        <span class="span-extra">{{ puzzle.getDokuVariantNames }}</span>
+                                <span class="span-extra">{{ puzzle.getDokuVariantNames }}</span>
 
-                    </div>
-                </td>
-                <td class="td-style">
-                    <a class="a-style"
-                       href="{{ puzzle.getDokuUrl }}" rel="noopener noreferrer"
-                       target="_blank">
-                        <span>{{ puzzle.getDokuUrl }}</span>
-                        <span class="material-symbols-outlined text-xs">open_in_new</span>
-                    </a>
-                </td>
-                <td class="td-style font-grid-digit-sm text-label-md font-semibold  text-on-surface">
-                    {{ puzzle.getDokuDuration }}
-                </td>
-                <td class="th-small text-center">
-                    <a class="font-label-sm text-label-sm px-space-md py-1 border border-outline hover:border-primary hover:bg-primary hover:text-on-primary transition-all inline-block focus:outline-none focus:ring-2 focus:ring-primary"
-                       data-path="puzzle-details" href="?route=showDetails&id={{ puzzle.getDokuId }}">
-                        Details
-                    </a>
-                </td>
-            </tr>
-                 {% endfor %}
+                            </div>
+                        </td>
+                        <td class="td-style">
+                            <a class="a-style track-link" id="link-{{ puzzle.getDokuId }}"
+                               href="{{ puzzle.getDokuUrl }}" rel="noopener noreferrer"
+                               target="_blank">
+                                <span>{{ puzzle.getDokuUrl }}</span>
+                                <span class="material-symbols-outlined text-xs">open_in_new</span>
+                            </a>
+                        </td>
+                        <td class="td-style font-grid-digit-sm text-label-md font-semibold  text-on-surface">
+                            {{ puzzle.getDokuDuration }}
+                        </td>
+                        <td class="th-small text-center">
+                            <a class="font-label-sm text-label-sm px-space-md py-1 border border-outline hover:border-primary hover:bg-primary hover:text-on-primary transition-all inline-block focus:outline-none focus:ring-2 focus:ring-primary"
+                               data-path="puzzle-details" href="?route=showDetails&id={{ puzzle.getDokuId }}">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
 
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+        </div>
     {% else %}
-    <h1 class="text-center text-4xl mt-12">No Solved Puzzles Yet &lpar;Even I have to sleep, Ishtar!&rpar;</h1>
-{% endif %}
-</div>
-<!-- Action Group -->
-<div class="flex flex-col lg:flex-row gap-x-12 ms-20 mt-12">
-    <a class="font-label-md text-label-md bg-primary text-on-primary px-space-lg py-space-sm transition-all duration-150 flex items-center gap-space-xs hover:bg-inverse-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-       data-path="all-solved-puzzles" href="?route=viewAll">
-        <span>View All Solved Puzzles</span>
-        <span class="material-symbols-outlined text-base">arrow_forward</span>
-    </a>
-    {% if "ROLE_ADMIN" in sessionRole %}
-        <a class="font-label-md text-label-md bg-surface-container-low text-on-surface px-space-lg py-space-sm border border-outline-variant hover:bg-surface-container transition-all flex items-center gap-space-xs focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                id="quick-log-btn" href="?route=addSudoku">
-            <span class="material-symbols-outlined text-base text-primary">add_box</span>
-            <span>Log New Solve</span>
-        </a>
+        <h1 class="text-center text-4xl mt-12">No Solved Puzzles Yet &lpar;Even I have to sleep, Ishtar!&rpar;</h1>
     {% endif %}
-</div>
+    </div>
+    <!-- Action Group -->
+    <div class="flex flex-col lg:flex-row gap-x-12 ms-20 mt-12">
+        <a class="font-label-md text-label-md bg-primary text-on-primary px-space-lg py-space-sm transition-all duration-150 flex items-center gap-space-xs hover:bg-inverse-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+           data-path="all-solved-puzzles" href="?route=viewAll">
+            <span>View All Solved Puzzles</span>
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </a>
+        {% if "ROLE_ADMIN" in sessionRole %}
+            <a class="font-label-md text-label-md bg-surface-container-low text-on-surface px-space-lg py-space-sm border border-outline-variant hover:bg-surface-container transition-all flex items-center gap-space-xs focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+               id="quick-log-btn" href="?route=addSudoku">
+                <span class="material-symbols-outlined text-base text-primary">add_box</span>
+                <span>Log New Solve</span>
+            </a>
+        {% endif %}
+    </div>
 {% endblock %}
-        
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ PUB_DIR }}scripts/linkTracker.js"></script>
+{% endblock %}

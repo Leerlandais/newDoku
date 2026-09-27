@@ -96,5 +96,9 @@ class ConnectionController extends Abstract\AbstractController
         ]);
     }
 
-
+    public function logLinkConnect(string $link): void
+    {
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->connectionManager->logConnection($ip, $link);
+    }
 }

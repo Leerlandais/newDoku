@@ -28,7 +28,7 @@ $router->registerRoute("addSudoku", AdminController::class, "addSudoku");
 $router->registerRoute("viewLogs", AdminController::class, "viewLogs");
 $router->registerRoute("editVariant", AdminController::class, "editVariant");
 
-
+$router->registerRoute("logLinkConnect", ConnectionController::class, "logLinkConnect");
 // Handle request
 $route = $_GET['route'] ?? 'home';
 $router->handleRequest($route);
