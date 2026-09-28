@@ -44,7 +44,7 @@ class AdminController extends Abstract\AbstractController
             $cleanedData = $this->preparePostData($_POST);
             $addSetter = $this->adminManager->addSetter($cleanedData);
             $_SESSION["systemMessage"] = $addSetter ? "Setter added" : "Setter not added";
-            header("Location: ?route=addSetter");
+            header("Location: ?route=addSudoku");
             exit();
         }
         echo $this->twig->render("private/private.addSetter.html.twig", [
@@ -67,7 +67,7 @@ class AdminController extends Abstract\AbstractController
             $cleanedData = $this->preparePostData($_POST);
             $addVariant = $this->adminManager->addVariant($cleanedData);
             $_SESSION["systemMessage"] = $addVariant ? "Variant added" : "Variant not added";
-            header("Location: ?route=addVariant");
+            header("Location: ?route=addSudoku");
             exit();
         }
         echo $this->twig->render("private/private.addVariant.html.twig", [
