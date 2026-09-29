@@ -165,6 +165,12 @@ class GeneralController extends Abstract\AbstractController
             $_SESSION["systemMessage"] = $addClue ? "Clue added" : "Clue not added";
             header("Location: ?route=showDetails&id=$id");
             exit();
+        } elseif (isset($_POST["unset:updateStars"])) {
+            $cleanedData = $this->preparePostData($_POST);
+            $cleanedData["doku_id"] = $id;
+            $this->adminManager->updateStars($cleanedData);
+            header("Location: ?route=showDetails&id=$id");
+            exit();
         }
         $dokuClues = $this->cluesManager->getDokuClues($id);
         echo $this->twig->render('public/public.showDetails.html.twig', [

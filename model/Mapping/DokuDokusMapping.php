@@ -16,6 +16,7 @@ class DokuDokusMapping extends AbstractMapping
 
     private DateTime $doku_date;
     private ?int $doku_duration;
+    private ?int $doku_stars;
 
     private ?string $doku_img_location;
 
@@ -110,6 +111,16 @@ class DokuDokusMapping extends AbstractMapping
     public function setDokuImgLocation(?string $doku_img_location): void
     {
         $this->doku_img_location = $doku_img_location;
+    }
+
+    public function getDokuStars(): ?int
+    {
+        return $this->doku_stars;
+    }
+
+    public function setDokuStars(?int $doku_stars): void
+    {
+        $this->doku_stars = $doku_stars;
     }
 
 

@@ -12,6 +12,10 @@ class AdminManager extends AbstractManager
     }
 
 
+    public function updateStars(array $data) : void
+    {
+        $this->updateAnything($data, "doku_id", $data["doku_id"], "doku_dokus");
+    }
     public function addVariant(array $data) : bool
     {
         return $this->insertAnything($data, "doku_variants");
