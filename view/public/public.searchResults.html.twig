@@ -1,109 +1,370 @@
 {% extends 'template.html.twig' %}
 {% block title %}{{ parent() }}Results{% endblock %}
-
+{% block dumpArea %}
+    {{ dump(puzzles) }}
+{% endblock %}
 {% block content %}
 
-    <section class="flex flex-col md:flex-row md:items-end justify-between gap-space-lg">
-        <div class="flex flex-col gap-space-xs max-w-2xl">
-            <h1 class="h1-style">
-                Puzzles Found : {{ puzzles|length }}
-            </h1>
-            <span class="span-style">{{ systemMessage ? systemMessage : "" }}</span>
-        </div>
-        <!-- Quick Stats Callout -->
-        <div class="flex items-center gap-space-md bg-surface-container-low px-space-lg py-space-sm shadow-sm self-start md:self-auto">
 
-            <div class="w-px h-8 bg-outline-variant"></div>
+
+    <!-- 6 Segmented Table Layout -->
+    <section class="w-full px-margin pb-space-xl">
+        <div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
+            <!-- CREATE A VARIABLE SEARCH_OPTIONS -->
+            <!-- PUT A FOR X IN Y HERE -->
+            <article class="bg-surface-cream shadow-sm flex flex-col overflow-hidden">
+                <header class="bg-surface-container-low px-space-md py-space-sm flex flex-wrap items-center justify-between gap-space-sm">
+                    <div class="flex items-center gap-space-sm">
+                        <span class="font-label-sm text-label-sm bg-primary text-on-primary px-space-xs py-0.5 uppercase tracking-wider font-semibold">01</span>
+                        <h2 class="font-headline-md text-headline-md text-on-surface">Puzzles found by Name</h2>
+                    </div>
+                </header>
+            {% if puzzles["byTitle"] %}
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left font-body-sm text-body-sm">
+                        <thead>
+                        <tr class="bg-surface-container-lowest text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+                            <th class="py-space-sm px-space-md" scope="col">Puzzle ID</th>
+                            <th class="py-space-sm px-space-md" scope="col">Title &amp; Setter</th>
+                            <th class="py-space-sm px-space-md" scope="col">Variant Tags</th>
+                            <th class="py-space-sm px-space-md" scope="col">Solve Time / Metric</th>
+                            <th class="py-space-sm px-space-md text-right" scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="hover:bg-surface-container-low/60 transition-colors">
+                            <td class="py-space-md px-space-md font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
+                                #SUD-2841
+                            </td>
+                            <td class="py-space-md px-space-md">
+                                <div class="flex flex-col">
+                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">Whispering Whispers</span>
+                                    <span class="font-body-sm text-body-sm text-secondary">Setter: Philip Newman</span>
+                                </div>
+                            </td>
+                            <td class="py-space-md px-space-md">
+                                <div class="flex flex-wrap gap-space-xs">
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">German Whisper</span>
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Parity</span>
+                                </div>
+                            </td>
+                            <td class="py-space-md px-space-md font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
+<span class="inline-flex items-center gap-space-xs text-secondary font-normal mr-1">
+<span class="material-symbols-outlined text-sm">timer</span>
+</span>
+                                24m 18s
+                            </td>
+                            <td class="py-space-md px-space-md text-right whitespace-nowrap">
+                                <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-surface transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 px-space-sm py-1 bg-surface-container"
+                                   href="#">
+                                    Details
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            {% else %}
+                    <div class="p-space-xl flex flex-col items-center justify-center text-center bg-surface-container-low/40">
+                        <div class="w-12 h-12 flex items-center justify-center bg-surface-container text-secondary mb-space-sm">
+                            <span class="material-symbols-outlined text-2xl">event_busy</span>
+                        </div>
+                        <p class="font-headline-md text-headline-md text-on-surface mb-space-xs">
+                            Nothing found under using those parameters.
+                        </p>
+                    </div>
+            {% endif %}
+                </article>
+
+            <!-- PUT A FOR X IN Y HERE -->
+            <!-- Table 2: Puzzles found by Setter -->
+            <article class="bg-surface-cream shadow-sm flex flex-col overflow-hidden">
+                <header class="bg-surface-container-low px-space-md py-space-sm flex flex-wrap items-center justify-between gap-space-sm">
+                    <div class="flex items-center gap-space-sm">
+                        <span class="font-label-sm text-label-sm bg-primary text-on-primary px-space-xs py-0.5 uppercase tracking-wider font-semibold">02</span>
+                        <h2 class="font-headline-md text-headline-md text-on-surface">Puzzles found by Setter</h2>
+                    </div>
+                    <span class="font-label-sm text-label-sm text-secondary bg-surface-container px-space-sm py-0.5">
+            Matched Setter: <strong class="text-on-surface">'Philip Newman'</strong>
+</span>
+                </header>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left font-body-sm text-body-sm">
+                        <thead>
+                        <tr class="bg-surface-container-lowest text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+                            <th class="py-space-sm px-space-md" scope="col">Puzzle ID</th>
+                            <th class="py-space-sm px-space-md" scope="col">Title &amp; Setter</th>
+                            <th class="py-space-sm px-space-md" scope="col">Variant Tags</th>
+                            <th class="py-space-sm px-space-md" scope="col">Solve Time / Metric</th>
+                            <th class="py-space-sm px-space-md text-right" scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="hover:bg-surface-container-low/60 transition-colors">
+                            <td class="py-space-md px-space-md font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
+                                #SUD-2841
+                            </td>
+                            <td class="py-space-md px-space-md">
+                                <div class="flex flex-col">
+                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">The Phistomefel Ring</span>
+                                    <span class="font-body-sm text-body-sm text-secondary">Setter: Philip Newman (Collab: Phistomefel)</span>
+                                </div>
+                            </td>
+                            <td class="py-space-md px-space-md">
+                                <div class="flex flex-wrap gap-space-xs">
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">German Whisper</span>
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Kropki</span>
+                                </div>
+                            </td>
+                            <td class="py-space-md px-space-md font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
+<span class="inline-flex items-center gap-space-xs text-secondary font-normal mr-1">
+<span class="material-symbols-outlined text-sm">timer</span>
+</span>
+                                28m 44s
+                            </td>
+                            <td class="py-space-md px-space-md text-right whitespace-nowrap">
+                                <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-surface transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 px-space-sm py-1 bg-surface-container"
+                                   href="#">
+                                    Details
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+            <!-- Table 3: Puzzles found by Duration -->
+            <article class="bg-surface-cream shadow-sm flex flex-col overflow-hidden">
+                <header class="bg-surface-container-low px-space-md py-space-sm flex flex-wrap items-center justify-between gap-space-sm">
+                    <div class="flex items-center gap-space-sm">
+                        <span class="font-label-sm text-label-sm bg-primary text-on-primary px-space-xs py-0.5 uppercase tracking-wider font-semibold">03</span>
+                        <h2 class="font-headline-md text-headline-md text-on-surface">Puzzles found by Duration</h2>
+                    </div>
+                    <span class="font-label-sm text-label-sm text-secondary bg-surface-container px-space-sm py-0.5">
+            Matched Duration: <strong class="text-on-surface">≤ 45 minutes</strong>
+</span>
+                </header>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left font-body-sm text-body-sm">
+                        <thead>
+                        <tr class="bg-surface-container-lowest text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+                            <th class="py-space-sm px-space-md" scope="col">Puzzle ID</th>
+                            <th class="py-space-sm px-space-md" scope="col">Title &amp; Setter</th>
+                            <th class="py-space-sm px-space-md" scope="col">Variant Tags</th>
+                            <th class="py-space-sm px-space-md" scope="col">Solve Time / Metric</th>
+                            <th class="py-space-sm px-space-md text-right" scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="hover:bg-surface-container-low/60 transition-colors">
+                            <td class="py-space-md px-space-md font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
+                                #SUD-2838
+                            </td>
+                            <td class="py-space-md px-space-md">
+                                <div class="flex flex-col">
+                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">Arrowhead Matrix</span>
+                                    <span class="font-body-sm text-body-sm text-secondary">Setter: BremSter</span>
+                                </div>
+                            </td>
+                            <td class="py-space-md px-space-md">
+                                <div class="flex flex-wrap gap-space-xs">
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Arrow Sudoku</span>
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Renban</span>
+                                </div>
+                            </td>
+                            <td class="py-space-md px-space-md font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
+<span class="inline-flex items-center gap-space-xs text-primary font-normal mr-1">
+<span class="material-symbols-outlined text-sm">schedule</span>
+</span>
+                                18m 45s <span
+                                        class="font-label-sm text-label-sm text-secondary font-normal">(Optimal)</span>
+                            </td>
+                            <td class="py-space-md px-space-md text-right whitespace-nowrap">
+                                <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-surface transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 px-space-sm py-1 bg-surface-container"
+                                   href="#">
+                                    Details
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+            <!-- Table 4: Puzzles found by Date (EMPTY STATE REQUIREMENT) -->
+            <article class="bg-surface-cream shadow-sm flex flex-col overflow-hidden">
+                <header class="bg-surface-container-low px-space-md py-space-sm flex flex-wrap items-center justify-between gap-space-sm">
+                    <div class="flex items-center gap-space-sm">
+                        <span class="font-label-sm text-label-sm bg-secondary text-on-secondary px-space-xs py-0.5 uppercase tracking-wider font-semibold">04</span>
+                        <h2 class="font-headline-md text-headline-md text-on-surface">Puzzles found by Date</h2>
+                    </div>
+                    <span class="font-label-sm text-label-sm text-secondary bg-surface-container px-space-sm py-0.5">
+            Date Window: <strong class="text-on-surface">01 Oct 2024 – 15 Oct 2024</strong>
+</span>
+                </header>
+                <div class="p-space-xl flex flex-col items-center justify-center text-center bg-surface-container-low/40">
+                    <div class="w-12 h-12 flex items-center justify-center bg-surface-container text-secondary mb-space-sm">
+                        <span class="material-symbols-outlined text-2xl">event_busy</span>
+                    </div>
+                    <p class="font-headline-md text-headline-md text-on-surface mb-space-xs">
+                        Nothing found under using those parameters.
+                    </p>
+                    <p class="font-body-md text-body-md text-secondary max-w-lg mb-space-md">
+                        No solved puzzles recorded within the specified solve date window. Try expanding your date range
+                        or adjusting criteria.
+                    </p>
+                    <div class="flex items-center gap-space-sm">
+                        <button class="inline-flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-highest transition-colors"
+                                type="button">
+                            <span class="material-symbols-outlined text-sm">calendar_month</span>
+                            Expand to All 2024
+                        </button>
+                        <button class="inline-flex items-center gap-space-xs px-space-md py-space-xs bg-surface-cream text-secondary hover:text-on-surface font-label-md text-label-md transition-colors"
+                                type="button">
+                            Reset Date Filter
+                        </button>
+                    </div>
+                </div>
+            </article>
+            <!-- Table 5: Puzzles found by Rating -->
+            <article class="bg-surface-cream shadow-sm flex flex-col overflow-hidden">
+                <header class="bg-surface-container-low px-space-md py-space-sm flex flex-wrap items-center justify-between gap-space-sm">
+                    <div class="flex items-center gap-space-sm">
+                        <span class="font-label-sm text-label-sm bg-primary text-on-primary px-space-xs py-0.5 uppercase tracking-wider font-semibold">05</span>
+                        <h2 class="font-headline-md text-headline-md text-on-surface">Puzzles found by Rating</h2>
+                    </div>
+                    <span class="font-label-sm text-label-sm text-secondary bg-surface-container px-space-sm py-0.5">
+            Matched Rating: <strong class="text-on-surface">★★★★☆ (Expert)</strong>
+</span>
+                </header>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left font-body-sm text-body-sm">
+                        <thead>
+                        <tr class="bg-surface-container-lowest text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+                            <th class="py-space-sm px-space-md" scope="col">Puzzle ID</th>
+                            <th class="py-space-sm px-space-md" scope="col">Title &amp; Setter</th>
+                            <th class="py-space-sm px-space-md" scope="col">Variant Tags</th>
+                            <th class="py-space-sm px-space-md" scope="col">Solve Time / Metric</th>
+                            <th class="py-space-sm px-space-md text-right" scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="hover:bg-surface-container-low/60 transition-colors">
+                            <td class="py-space-md px-space-md font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
+                                #SUD-2840
+                            </td>
+                            <td class="py-space-md px-space-md">
+                                <div class="flex flex-col">
+                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">The Miracle II</span>
+                                    <span class="font-body-sm text-body-sm text-secondary">Setter: Mitchell Lee</span>
+                                </div>
+                            </td>
+                            <td class="py-space-md px-space-md">
+                                <div class="flex flex-wrap gap-space-xs">
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Knight's Move</span>
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">King's Move</span>
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Orthogonal</span>
+                                </div>
+                            </td>
+                            <td class="py-space-md px-space-md font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
+                                <span class="text-tertiary-container font-semibold tracking-wider">★★★★☆</span>
+                                <span class="font-label-sm text-label-sm text-secondary ml-1">4.0 / 5.0</span>
+                            </td>
+                            <td class="py-space-md px-space-md text-right whitespace-nowrap">
+                                <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-surface transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 px-space-sm py-1 bg-surface-container"
+                                   href="#">
+                                    Details
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+            <!-- Table 6: Puzzles found by Variant Type -->
+            <article class="bg-surface-cream shadow-sm flex flex-col overflow-hidden">
+                <header class="bg-surface-container-low px-space-md py-space-sm flex flex-wrap items-center justify-between gap-space-sm">
+                    <div class="flex items-center gap-space-sm">
+                        <span class="font-label-sm text-label-sm bg-primary text-on-primary px-space-xs py-0.5 uppercase tracking-wider font-semibold">06</span>
+                        <h2 class="font-headline-md text-headline-md text-on-surface">Puzzles found by Variant Type</h2>
+                    </div>
+                    <span class="font-label-sm text-label-sm text-secondary bg-surface-container px-space-sm py-0.5">
+            Matched Constraint: <strong class="text-on-surface">'German Whisper'</strong>
+</span>
+                </header>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left font-body-sm text-body-sm">
+                        <thead>
+                        <tr class="bg-surface-container-lowest text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+                            <th class="py-space-sm px-space-md" scope="col">Puzzle ID</th>
+                            <th class="py-space-sm px-space-md" scope="col">Title &amp; Setter</th>
+                            <th class="py-space-sm px-space-md" scope="col">Variant Tags</th>
+                            <th class="py-space-sm px-space-md" scope="col">Solve Time / Metric</th>
+                            <th class="py-space-sm px-space-md text-right" scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="hover:bg-surface-container-low/60 transition-colors">
+                            <td class="py-space-md px-space-md font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
+                                #SUD-2834
+                            </td>
+                            <td class="py-space-md px-space-md">
+                                <div class="flex flex-col">
+                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">Bipolar Junction</span>
+                                    <span class="font-body-sm text-body-sm text-secondary">Setter: Sven</span>
+                                </div>
+                            </td>
+                            <td class="py-space-md px-space-md">
+                                <div class="flex flex-wrap gap-space-xs">
+                                    <span class="font-label-sm text-label-sm bg-primary text-on-primary px-space-xs py-0.5 font-semibold">German Whisper</span>
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Thermometer</span>
+                                </div>
+                            </td>
+                            <td class="py-space-md px-space-md font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
+<span class="inline-flex items-center gap-space-xs text-secondary font-normal mr-1">
+<span class="material-symbols-outlined text-sm">timer</span>
+</span>
+                                29m 41s
+                            </td>
+                            <td class="py-space-md px-space-md text-right whitespace-nowrap">
+                                <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-surface transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 px-space-sm py-1 bg-surface-container"
+                                   href="#">
+                                    Details
+                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
         </div>
     </section>
-<!-- Instant Search Results Section -->
-<section class="flex flex-col gap-space-md">
-    <!-- Ledger Head Controls & Metric -->
 
-    <!-- High-Density Vision-Friendly Data Table -->
-    <div class="w-full overflow-x-auto shadow-sm bg-surface-cream">
-        <table class="w-full text-left border-collapse" id="archiveResultsTable">
-            <thead>
-            <tr class="bg-surface-container text-secondary font-label-sm text-label-sm tracking-wider uppercase">
-                <th class="th-small">ID</th>
-                <th class="th-small">Puzzle Designation</th>
-                <th class="th-small">Setter</th>
-                <th class="th-small">Variants</th>
-                <th class="th-small text-right">Solve Time</th>
-                <th class="th-small text-right">Log Date</th>
-                <th class="th-small text-center">Details</th>
-            </tr>
-            </thead>
-            <tbody class="divide-y-0 font-body-sm text-body-sm text-on-surface" id="resultsBody">
-            {% for puzzle in puzzles %}
-                <tr class="hover:bg-surface-cream/80 transition-colors group bg-surface-container-low/40;">
-                    <td class="td-style font-label-md text-label-md text-on-surface-variant group-hover:text-primary font-semibold">
-                        {{ puzzle.getDokuId }}
-                    </td>
-                    <td class="td-style">
-                        <div class="flex flex-col">
-                            <div class="flex items-center gap-space-xs">
-                                <span class="font-headline-md text-base font-semibold text-on-surface leading-snug">{{ puzzle.getDokuTitle }}</span>
-                                {% if puzzle.getDokuDuration > 35 %}
-                                    <span class="font-label-sm text-label-sm px-1.5 py-0.2 bg-tertiary-fixed text-on-tertiary-fixed font-medium">HARD</span>
-                                {% elseif puzzle.getDokuDuration < 18 %}
-                                    <span class="font-label-sm text-label-sm px-1.5 py-0.2 bg-green-200 text-on-tertiary-fixed font-medium">EASY</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </td>
-                    <td class="td-style">
-                        <div class="flex flex-wrap gap-1.5">
-                            <span class="span-extra">{{ puzzle.getDokuSetterName }}</span>
-                        </div>
-                    </td>
-                    <td class="td-style">
-                        <div class="flex flex-wrap gap-1.5">
-                            <span class="span-extra">{{ puzzle.getDokuVariantNames }}</span>
-                        </div>
-                    </td>
-                    <td class="td-style">
-                        <div class="flex flex-wrap gap-1.5">
-                            <span class="span-extra">{{ puzzle.getDokuDuration }}</span>
-                        </div>
-                    </td>
-                    <td class="td-style font-grid-digit-sm text-label-md font-semibold  text-on-surface">
-                        {{ puzzle.getDokuDate|date("d/m") }}
-                    </td>
-                    <td class="td-style font-grid-digit-sm text-label-md font-semibold  text-on-surface">
-                        <a class="font-label-sm text-label-sm px-space-md py-1 border border-outline hover:border-primary hover:bg-primary hover:text-on-primary transition-all inline-block focus:outline-none focus:ring-2 focus:ring-primary"
-                           data-path="puzzle-details" href="?route=showDetails&id={{ puzzle.getDokuId }}">
-                            Details
-                        </a>
-                    </td>
-                    {#
-                    <td class="th-small text-center">
-                        <a href="#"><span class="material-symbols-outlined text-secondary group-hover:text-primary transition-colors text-lg">arrow_forward</span></a>
-                    </td>
-                    #}
-                </tr>
-
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <!-- Pagination & Bottom Ledger Foot -->
-    {% if foundPuzzles == false %}
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-xs">
-<span class="font-label-sm text-label-sm text-secondary">
-          Displaying rows 1 – 5 of 18 archived solves
-        </span>
-        <div class="flex items-center gap-space-xs">
-            <button class="button-style text-outline opacity-50 cursor-not-allowed" disabled="" type="button">PREV</button>
-            <span class="font-label-sm text-label-sm px-space-md py-space-xs bg-primary-container text-on-primary">1</span>
-            <button class="button-style text-on-surface hover:bg-surface-container-high transition-colors" type="button">2</button>
-            <button class="button-style text-on-surface hover:bg-surface-container-high transition-colors" type="button">3</button>
-            <button class="button-style text-on-surface hover:bg-surface-container-high transition-colors" type="button">4</button>
-            <button class="button-style text-on-surface hover:bg-surface-container-high transition-colors" type="button">NEXT</button>
+    <footer class="w-full bg-surface-container-low border-t border-outline-variant">
+        <div class="w-full px-margin py-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md">
+            <div class="flex items-center gap-space-lg"><span
+                        class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">© 2024 The Variant Log</span><span
+                        class="h-3 w-px bg-outline-variant hidden sm:inline-block"></span><a
+                        class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+                        href="#">Rules &amp; Notation</a><a
+                        class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+                        href="#">CTC Discord Archive</a><a
+                        class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+                        href="#">Export Log</a></div>
+            <div class="flex items-center gap-space-xs bg-surface-container-lowest border border-outline-variant px-space-md py-space-xs">
+                <span class="material-symbols-outlined text-secondary text-sm">keyboard</span><span
+                        class="font-label-sm text-label-sm text-secondary">Shortcuts:</span><kbd
+                        class="font-label-sm text-label-sm bg-surface-container px-space-xs py-0.5 border border-outline-variant text-on-surface">1-9</kbd><span
+                        class="font-label-sm text-label-sm text-secondary">Values</span><kbd
+                        class="font-label-sm text-label-sm bg-surface-container px-space-xs py-0.5 border border-outline-variant text-on-surface ml-space-xs">Space</kbd><span
+                        class="font-label-sm text-label-sm text-secondary">Pencil</span><kbd
+                        class="font-label-sm text-label-sm bg-surface-container px-space-xs py-0.5 border border-outline-variant text-on-surface ml-space-xs">Z</kbd><span
+                        class="font-label-sm text-label-sm text-secondary">Undo</span></div>
         </div>
-    </div>
-    {% endif %}
-</section>
-
-
+    </footer>
 {% endblock %}

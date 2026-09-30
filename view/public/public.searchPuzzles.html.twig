@@ -83,6 +83,63 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-space-lg">
+                        <!-- Setter Selection -->
+                        <div class="md:col-span-5 flex flex-col gap-space-xs">
+                            <label class="label-style" for="puzzleName">
+                                <span class="material-symbols-outlined text-sm text-primary">eyeglasses</span>
+                                Puzzle Name
+                            </label>
+                            <div class="relative bg-surface-container-lowest flex items-center">
+                                <input class="w-full bg-transparent font-label-md text-label-md text-on-surface py-space-sm px-space-md focus:outline-none focus:bg-surface-container-high transition-colors"
+                                       id="puzzleName"
+                                       type="text"
+                                       name="str:doku_title"/>
+
+                            </div>
+                        </div>
+                        <!-- Maximum Difficulty -->
+                        <div class="md:col-span-3 flex flex-col gap-space-xs">
+                            <label class="label-style" for="diffRating">
+                                <span class="material-symbols-outlined text-sm text-primary">query_stats</span>
+                                Max Difficulty
+                            </label>
+                            <div class="relative bg-surface-container-lowest flex items-center">
+                                <input class="w-full bg-transparent font-label-md text-label-md text-on-surface py-space-sm px-space-md focus:outline-none focus:bg-surface-container-high transition-colors"
+                                       id="diffRating"
+                                       max="5"
+                                       min="1"
+                                       type="number"
+                                       name="int:doku_stars"/>
+                                <span class="font-label-sm text-label-sm text-secondary pr-space-md select-none">/5 stars</span>
+                            </div>
+                        </div>
+                        {#
+                        <!-- Date Completed Range -->
+                        <div class="md:col-span-4 flex flex-col gap-space-xs">
+                            <label class="label-style">
+                                <span class="material-symbols-outlined text-sm text-primary">calendar_month</span>
+                                Solve Date Window
+                            </label>
+                            <div class="grid grid-cols-2 gap-space-sm">
+                                <div class="bg-surface-container-lowest">
+                                    <input class="w-full bg-transparent font-label-sm text-label-sm text-on-surface py-space-sm px-space-sm focus:outline-none focus:bg-surface-container-high transition-colors cursor-pointer"
+                                           id="fromDate"
+                                           title="From Date"
+                                           type="date" name="date:doku_start"/>
+                                </div>
+                                <div class="bg-surface-container-lowest">
+                                    <input class="w-full bg-transparent font-label-sm text-label-sm text-on-surface py-space-sm px-space-sm focus:outline-none focus:bg-surface-container-high transition-colors cursor-pointer"
+                                           id="toDate"
+                                           title="To Date"
+                                           type="date" name="date:doku_end"/>
+                                </div>
+                            </div>
+                        </div>
+                        #}
+                    </div>
                     <!-- Row 2: Logic Variants & Constraints (Multi-Select Matrix) -->
                     <div class="flex flex-col gap-space-sm bg-surface-container-low p-space-md">
                         <div class="flex items-center justify-between">
