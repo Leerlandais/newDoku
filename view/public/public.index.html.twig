@@ -38,7 +38,7 @@
                         VARIANT CONSTRAINTS
                     </th>
                     <th class="th-style" scope="col">
-                        SOLVER SOURCE
+                       Difficulty
                     </th>
                     <th class="th-style w-36"
                         scope="col">TIME
@@ -73,12 +73,27 @@
                             </div>
                         </td>
                         <td class="td-style">
-                            <a class="a-style track-link" id="link-{{ puzzle.getDokuId }}"
-                               href="{{ puzzle.getDokuUrl }}" rel="noopener noreferrer"
-                               target="_blank">
-                                <span>{{ puzzle.getDokuUrl }}</span>
-                                <span class="material-symbols-outlined text-xs">open_in_new</span>
-                            </a>
+                            {% set stars = puzzle.getDokuStars ?? 0 %}
+                            {% if stars %}
+                                <span class="font-label-sm text-label-sm bg-tertiary-container text-on-tertiary px-2 py-0.5 uppercase tracking-wider">Difficulty :</span>
+                                <div class="flex items-center text-tertiary text-sm" title="Difficulty: 4 of 5">
+
+                                    {% if stars > 5 %}
+                                        {% set stars = 5 %}
+                                    {% endif %}
+                                    {% for i in range(1, stars) %}
+                                        <span class="material-symbols-outlined text-sm"
+                                              style="font-variation-settings: 'FILL' 1;">star</span>
+                                    {% endfor %}
+                                    {% if stars < 5 %}
+                                        {% for j in range(1, (5 - stars)) %}
+                                            <span class="material-symbols-outlined text-sm text-outline-variant">star</span>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <span class="font-label-sm text-label-sm text-secondary ml-1.5 font-semibold">{{ stars }} / 5</span>
+                                </div>
+                            {% endif %}
+
                         </td>
                         <td class="td-style font-grid-digit-sm text-label-md font-semibold  text-on-surface">
                             {{ puzzle.getDokuDuration }}
