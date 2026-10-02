@@ -5,13 +5,21 @@
 {% endblock %}
 {% block content %}
 
-
+{% set nothingFound %}
+    <div class="p-space-xl flex flex-col items-center justify-center text-center bg-surface-container-low/40">
+        <div class="w-12 h-12 flex items-center justify-center bg-surface-container text-secondary mb-space-sm">
+            <span class="material-symbols-outlined text-2xl">event_busy</span>
+        </div>
+        <p class="font-headline-md text-headline-md text-on-surface mb-space-xs">
+            Nothing found using those parameters.
+        </p>
+    </div>
+{% endset %}
 
     <!-- 6 Segmented Table Layout -->
     <section class="w-full px-margin pb-space-xl">
         <div class="max-w-7xl mx-auto flex flex-col gap-space-lg">
             <!-- CREATE A VARIABLE SEARCH_OPTIONS -->
-            <!-- PUT A FOR X IN Y HERE -->
             <article class="bg-surface-cream shadow-sm flex flex-col overflow-hidden">
                 <header class="bg-surface-container-low px-space-md py-space-sm flex flex-wrap items-center justify-between gap-space-sm">
                     <div class="flex items-center gap-space-sm">
@@ -19,66 +27,61 @@
                         <h2 class="font-headline-md text-headline-md text-on-surface">Puzzles found by Name</h2>
                     </div>
                 </header>
-            {% if puzzles["byTitle"] %}
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left font-body-sm text-body-sm">
-                        <thead>
-                        <tr class="bg-surface-container-lowest text-secondary font-label-sm text-label-sm uppercase tracking-wider">
-                            <th class="py-space-sm px-space-md" scope="col">Puzzle ID</th>
-                            <th class="py-space-sm px-space-md" scope="col">Title &amp; Setter</th>
-                            <th class="py-space-sm px-space-md" scope="col">Variant Tags</th>
-                            <th class="py-space-sm px-space-md" scope="col">Solve Time / Metric</th>
-                            <th class="py-space-sm px-space-md text-right" scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="hover:bg-surface-container-low/60 transition-colors">
-                            <td class="py-space-md px-space-md font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
-                                #SUD-2841
-                            </td>
-                            <td class="py-space-md px-space-md">
-                                <div class="flex flex-col">
-                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">Whispering Whispers</span>
-                                    <span class="font-body-sm text-body-sm text-secondary">Setter: Philip Newman</span>
-                                </div>
-                            </td>
-                            <td class="py-space-md px-space-md">
-                                <div class="flex flex-wrap gap-space-xs">
-                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">German Whisper</span>
-                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Parity</span>
-                                </div>
-                            </td>
-                            <td class="py-space-md px-space-md font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
-<span class="inline-flex items-center gap-space-xs text-secondary font-normal mr-1">
-<span class="material-symbols-outlined text-sm">timer</span>
-</span>
-                                24m 18s
-                            </td>
-                            <td class="py-space-md px-space-md text-right whitespace-nowrap">
-                                <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-surface transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 px-space-sm py-1 bg-surface-container"
-                                   href="#">
-                                    Details
-                                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                </a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            {% else %}
-                    <div class="p-space-xl flex flex-col items-center justify-center text-center bg-surface-container-low/40">
-                        <div class="w-12 h-12 flex items-center justify-center bg-surface-container text-secondary mb-space-sm">
-                            <span class="material-symbols-outlined text-2xl">event_busy</span>
-                        </div>
-                        <p class="font-headline-md text-headline-md text-on-surface mb-space-xs">
-                            Nothing found under using those parameters.
-                        </p>
+                {% if puzzles["byTitle"] %}
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left font-body-sm text-body-sm">
+                            <thead>
+                            <tr class="bg-surface-container-lowest text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+                                <th class="py-space-sm px-space-md" scope="col">Puzzle ID</th>
+                                <th class="py-space-sm px-space-md" scope="col">Title &amp; Setter</th>
+                                <th class="py-space-sm px-space-md" scope="col">Variant Tags</th>
+                                <th class="py-space-sm px-space-md" scope="col">Solve Time / Metric</th>
+                                <th class="py-space-sm px-space-md text-right" scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for puzzle in puzzles["byTitle"] %}
+                                <tr class="hover:bg-surface-container-low/60 transition-colors">
+                                    <td class="py-space-md px-space-md font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
+                                        &num; {{ puzzle.getDokuId }}
+                                    </td>
+                                    <td class="py-space-md px-space-md">
+                                        <div class="flex flex-col">
+                                            <span class="font-headline-md text-headline-md text-on-surface leading-tight">{{ puzzle.getDokuTitle }}</span>
+                                            <span class="font-body-sm text-body-sm text-secondary">Setter: {{ puzzle.getDokuSetterName }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-space-md px-space-md">
+                                        <div class="flex flex-wrap gap-space-xs">
+                                            {% for variant in puzzle.getDokuVariantNames|split(', ') %}
+                                            <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">{{ variant }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    </td>
+                                    <td class="py-space-md px-space-md font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
+                                <span class="inline-flex items-center gap-space-xs text-secondary font-normal mr-1">
+                                <span class="material-symbols-outlined text-sm">timer</span>
+                                </span>
+                                        {{ puzzle.dokuDuration }}m
+                                    </td>
+                                    <td class="py-space-md px-space-md text-right whitespace-nowrap">
+                                        <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-surface transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 px-space-sm py-1 bg-surface-container"
+                                           href="?route=showDetails&id={{ puzzle.getDokuId }}">
+                                            Details
+                                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
-            {% endif %}
-                </article>
 
-            <!-- PUT A FOR X IN Y HERE -->
+                {% else %}
+                    {{ nothingFound }}
+                {% endif %}
+            </article>
+
             <!-- Table 2: Puzzles found by Setter -->
             <article class="bg-surface-cream shadow-sm flex flex-col overflow-hidden">
                 <header class="bg-surface-container-low px-space-md py-space-sm flex flex-wrap items-center justify-between gap-space-sm">
@@ -86,10 +89,8 @@
                         <span class="font-label-sm text-label-sm bg-primary text-on-primary px-space-xs py-0.5 uppercase tracking-wider font-semibold">02</span>
                         <h2 class="font-headline-md text-headline-md text-on-surface">Puzzles found by Setter</h2>
                     </div>
-                    <span class="font-label-sm text-label-sm text-secondary bg-surface-container px-space-sm py-0.5">
-            Matched Setter: <strong class="text-on-surface">'Philip Newman'</strong>
-</span>
                 </header>
+            {% if puzzles["bySetter"] %}
                 <div class="overflow-x-auto">
                     <table class="w-full text-left font-body-sm text-body-sm">
                         <thead>
@@ -102,39 +103,45 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% for puzzle in puzzles["bySetter"] %}
                         <tr class="hover:bg-surface-container-low/60 transition-colors">
                             <td class="py-space-md px-space-md font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
-                                #SUD-2841
+                                &num;{{ puzzle.getDokuId }}
                             </td>
                             <td class="py-space-md px-space-md">
                                 <div class="flex flex-col">
-                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">The Phistomefel Ring</span>
-                                    <span class="font-body-sm text-body-sm text-secondary">Setter: Philip Newman (Collab: Phistomefel)</span>
+                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">{{ puzzle.getDokuTitle }}</span>
+                                    <span class="font-body-sm text-body-sm text-secondary">Setter: {{ puzzle.getDokuSetterName }}</span>
                                 </div>
                             </td>
                             <td class="py-space-md px-space-md">
                                 <div class="flex flex-wrap gap-space-xs">
-                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">German Whisper</span>
-                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Kropki</span>
+                                    {% for variant in puzzle.getDokuVariantNames|split(", ") %}
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">{{ variant }}</span>
+                                    {% endfor %}
                                 </div>
                             </td>
                             <td class="py-space-md px-space-md font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
-<span class="inline-flex items-center gap-space-xs text-secondary font-normal mr-1">
-<span class="material-symbols-outlined text-sm">timer</span>
-</span>
-                                28m 44s
+                                <span class="inline-flex items-center gap-space-xs text-secondary font-normal mr-1">
+                                <span class="material-symbols-outlined text-sm">timer</span>
+                                </span>
+                                {{ puzzle.getDokuDuration }}m
                             </td>
                             <td class="py-space-md px-space-md text-right whitespace-nowrap">
                                 <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-surface transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 px-space-sm py-1 bg-surface-container"
-                                   href="#">
+                                   href="?route=showDetails&id={{ puzzle.getDokuId }}">
                                     Details
                                     <span class="material-symbols-outlined text-sm">arrow_forward</span>
                                 </a>
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
+                {% else %}
+                    {{ nothingFound }}
+                {% endif %}
             </article>
             <!-- Table 3: Puzzles found by Duration -->
             <article class="bg-surface-cream shadow-sm flex flex-col overflow-hidden">
@@ -143,10 +150,8 @@
                         <span class="font-label-sm text-label-sm bg-primary text-on-primary px-space-xs py-0.5 uppercase tracking-wider font-semibold">03</span>
                         <h2 class="font-headline-md text-headline-md text-on-surface">Puzzles found by Duration</h2>
                     </div>
-                    <span class="font-label-sm text-label-sm text-secondary bg-surface-container px-space-sm py-0.5">
-            Matched Duration: <strong class="text-on-surface">≤ 45 minutes</strong>
-</span>
                 </header>
+                    {% if puzzle["byDuration"] %}
                 <div class="overflow-x-auto">
                     <table class="w-full text-left font-body-sm text-body-sm">
                         <thead>
@@ -159,40 +164,45 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% for puzzle in puzzle["byDuration"] %}
                         <tr class="hover:bg-surface-container-low/60 transition-colors">
                             <td class="py-space-md px-space-md font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
-                                #SUD-2838
+                                {{ puzzle.getDokuId }}
                             </td>
                             <td class="py-space-md px-space-md">
                                 <div class="flex flex-col">
-                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">Arrowhead Matrix</span>
-                                    <span class="font-body-sm text-body-sm text-secondary">Setter: BremSter</span>
+                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">{{ puzzle.getDokuTitle }}</span>
+                                    <span class="font-body-sm text-body-sm text-secondary">Setter: {{ puzzle.getDokuSetterName }}</span>
                                 </div>
                             </td>
                             <td class="py-space-md px-space-md">
                                 <div class="flex flex-wrap gap-space-xs">
-                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Arrow Sudoku</span>
-                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Renban</span>
+                                    {% for variant in puzzle.getDokuVariantNames|split(" ,") %}
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">{{ variant }}</span>
+                                    {% endfor %}
                                 </div>
                             </td>
                             <td class="py-space-md px-space-md font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
-<span class="inline-flex items-center gap-space-xs text-primary font-normal mr-1">
-<span class="material-symbols-outlined text-sm">schedule</span>
-</span>
-                                18m 45s <span
-                                        class="font-label-sm text-label-sm text-secondary font-normal">(Optimal)</span>
+                                    <span class="inline-flex items-center gap-space-xs text-primary font-normal mr-1">
+                                    <span class="material-symbols-outlined text-sm">schedule</span>
+                                    </span>
+                                {{ puzzle.getDokuDuration }}m
                             </td>
                             <td class="py-space-md px-space-md text-right whitespace-nowrap">
                                 <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-surface transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 px-space-sm py-1 bg-surface-container"
-                                   href="#">
+                                   href="?route=showDetails&id={{ puzzle.getDokuId }}">
                                     Details
                                     <span class="material-symbols-outlined text-sm">arrow_forward</span>
                                 </a>
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
+                {% else %}
+                {{ nothingFound }}
+                {% endif %}
             </article>
             <!-- Table 4: Puzzles found by Date (EMPTY STATE REQUIREMENT) -->
             <article class="bg-surface-cream shadow-sm flex flex-col overflow-hidden">
@@ -236,10 +246,8 @@
                         <span class="font-label-sm text-label-sm bg-primary text-on-primary px-space-xs py-0.5 uppercase tracking-wider font-semibold">05</span>
                         <h2 class="font-headline-md text-headline-md text-on-surface">Puzzles found by Rating</h2>
                     </div>
-                    <span class="font-label-sm text-label-sm text-secondary bg-surface-container px-space-sm py-0.5">
-            Matched Rating: <strong class="text-on-surface">★★★★☆ (Expert)</strong>
-</span>
                 </header>
+                {% if puzzle["byStars"] %}
                 <div class="overflow-x-auto">
                     <table class="w-full text-left font-body-sm text-body-sm">
                         <thead>
@@ -252,38 +260,45 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% for puzzle in puzzles["byStars"] %}
                         <tr class="hover:bg-surface-container-low/60 transition-colors">
                             <td class="py-space-md px-space-md font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
-                                #SUD-2840
+                                &num;{{ puzzle.getDokuId }}
                             </td>
                             <td class="py-space-md px-space-md">
                                 <div class="flex flex-col">
-                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">The Miracle II</span>
-                                    <span class="font-body-sm text-body-sm text-secondary">Setter: Mitchell Lee</span>
+                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">{{ puzzle.getDokuTitle }}</span>
+                                    <span class="font-body-sm text-body-sm text-secondary">Setter: {{ puzzle.getDokuSetterName }}</span>
                                 </div>
                             </td>
                             <td class="py-space-md px-space-md">
                                 <div class="flex flex-wrap gap-space-xs">
-                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Knight's Move</span>
-                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">King's Move</span>
-                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Orthogonal</span>
+                                    {% for variant in puzzle.getDokuVariantNames|split(" ,") %}
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">{{ variant }}</span>
+                                    {% endfor %}
                                 </div>
                             </td>
                             <td class="py-space-md px-space-md font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
-                                <span class="text-tertiary-container font-semibold tracking-wider">★★★★☆</span>
-                                <span class="font-label-sm text-label-sm text-secondary ml-1">4.0 / 5.0</span>
+                                    <span class="inline-flex items-center gap-space-xs text-primary font-normal mr-1">
+                                    <span class="material-symbols-outlined text-sm">schedule</span>
+                                    </span>
+                                {{ puzzle.getDokuDuration }}m
                             </td>
                             <td class="py-space-md px-space-md text-right whitespace-nowrap">
                                 <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-surface transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 px-space-sm py-1 bg-surface-container"
-                                   href="#">
+                                   href="?route=showDetails&id={{ puzzle.getDokuId }}">
                                     Details
                                     <span class="material-symbols-outlined text-sm">arrow_forward</span>
                                 </a>
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
+                {% else %}
+                {{ nothingFound }}
+                {% endif %}
             </article>
             <!-- Table 6: Puzzles found by Variant Type -->
             <article class="bg-surface-cream shadow-sm flex flex-col overflow-hidden">
@@ -292,10 +307,8 @@
                         <span class="font-label-sm text-label-sm bg-primary text-on-primary px-space-xs py-0.5 uppercase tracking-wider font-semibold">06</span>
                         <h2 class="font-headline-md text-headline-md text-on-surface">Puzzles found by Variant Type</h2>
                     </div>
-                    <span class="font-label-sm text-label-sm text-secondary bg-surface-container px-space-sm py-0.5">
-            Matched Constraint: <strong class="text-on-surface">'German Whisper'</strong>
-</span>
                 </header>
+                {% if puzzles["byVariant"] %}
                 <div class="overflow-x-auto">
                     <table class="w-full text-left font-body-sm text-body-sm">
                         <thead>
@@ -308,40 +321,46 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% for puzzle in puzzles["byVariant"] %}
                         <tr class="hover:bg-surface-container-low/60 transition-colors">
                             <td class="py-space-md px-space-md font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
                                 #SUD-2834
                             </td>
                             <td class="py-space-md px-space-md">
                                 <div class="flex flex-col">
-                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">Bipolar Junction</span>
-                                    <span class="font-body-sm text-body-sm text-secondary">Setter: Sven</span>
+                                    <span class="font-headline-md text-headline-md text-on-surface leading-tight">{{ puzzle.getDokuTitle }}</span>
+                                    <span class="font-body-sm text-body-sm text-secondary">Setter: {{ puzzle.getDokuSetterName }}</span>
                                 </div>
                             </td>
                             <td class="py-space-md px-space-md">
                                 <div class="flex flex-wrap gap-space-xs">
-                                    <span class="font-label-sm text-label-sm bg-primary text-on-primary px-space-xs py-0.5 font-semibold">German Whisper</span>
-                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">Thermometer</span>
+                                    {% for variant in puzzle.getDokuVariantNames|split(" ,") %}
+                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">{{ variant }}</span>
+                                    {% endfor %}
                                 </div>
                             </td>
                             <td class="py-space-md px-space-md font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
 <span class="inline-flex items-center gap-space-xs text-secondary font-normal mr-1">
 <span class="material-symbols-outlined text-sm">timer</span>
 </span>
-                                29m 41s
+                                {{ puzzle.getDokuDuration }}m
                             </td>
                             <td class="py-space-md px-space-md text-right whitespace-nowrap">
                                 <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-surface transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 px-space-sm py-1 bg-surface-container"
-                                   href="#">
+                                   href="?route=showDetails&id={{ puzzle.getDokuId }}">
                                     Details
                                     <span class="material-symbols-outlined text-sm">arrow_forward</span>
                                 </a>
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </article>
+            {% else %}
+                {{ nothingFound }}
+            {% endif %}
         </div>
     </section>
 

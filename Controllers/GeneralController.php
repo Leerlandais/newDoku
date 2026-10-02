@@ -89,7 +89,7 @@ class GeneralController extends Abstract\AbstractController
 
         if (isset($_POST["unset:searchPuzzles"])) {
             $cleanedData = $this->preparePostData($_POST);
-            $cleanedData = array_filter($cleanedData, fn($value) => $value !== null && $value !== 0);
+            $cleanedData = array_filter($cleanedData, fn($value) => $value !== null && $value !== 0 && $value !== "");
 
             $searchResults = $this->runSearch($cleanedData);
             $searchResults = array_filter($searchResults, fn($value) => $value !== false);
