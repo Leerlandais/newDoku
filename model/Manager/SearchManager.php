@@ -109,9 +109,9 @@ class SearchManager extends AbstractManager
                     ON dd.doku_id = dhv.doku_id
                 LEFT JOIN doku_variants dv 
                     ON dhv.doku_variant = dv.variant_id
-                WHERE dd.doku_stars <= :stars
-                GROUP BY dd.doku_id
-                ORDER BY dd.doku_id DESC");
+                WHERE dd.doku_stars = :stars
+                GROUP BY dd.doku_stars
+                ORDER BY dd.doku_stars DESC");
         $stmt->bindParam(":stars", $stars, \PDO::PARAM_INT);
         $stmt->execute();
         $results = [];

@@ -257,4 +257,17 @@ class GeneralController extends Abstract\AbstractController
         return $resultsArray;
 
     }
+
+    public function searchByStars(array $getParams) : void
+    {
+        global $systemMessage, $sessionRole, $sessionExpiresAt;
+        $stars = $this->intClean($getParams["count"] ?? 1);
+        $puzzles["byStars"] = $this->searchManager->getPuzzleByStars($stars);
+        echo $this->twig->render('public/public.searchResults.html.twig', [
+            "systemMessage" => $systemMessage,
+            "sessionRole" => $sessionRole,
+            "puzzles" => $puzzles,
+            "sessionExpiresAt" => $sessionExpiresAt,
+        ]);
+    }
 }
