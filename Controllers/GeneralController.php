@@ -125,8 +125,7 @@ class GeneralController extends Abstract\AbstractController
     public function showDetails(array $getParams): void
     {
         global $systemMessage, $sessionRole, $sessionExpiresAt;
-
-        if (!isset($getParams["id"])) {
+        if (!isset($getParams["id"]) || !is_numeric($getParams["id"])) {
             header("Location: ?route=home");
             exit();
         }
