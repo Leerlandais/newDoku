@@ -12,6 +12,7 @@ class DokuConnectionLogsMapping extends AbstractMapping
     private string $log_ip;
     private string $log_page_visited;
     private ?int $log_user;
+    private ?int $log_url;
 
     public function getLogId(): int
     {
@@ -65,6 +66,19 @@ class DokuConnectionLogsMapping extends AbstractMapping
     {
         $this->log_user = $log_user;
     }
+
+    public function getLogUrl(): ?int
+    {
+        return $this->log_url;
+    }
+
+    public function setLogUrl(?int $log_url): void
+    {
+        $this->log_url = $log_url;
+    }
+
+
+
 
 
 }

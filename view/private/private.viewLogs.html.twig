@@ -1,7 +1,9 @@
 {% extends "template.html.twig" %}
 
 {% block title %}{{ parent() }} Logs{% endblock %}
+{% block dumpArea %}
 
+{% endblock %}
 {% block content %}
     {% if logs %}
         <div class="overflow-scroll max-h-[500px]">
@@ -22,7 +24,7 @@
 
                         <td class="py-3 px-4">{{ log.getLogDate|date("d/m H:i:s") }}</td>
                         <td class="py-3 px-4">{{ log.getLogIp }}</td>
-                        <td class="py-3 px-4">{{ log.getLogPageVisited == 0 ? "Home" : log.getLogPageVisited }}</td>
+                        <td class="py-3 px-4"><a href="?route=showDetails&id={{ log.getLogUrl }}">{{ log.getLogPageVisited == 0 ? "Home" : log.getLogPageVisited }}</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

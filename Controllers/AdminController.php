@@ -14,6 +14,7 @@ class AdminController extends Abstract\AbstractController
     private DokuManager $dokuManager;
     private ConnectionManager $connectionManager;
     private AdminManager $adminManager;
+
     public function __construct(Environment $twig, ManagerFactory $managerFactory)
     {
         parent::__construct($twig, $managerFactory);
@@ -21,7 +22,8 @@ class AdminController extends Abstract\AbstractController
         $this->connectionManager = $this->getManager(ConnectionManager::class);
         $this->adminManager = $this->getManager(AdminManager::class);
     }
-    public function admin() : void
+
+    public function admin(): void
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
@@ -33,13 +35,13 @@ class AdminController extends Abstract\AbstractController
         ]);
     }
 
-    public function addSetter() : void
+    public function addSetter(): void
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
         $setters = $this->dokuManager->getAllSetters();
 
-        if(isset($_POST["unset:addSetter"])) {
+        if (isset($_POST["unset:addSetter"])) {
             // $this->verifyCsrfToken($_POST['csrf:csrf_token']);
             $cleanedData = $this->preparePostData($_POST);
             $addSetter = $this->adminManager->addSetter($cleanedData);
@@ -56,14 +58,14 @@ class AdminController extends Abstract\AbstractController
         ]);
     }
 
-    public function addVariant() : void
+    public function addVariant(): void
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
 
         $variants = $this->dokuManager->getAllVariants();
 
-        if(isset($_POST["unset:addVariant"])) {
+        if (isset($_POST["unset:addVariant"])) {
             $cleanedData = $this->preparePostData($_POST);
             $addVariant = $this->adminManager->addVariant($cleanedData);
             $_SESSION["systemMessage"] = $addVariant ? "Variant added" : "Variant not added";
@@ -79,20 +81,20 @@ class AdminController extends Abstract\AbstractController
         ]);
     }
 
-    public function addSudoku() : void
+    public function addSudoku(): void
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
         $setters = $this->dokuManager->getAllSetters();
         $variants = $this->dokuManager->getAllVariants();
 
-        if(isset($_POST["unset:addSudoku"])) {
+        if (isset($_POST["unset:addSudoku"])) {
             // $this->verifyCsrfToken($_POST['csrf:csrf_token']);
             $dokuVariants = $_POST["int:variant"];
             unset($_POST["int:variant"]);
             $cleanedData = $this->preparePostData($_POST);
             $addSoduku = $this->adminManager->addSudoku($cleanedData);
-            if($addSoduku) {
+            if ($addSoduku) {
                 $this->adminManager->incremementSetterCount($cleanedData["doku_setter_id"]);
                 $dokuVariants["doku_id"] = $addSoduku;
                 $this->adminManager->addSudokuVariantsToLatestPuzzle($dokuVariants);
@@ -112,13 +114,20 @@ class AdminController extends Abstract\AbstractController
         ]);
     }
 
-    public function viewLogs() : void
+    public function viewLogs(): void
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
 
         $logs = $this->connectionManager->getAllLogs();
+        foreach ($logs as &$log) {
+            if (isset(explode(":", $log->getLogPageVisited())[1])) {
 
+                    $log->setLogUrl(intval(explode(":", $log->getLogPageVisited())[1]));
+            }else {
+                $log->setLogUrl(null);
+            }
+        }
         echo $this->twig->render("private/private.viewLogs.html.twig", [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
@@ -127,13 +136,13 @@ class AdminController extends Abstract\AbstractController
         ]);
     }
 
-    public function editVariant() : void
+    public function editVariant(): void
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
         $variants = $this->dokuManager->getAllVariants();
 
-        if(isset($_POST["unset:editVariant"])) {
+        if (isset($_POST["unset:editVariant"])) {
             $cleanedData = $this->preparePostData($_POST);
             $editVariant = $this->adminManager->editVariant($cleanedData);
             $_SESSION["systemMessage"] = $editVariant ? "Variant edited" : "Variant not edited";
