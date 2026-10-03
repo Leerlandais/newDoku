@@ -151,7 +151,7 @@
                         <h2 class="font-headline-md text-headline-md text-on-surface">Puzzles found by Duration</h2>
                     </div>
                 </header>
-                    {% if puzzle["byDuration"] %}
+                    {% if puzzles["byDuration"] %}
                 <div class="overflow-x-auto">
                     <table class="w-full text-left font-body-sm text-body-sm">
                         <thead>
@@ -164,7 +164,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for puzzle in puzzle["byDuration"] %}
+                        {% for puzzle in puzzles["byDuration"] %}
                         <tr class="hover:bg-surface-container-low/60 transition-colors">
                             <td class="py-space-md px-space-md font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
                                 {{ puzzle.getDokuId }}
@@ -247,7 +247,7 @@
                         <h2 class="font-headline-md text-headline-md text-on-surface">Puzzles found by Rating</h2>
                     </div>
                 </header>
-                {% if puzzle["byStars"] %}
+                {% if puzzles["byStars"] %}
                 <div class="overflow-x-auto">
                     <table class="w-full text-left font-body-sm text-body-sm">
                         <thead>
