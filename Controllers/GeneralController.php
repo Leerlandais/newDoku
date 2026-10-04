@@ -188,8 +188,9 @@ class GeneralController extends Abstract\AbstractController
     public function getVariant(array $getParams): void
     {
         global $systemMessage, $sessionRole, $sessionExpiresAt;
-        $id[] = $this->intClean($getParams["id"]);
-        $puzzles = $this->dokuManager->getPuzzlesByVariant($id);
+        $id = [];
+        $id = [$this->intClean($getParams["id"])];
+        $puzzles = $this->searchManager->getPuzzlesByVariant($id);
 
         echo $this->twig->render('public/public.searchResults.html.twig', [
             "systemMessage" => $systemMessage,

@@ -124,7 +124,6 @@ class SearchManager extends AbstractManager
 
     public function getPuzzlesByVariant(array $variantIds) : array|false
     {
-
         $stmt = $this->db->prepare("
             SELECT * FROM doku_has_variant WHERE doku_variant IN (:variant_ids)");
                  $implode = implode(", ", $variantIds);

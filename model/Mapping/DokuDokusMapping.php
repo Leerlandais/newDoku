@@ -32,7 +32,7 @@ class DokuDokusMapping extends AbstractMapping
 
     public function getDokuTitle(): string
     {
-        return $this->doku_title;
+        return htmlspecialchars_decode($this->doku_title);
     }
 
     public function setDokuTitle(string $doku_title): void
