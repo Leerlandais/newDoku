@@ -188,9 +188,13 @@ class GeneralController extends Abstract\AbstractController
     public function getVariant(array $getParams): void
     {
         global $systemMessage, $sessionRole, $sessionExpiresAt;
-        $id = [];
-        $id = [$this->intClean($getParams["id"])];
-        $puzzles = $this->searchManager->getPuzzlesByVariant($id);
+        if (!isset($getParams["id"]) || !is_numeric($getParams["id"])) {
+            header("Location: ?route=home");
+            exit();
+        }
+        $id = $this->intClean($getParams["id"]);
+
+        $puzzles["byVariant"] = $this->searchManager->getPuzzlesByVariantId($id);
 
         echo $this->twig->render('public/public.searchResults.html.twig', [
             "systemMessage" => $systemMessage,
