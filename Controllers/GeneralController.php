@@ -43,8 +43,8 @@ class GeneralController extends Abstract\AbstractController
             //      }
         }
         $pageCounter = $this->intClean($_GET["pageCounter"] ?? 1);
-        $puzzles = $this->dokuManager->getAllPuzzles($pageCounter);
         $puzzleCount = $this->dokuManager->getPuzzleCount();
+        $puzzles = $this->dokuManager->getAllPuzzles($pageCounter);
         $totalTime = $this->dokuManager->getTotalTime();
         echo $this->twig->render("public/public.viewAll.html.twig", [
             "sessionRole" => $sessionRole,

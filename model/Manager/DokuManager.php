@@ -51,7 +51,7 @@ $stmt->execute();
 
     public function getAllPuzzles(int $pageCounter) : array|false
     {
-        $offset = ($pageCounter - 1) * 10;
+        $offset = ($pageCounter - 1) * 20;
 
         $query = $this->db->prepare("SELECT 
     dd.*,
@@ -64,9 +64,8 @@ LEFT JOIN doku_has_variant dhv
     ON dd.doku_id = dhv.doku_id
 LEFT JOIN doku_variants dv 
     ON dhv.doku_variant = dv.variant_id
-WHERE dd.doku_id > :offset
 GROUP BY dd.doku_id
-ORDER BY dd.doku_id LIMIT 10");
+ORDER BY dd.doku_id DESC LIMIT 20 OFFSET :offset");
         $query->bindParam(":offset", $offset, \PDO::PARAM_INT);
         $query->execute();
         $dokus = [];
