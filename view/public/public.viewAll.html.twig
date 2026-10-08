@@ -15,8 +15,7 @@
             <h1 class="h1-style">
                 All {{ puzzleCount }} Solved
                 Puzzles</h1>
-            <h2 class="h2-style">Time spent &lpar;minutes&rpar;
-                : {{ totalTime }}</h2>
+            <h2 class="h2-style">Time spent {{ (totalTime / 60)|round(2) }} hours</h2>
         </div>
 
     </div>
