@@ -12,8 +12,7 @@ class DokuManager extends AbstractManager
     public function getLatestPuzzles($offset = false) : array|false
     {
         $date = date("Y-m-d");
-        if($offset) $date = date("Y-m-d", strtotime("$offset days"));
-
+        if($offset) $date = date("Y-m-d", strtotime(" - $offset days"));;
         $stmt = $this->db->prepare("SELECT 
     dd.*,
     ds.setter_name AS doku_setter_name,

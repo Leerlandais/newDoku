@@ -32,8 +32,9 @@ class ConnectionController extends Abstract\AbstractController
         exit;
     }
 
-    public function index(): void
+    public function index(?array $getParams): void
     {
+
         global $systemMessage, $sessionRole, $sessionExpiresAt;
         if (!isset($_SESSION["visit_logged"])) {
             $ip = $_SERVER['REMOTE_ADDR'];
@@ -45,7 +46,7 @@ class ConnectionController extends Abstract\AbstractController
         }
         $solvedPuzzles = $this->dokuManager->getLatestPuzzles();
         $totalTime = $this->dokuManager->getTotalTime(true);
-        $currentDateOffset = $_GET["currentDateOffset"] ?? 0;
+        $currentDateOffset = $_GET["date"] ?? 0;
         echo $this->twig->render('public/public.index.html.twig', [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
