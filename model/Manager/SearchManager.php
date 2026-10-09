@@ -192,4 +192,33 @@ class SearchManager extends AbstractManager
         return $puzzles;
     }
 
+    public function getPuzzlesByDate($startDate, $endDate) : array|false
+    {
+        $start = substr($startDate, 0, 10);
+        $end = substr($endDate, 0, 10);
+        $stmt = $this->db->prepare("
+                    SELECT 
+                        dd.*,
+                        ds.setter_name AS doku_setter_name,
+                        GROUP_CONCAT(DISTINCT dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
+                    FROM doku_dokus dd
+                    LEFT JOIN doku_setters ds 
+                        ON dd.doku_setter_id = ds.setter_id
+                    LEFT JOIN doku_has_variant dhv 
+                        ON dd.doku_id = dhv.doku_id
+                    LEFT JOIN doku_variants dv 
+                        ON dhv.doku_variant = dv.variant_id
+                    WHERE dd.doku_date BETWEEN :start AND :end
+                    GROUP BY dd.doku_id
+                    ORDER BY dd.doku_id DESC");
+        $stmt->bindParam(":start", $start);
+        $stmt->bindParam(":end", $end);
+        $stmt->execute();
+        $puzzles = [];
+        while ($result = $stmt->fetch()) {
+            $puzzles[] = new DokuDokusMapping($result);
+        }
+        if(empty($puzzles)) return false;
+        return $puzzles;
+    }
 }

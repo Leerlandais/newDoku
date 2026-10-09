@@ -229,6 +229,7 @@ class GeneralController extends Abstract\AbstractController
 
     private function runSearch(array $data): array|false|DokuDokusMapping
     {
+
         $resultsArray = [];
         if (isset($data["doku_title"])) {
             $resultsArray["byTitle"] = $this->searchManager->getPuzzleByTitle($data["doku_title"]);
@@ -257,13 +258,23 @@ class GeneralController extends Abstract\AbstractController
         } else {
             $resultsArray["byVariant"] = false;
         }
-
-
+        $stopIt = false;
+        if (isset($data["doku_start"]) && isset($data["doku_end"])) {
+            if(substr($data["doku_start"], 0, 10) == "2026-09-06" &&
+                substr($data["doku_end"], 0, 10) == date("Y-m-d")) {
+                $stopIt = true;
+                if(count($data) < 3) {
+                    header("Location: ?route=viewAll");
+                }
+            }
+            $resultsArray["byDate"] = $this->searchManager->getPuzzlesByDate($data["doku_start"], $data["doku_end"]);
+        }
+        if($stopIt) $resultsArray["byDate"] = false;
         return $resultsArray;
 
     }
 
-    public function searchByStars(array $getParams) : void
+    public function searchByStars(array $getParams): void
     {
         global $systemMessage, $sessionRole, $sessionExpiresAt;
         $stars = $this->intClean($getParams["count"] ?? 1);

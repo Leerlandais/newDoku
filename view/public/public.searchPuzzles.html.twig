@@ -69,15 +69,19 @@
                             </label>
                             <div class="grid grid-cols-2 gap-space-sm">
                                 <div class="bg-surface-container-lowest">
+                                    {% set startDate = date("2026-09-06")|date("Y-m-d") %}
+
                                     <input class="w-full bg-transparent font-label-sm text-label-sm text-on-surface py-space-sm px-space-sm focus:outline-none focus:bg-surface-container-high transition-colors cursor-pointer"
-                                           id="fromDate"
+                                           id="startDate"
                                            title="From Date"
+                                           value="{{ startDate }}"
                                            type="date" name="date:doku_start"/>
                                 </div>
                                 <div class="bg-surface-container-lowest">
                                     <input class="w-full bg-transparent font-label-sm text-label-sm text-on-surface py-space-sm px-space-sm focus:outline-none focus:bg-surface-container-high transition-colors cursor-pointer"
-                                           id="toDate"
+                                           id="endDate"
                                            title="To Date"
+                                           value="{{ 'now'|date('Y-m-d') }}"
                                            type="date" name="date:doku_end"/>
                                 </div>
                             </div>
@@ -222,4 +226,8 @@
                 </form>
             </section>
 
+{% endblock %}
+    {% block javascript %}
+    {{ parent() }}
+    <script src="{{ PUB_DIR }}scripts/searchController.js"></script>
 {% endblock %}
