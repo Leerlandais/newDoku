@@ -9,9 +9,11 @@ use model\Mapping\DokuVariantsMapping;
 
 class DokuManager extends AbstractManager
 {
-    public function getLatestPuzzles() : array|false
+    public function getLatestPuzzles($offset = false) : array|false
     {
         $date = date("Y-m-d");
+        if($offset) $date = date("Y-m-d", strtotime("$offset days"));
+
         $stmt = $this->db->prepare("SELECT 
     dd.*,
     ds.setter_name AS doku_setter_name,
@@ -51,6 +53,7 @@ $stmt->execute();
 
     public function getAllPuzzles(int $pageCounter) : array|false
     {
+        if($pageCounter < 1) $pageCounter = 1;
         $offset = ($pageCounter - 1) * 20;
 
         $query = $this->db->prepare("SELECT 

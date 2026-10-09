@@ -5,7 +5,6 @@
 
     {% block dumpArea %}
 
-
     {% endblock %}
     {% if puzzles %}
         {% if puzzles|length < 3 %}
@@ -15,7 +14,7 @@
             <!-- Top Action & Date Anchor -->
             <div class="flex flex-col justify-between gap-space-lg">
                 <h1 class="h1-style">
-                    Today's {{ puzzles|length }} Solved
+                    {{ puzzles|length }} Solved
                     Puzzle{{ puzzles|length > 1 ? "s" : "" }}</h1>
                 <h2 class="h2-style">Time spent &lpar;minutes&rpar; : {{ totalTime }}</h2>
             </div>
@@ -116,6 +115,19 @@
     </div>
     <!-- Action Group -->
     <div class="flex flex-col lg:flex-row gap-x-12 ms-20 mt-12">
+        {% if currentDateOffset == 0 %}
+        <a class="font-label-md text-label-md bg-primary text-on-primary px-space-lg py-space-sm transition-all duration-150 flex items-center gap-space-xs hover:bg-inverse-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+           data-path="hier-solved-puzzles" href="?route=getPrevious&date={{ currentDateOffset - 1 }}">
+            <span>View Yesterday's Puzzles</span>
+            <span class="material-symbols-outlined text-base">arrow_back</span>
+        </a>
+        {% else %}
+        <a class="font-label-md text-label-md bg-primary text-on-primary px-space-lg py-space-sm transition-all duration-150 flex items-center gap-space-xs hover:bg-inverse-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+           data-path="hier-solved-puzzles" href="?route=getPrevious&date={{ currentDateOffset - 1 }}">
+            <span>View Previous Day's Puzzles</span>
+            <span class="material-symbols-outlined text-base">arrow_back</span>
+        </a>
+        {% endif %}
         <a class="font-label-md text-label-md bg-primary text-on-primary px-space-lg py-space-sm transition-all duration-150 flex items-center gap-space-xs hover:bg-inverse-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
            data-path="all-solved-puzzles" href="?route=viewAll">
             <span>View All Solved Puzzles</span>

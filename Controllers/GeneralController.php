@@ -58,6 +58,36 @@ class GeneralController extends Abstract\AbstractController
         ]);
     }
 
+    public function getPrevious(array $getParams): void
+    {
+        global $systemMessage, $sessionRole, $sessionExpiresAt;
+        if (!isset($_SESSION["visit_logged"])) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = $ip == "::1" ? "localhost" : $ip;
+            if ($ip !== MAIN_IP) {
+                $this->connectionManager->logConnection($ip, "Previous");
+                $_SESSION["visit_logged"] = true;
+            }
+        }
+        $offset = null;
+        if(isset($_GET["date"])) {
+            $offset = $_GET["date"];
+        }
+        $solvedPuzzles = $this->dokuManager->getLatestPuzzles($offset);
+        $totalTime = $this->dokuManager->getTotalTime(true);
+
+        echo $this->twig->render('public/public.index.html.twig', [
+            "systemMessage" => $systemMessage,
+            "sessionRole" => $sessionRole,
+            "csrfToken" => $this->csrfToken,
+            "puzzles" => $solvedPuzzles,
+            "location" => "home",
+            "totalTime" => $totalTime,
+            "sessionExpiresAt" => $sessionExpiresAt,
+            "currentDateOffset" => $offset,
+        ]);
+    }
+
     public function findDoku(): void
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;

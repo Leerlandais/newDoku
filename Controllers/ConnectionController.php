@@ -45,7 +45,7 @@ class ConnectionController extends Abstract\AbstractController
         }
         $solvedPuzzles = $this->dokuManager->getLatestPuzzles();
         $totalTime = $this->dokuManager->getTotalTime(true);
-
+        $currentDateOffset = $_GET["currentDateOffset"] ?? 0;
         echo $this->twig->render('public/public.index.html.twig', [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
@@ -53,9 +53,11 @@ class ConnectionController extends Abstract\AbstractController
             "puzzles" => $solvedPuzzles,
             "location" => "home",
             "totalTime" => $totalTime,
-            "sessionExpiresAt" => $sessionExpiresAt
+            "sessionExpiresAt" => $sessionExpiresAt,
+            "currentDateOffset" => $currentDateOffset
         ]);
     }
+
 
     public function login(): void
     {
@@ -84,13 +86,11 @@ class ConnectionController extends Abstract\AbstractController
             exit();
         }
 
-        $puzzles = $this->dokuManager->getLatestPuzzles();
 
         echo $this->twig->render('public/public.login.html.twig', [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
             "csrfToken" => $this->csrfToken,
-            "puzzles" => $puzzles,
             "location" => "login",
             "sessionExpiresAt" => $sessionExpiresAt
         ]);

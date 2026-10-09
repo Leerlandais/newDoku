@@ -20,6 +20,7 @@ $router->registerRoute('showDetails', GeneralController::class, 'showDetails');
 $router->registerRoute('getVariant', GeneralController::class, 'getVariant');
 $router->registerRoute('showVariantRules', GeneralController::class, 'showVariantRules');
 $router->registerRoute('searchByStars', GeneralController::class, 'searchByStars');
+$router->registerRoute("getPrevious", GeneralController::class, "getPrevious");
 // ADMIN ROUTES
 
 $router->registerRoute("admin", AdminController::class, "admin");
