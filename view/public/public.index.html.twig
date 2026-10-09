@@ -120,18 +120,24 @@
             <span>View Yesterday's Puzzles</span>
             <span class="material-symbols-outlined text-base">arrow_back</span>
         </a>
+            <a class="font-label-md text-label-md bg-primary text-on-primary px-space-lg py-space-sm transition-all duration-150 flex items-center gap-space-xs hover:bg-inverse-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+               data-path="all-solved-puzzles" href="?route=viewAll">
+                <span>View All Solved Puzzles</span>
+                <span class="material-symbols-outlined text-base">arrow_forward</span>
+            </a>
         {% else %}
             <a class="font-label-md text-label-md bg-primary text-on-primary px-space-lg py-space-sm transition-all duration-150 flex items-center gap-space-xs hover:bg-inverse-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                data-path="hier-solved-puzzles" href="?route=getPrevious&date={{ currentDateOffset + 1 }}">
                 <span>View Previous Day's Puzzles</span>
                 <span class="material-symbols-outlined text-base">arrow_back</span>
             </a>
+            <a class="font-label-md text-label-md bg-primary text-on-primary px-space-lg py-space-sm transition-all duration-150 flex items-center gap-space-xs hover:bg-inverse-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+               data-path="all-solved-puzzles" href="?route=home">
+                <span>View Today's Puzzles</span>
+                <span class="material-symbols-outlined text-base">arrow_forward</span>
+            </a>
         {% endif %}
-        <a class="font-label-md text-label-md bg-primary text-on-primary px-space-lg py-space-sm transition-all duration-150 flex items-center gap-space-xs hover:bg-inverse-surface focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-           data-path="all-solved-puzzles" href="?route=viewAll">
-            <span>View All Solved Puzzles</span>
-            <span class="material-symbols-outlined text-base">arrow_forward</span>
-        </a>
+
         {% if "ROLE_ADMIN" in sessionRole %}
             <a class="font-label-md text-label-md bg-surface-container-low text-on-surface px-space-lg py-space-sm border border-outline-variant hover:bg-surface-container transition-all flex items-center gap-space-xs focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                id="quick-log-btn" href="?route=addSudoku">
