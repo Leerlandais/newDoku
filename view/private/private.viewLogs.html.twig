@@ -7,6 +7,7 @@
 {% block content %}
     {% if logs %}
         <div class="overflow-scroll max-h-[500px]">
+            <h1 class="h1-style">Total Connections : {{ logCount }}</h1>
             <table class="min-w-full bg-white shadow-md rounded-xl border border-gray-300
                   max-h-[500px] overflow-scroll text-center"
                    id="logTable">

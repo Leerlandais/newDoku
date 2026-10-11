@@ -128,11 +128,13 @@ class AdminController extends Abstract\AbstractController
                 $log->setLogUrl(null);
             }
         }
+        $logCount = count($logs);
         echo $this->twig->render("private/private.viewLogs.html.twig", [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
             "logs" => $logs,
-            "sessionExpiresAt" => $sessionExpiresAt
+            "sessionExpiresAt" => $sessionExpiresAt,
+            "logCount" => $logCount
         ]);
     }
 
