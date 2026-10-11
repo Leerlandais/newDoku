@@ -64,12 +64,13 @@ class GeneralController extends Abstract\AbstractController
         global $systemMessage, $sessionRole, $sessionExpiresAt;
 
         $offset = null;
-        if(isset($_GET["date"])) {
-            $offset = $this->intClean($_GET["date"]);
+        if(isset($getParams["date"])) {
+            $offset = $this->intClean($getParams["date"]);
         }
 
+        $requestedDate = date("Y-m-d", strtotime("- $offset day"));
         $solvedPuzzles = $this->dokuManager->getLatestPuzzles($offset);
-        $totalTime = $this->dokuManager->getTotalTime(true);
+        $totalTime = $this->dokuManager->getTotalTime(true, $requestedDate);
 
         echo $this->twig->render('public/public.index.html.twig', [
             "systemMessage" => $systemMessage,

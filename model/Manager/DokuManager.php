@@ -40,9 +40,10 @@ $stmt->execute();
         return $dokus;
     }
 
-    public function getTotalTime($current = false) : int
+    public function getTotalTime($current = false, $requestedDate = null) : int
     {
         $today = $current ? "WHERE doku_date LIKE '".date("Y-m-d")."%'" : "";
+        $today = $requestedDate ? "WHERE doku_date LIKE '$requestedDate%'" : $today;
         $query = $this->db->query("SELECT SUM(doku_duration) AS total_time FROM doku_dokus $today");
         $query->execute();
         $totalTime = $query->fetch();
