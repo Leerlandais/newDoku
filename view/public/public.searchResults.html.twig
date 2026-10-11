@@ -1,7 +1,6 @@
 {% extends 'template.html.twig' %}
 {% block title %}{{ parent() }}Results{% endblock %}
 {% block dumpArea %}
-
 {% endblock %}
 {% block content %}
 
@@ -280,8 +279,7 @@
                         <tr class="bg-surface-container-lowest text-secondary font-label-sm text-label-sm uppercase tracking-wider">         <tr class="bg-surface-container-lowest text-secondary font-label-sm text-label-sm uppercase tracking-wider">
                             <th class="py-space-sm px-space-md" scope="col">Puzzle ID</th>
                             <th class="py-space-sm px-space-md" scope="col">Title &amp; Setter</th>
-                            <th class="py-space-sm px-space-md" scope="col">Variant Tags</th>
-                            <th class="py-space-sm px-space-md" scope="col">Solve Time / Metric</th>
+                            <th class="py-space-sm px-space-md" scope="col">Solve Time / Difficulty</th>
                             <th class="py-space-sm px-space-md text-right" scope="col">Action</th>
                         </tr>
                         </thead>
@@ -297,18 +295,14 @@
                                     <span class="font-body-sm text-body-sm text-secondary">Setter: {{ puzzle.getDokuSetterName }}</span>
                                 </div>
                             </td>
-                            <td class="py-space-md px-space-md">
-                                <div class="flex flex-wrap gap-space-xs">
-                                    {% for variant in puzzle.getDokuVariantNames|split(" ,") %}
-                                    <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">{{ variant }}</span>
-                                    {% endfor %}
-                                </div>
-                            </td>
                             <td class="py-space-md px-space-md font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
                                     <span class="inline-flex items-center gap-space-xs text-primary font-normal mr-1">
                                     <span class="material-symbols-outlined text-sm">schedule</span>
                                     </span>
-                                {{ puzzle.getDokuDuration }}m
+                                {{ puzzle.getDokuDuration }}m                                {% for i in range(1, puzzle.getDokuStars) %}
+                                    <span class="material-symbols-outlined text-sm"
+                                          style="font-variation-settings: 'FILL' 1;">star</span>
+                                {% endfor %}
                             </td>
                             <td class="py-space-md px-space-md text-right whitespace-nowrap">
                                 <a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-surface transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 px-space-sm py-1 bg-surface-container"

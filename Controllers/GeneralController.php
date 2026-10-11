@@ -293,7 +293,13 @@ class GeneralController extends Abstract\AbstractController
         if (isset($data["doku_stars"])) {
             $resultsArray["byStars"] = $this->searchManager->getPuzzleByStars($data["doku_stars"]);
         } else {
-            $resultsArray["byStars"] = false;
+            $resultsArray["byStars"] = [];
+        }
+
+        if (isset($data["doku_stars_min"])) {
+            $resultsArray["byStarsMin"] = $this->searchManager->getPuzzleByStars($data["doku_stars_min"], true);
+        } else {
+            $resultsArray["byStarsMin"] = false;
         }
 
         if (isset($data["variant_id"])) {
@@ -313,6 +319,17 @@ class GeneralController extends Abstract\AbstractController
             $resultsArray["byDate"] = $this->searchManager->getPuzzlesByDate($data["doku_start"], $data["doku_end"]);
         }
         if($stopIt) $resultsArray["byDate"] = false;
+
+
+        foreach (array_merge(
+                     $resultsArray["byStars"] ?: [],
+                     $resultsArray["byStarsMin"] ?: []
+                 ) as $puzzle) {
+            $resultsArray["byStars"][$puzzle->getDokuId()] = $puzzle;
+        }
+
+        $resultsArray["byStars"] = array_values($resultsArray["byStars"]);
+        unset($resultsArray["byStarsMin"]);
         return $resultsArray;
 
     }

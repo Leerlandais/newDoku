@@ -93,23 +93,23 @@ class SearchManager extends AbstractManager
         return $results;
     }
 
-    public function getPuzzleByStars(int $stars) : array|false
+    public function getPuzzleByStars(int $stars, bool $min = false) : array|false
     {
+        if($min) $whereParams = "dd.doku_stars >= :stars";
+        else $whereParams = "dd.doku_stars <= :stars";
         $stmt = $this->db->prepare("
-            SELECT dd.*, ds.setter_name AS doku_setter_name,
-               GROUP_CONCAT(
-                    DISTINCT dv.variant_name 
-                    ORDER BY dv.variant_name 
-                    SEPARATOR ', '
-                ) AS doku_variant_names
-                FROM doku_dokus dd
-                LEFT JOIN doku_setters ds 
-                    ON dd.doku_setter_id = ds.setter_id
-                LEFT JOIN doku_has_variant dhv 
-                    ON dd.doku_id = dhv.doku_id
-                LEFT JOIN doku_variants dv 
-                    ON dhv.doku_variant = dv.variant_id
-                WHERE dd.doku_stars = :stars
+            SELECT 
+                        dd.*,
+                        ds.setter_name AS doku_setter_name,
+                        GROUP_CONCAT(DISTINCT dv.variant_name ORDER BY dv.variant_name SEPARATOR ', ') AS doku_variant_names
+                    FROM doku_dokus dd
+                    LEFT JOIN doku_setters ds 
+                        ON dd.doku_setter_id = ds.setter_id
+                    LEFT JOIN doku_has_variant dhv 
+                        ON dd.doku_id = dhv.doku_id
+                    LEFT JOIN doku_variants dv 
+                        ON dhv.doku_variant = dv.variant_id
+                WHERE $whereParams
                 GROUP BY dd.doku_stars
                 ORDER BY dd.doku_stars DESC");
         $stmt->bindParam(":stars", $stars, \PDO::PARAM_INT);

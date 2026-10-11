@@ -120,6 +120,22 @@
                                 <span class="font-label-sm text-label-sm text-secondary pr-space-md select-none">/5 stars</span>
                             </div>
                         </div>
+                        <!-- Minimum Difficulty -->
+                        <div class="md:col-span-3 flex flex-col gap-space-xs">
+                            <label class="label-style" for="diffRatingMin">
+                                <span class="material-symbols-outlined text-sm text-primary">query_stats</span>
+                                Min Difficulty
+                            </label>
+                            <div class="relative bg-surface-container-lowest flex items-center">
+                                <input class="w-full bg-transparent font-label-md text-label-md text-on-surface py-space-sm px-space-md focus:outline-none focus:bg-surface-container-high transition-colors"
+                                       id="diffRatingMin"
+                                       max="5"
+                                       min="1"
+                                       type="number"
+                                       name="int:doku_stars_min"/>
+                                <span class="font-label-sm text-label-sm text-secondary pr-space-md select-none">/5 stars</span>
+                            </div>
+                        </div>
                         {#
                         <!-- Date Completed Range -->
                         <div class="md:col-span-4 flex flex-col gap-space-xs">
