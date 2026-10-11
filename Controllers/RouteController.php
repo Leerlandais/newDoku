@@ -21,6 +21,7 @@ $router->registerRoute('getVariant', GeneralController::class, 'getVariant');
 $router->registerRoute('showVariantRules', GeneralController::class, 'showVariantRules');
 $router->registerRoute('searchByStars', GeneralController::class, 'searchByStars');
 $router->registerRoute("getPrevious", GeneralController::class, "getPrevious");
+$router->registerRoute("getRandomPuzzle", GeneralController::class, "getRandomPuzzle");
 // ADMIN ROUTES
 
 $router->registerRoute("admin", AdminController::class, "admin");

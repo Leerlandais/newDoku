@@ -252,6 +252,24 @@ class GeneralController extends Abstract\AbstractController
         ]);
     }
 
+    public function getRandomPuzzle(): void
+    {
+        global $systemMessage, $sessionRole, $sessionExpiresAt;
+        if (!isset($_SESSION["random_logged"])) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = $ip == "::1" ? "localhost" : $ip;
+            if ($ip !== MAIN_IP) {
+                $this->connectionManager->logConnection($ip, "Random Puzzle");
+            }
+            $_SESSION["random_logged"] = true;
+        }
+        $totalAllowed = $this->dokuManager->getPuzzleCount();
+
+        $puzzleId = rand(1, $totalAllowed);
+        header("Location: ?route=showDetails&id=$puzzleId");
+        exit();
+    }
+
     private function runSearch(array $data): array|false|DokuDokusMapping
     {
 
