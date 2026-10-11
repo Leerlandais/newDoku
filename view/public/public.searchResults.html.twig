@@ -52,9 +52,7 @@
                                     </td>
                                     <td class="py-space-md px-space-md">
                                         <div class="flex flex-wrap gap-space-xs">
-                                            {% for variant in puzzle.getDokuVariantNames|split(', ') %}
-                                            <span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-space-xs py-0.5">{{ variant }}</span>
-                                            {% endfor %}
+                                            <a href="?route=showVariantRules" class="span-extra">{{ puzzle.getDokuVariantNames }}</a>
                                         </div>
                                     </td>
                                     <td class="py-space-md px-space-md font-label-md text-label-md text-on-surface font-semibold whitespace-nowrap">
@@ -299,7 +297,9 @@
                                     <span class="inline-flex items-center gap-space-xs text-primary font-normal mr-1">
                                     <span class="material-symbols-outlined text-sm">schedule</span>
                                     </span>
-                                {{ puzzle.getDokuDuration }}m                                {% for i in range(1, puzzle.getDokuStars) %}
+                                {{ puzzle.getDokuDuration }}m
+                                <span class="font-label-sm text-label-sm bg-tertiary-container leading-loose text-on-tertiary px-2 py-0.5 uppercase tracking-wider">Difficulty :</span>
+                                {% for i in range(1, puzzle.getDokuStars) %}
                                     <span class="material-symbols-outlined text-sm"
                                           style="font-variation-settings: 'FILL' 1;">star</span>
                                 {% endfor %}
