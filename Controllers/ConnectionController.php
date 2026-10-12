@@ -79,9 +79,15 @@ class ConnectionController extends Abstract\AbstractController
             $cleanPostData = $this->preparePostData($_POST);
             $userLogin = $this->connectionManager->loginUser($cleanPostData);
             if ($userLogin) {
+                if ($ip !== MAIN_IP) {
+                    $this->connectionManager->logConnection($ip, "SUCCESS");
+                }
                 header("Location: ?route=admin");
             } else {
                 $_SESSION["systemMessage"] = "Not the right credentials";
+                if ($ip !== MAIN_IP) {
+                    $this->connectionManager->logConnection($ip, "FAILED");
+                }
                 header("Location: ./");
             }
             exit();
