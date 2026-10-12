@@ -166,7 +166,7 @@ class AdminController extends Abstract\AbstractController
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
         $logs = $this->connectionManager->getAllLogs($this->simpleTrim($getParams["ip"]));
         $logCount = count($logs);
-        var_dump($logs);
+
         echo $this->twig->render("private/private.viewLogs.html.twig", [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
