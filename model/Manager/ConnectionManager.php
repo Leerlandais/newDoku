@@ -53,13 +53,20 @@
 
         }
 
-        public function getAllLogs() : array
+        public function getAllLogs($ip = false) : array
         {
-            $query = $this->db->query("SELECT * FROM doku_connection_logs ORDER BY log_id DESC");
+            $whereClause = $ip ? "WHERE log_ip = :ip" : "";
+            $query = $this->db->prepare("SELECT * FROM doku_connection_logs $whereClause ORDER BY log_id DESC");
+            if($ip) {
+                $query->bindValue(":ip", $ip, \PDO::PARAM_STR);
+            }
+
+                $query->execute();
             $logs = [];
             while ($row = $query->fetch()) {
                 $logs[] = new DokuConnectionLogsMapping($row);
             }
+
             return $logs;
         }
 

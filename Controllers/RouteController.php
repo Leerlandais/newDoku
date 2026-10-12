@@ -30,6 +30,7 @@ $router->registerRoute("addVariant", AdminController::class, "addVariant");
 $router->registerRoute("addSudoku", AdminController::class, "addSudoku");
 $router->registerRoute("viewLogs", AdminController::class, "viewLogs");
 $router->registerRoute("editVariant", AdminController::class, "editVariant");
+$router->registerRoute('showLogs', AdminController::class, 'showLogs');
 
 $router->registerRoute("logLinkConnect", ConnectionController::class, "logLinkConnect");
 // Handle request
