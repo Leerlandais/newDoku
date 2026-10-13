@@ -73,7 +73,7 @@
                         <td class="td-style">
                             {% set stars = puzzle.getDokuStars ?? 0 %}
                             {% if stars %}
-                                <span class="font-label-sm text-label-sm bg-tertiary-container text-on-tertiary px-2 py-0.5 uppercase tracking-wider">Difficulty :</span>
+                                <span class="font-label-sm text-label-sm bg-tertiary-container text-on-tertiary px-2 py-0.5 uppercase tracking-wider">DIFFICULTY :</span>
                                 <div class="flex items-center text-tertiary text-sm" title="Difficulty: 4 of 5">
                                     <a href="?route=searchByStars&count={{ puzzle.getDokuStars }}" class="flex items-center text-tertiary text-sm" title="Difficulty: 4 of 5">
                                     {% if stars > 5 %}
