@@ -20,6 +20,7 @@ class DokuDokusMapping extends AbstractMapping
 
     private ?string $doku_img_location;
     private int $doku_solve_count;
+    private int $doku_view_count;
 
     public function getDokuId(): int
     {
@@ -132,6 +133,16 @@ class DokuDokusMapping extends AbstractMapping
     public function setDokuSolveCount(int $doku_solve_count): void
     {
         $this->doku_solve_count = $doku_solve_count;
+    }
+
+    public function getDokuViewCount(): int
+    {
+        return $this->doku_view_count;
+    }
+
+    public function setDokuViewCount(int $doku_view_count): void
+    {
+        $this->doku_view_count = $doku_view_count;
     }
 
 

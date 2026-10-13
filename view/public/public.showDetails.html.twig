@@ -71,6 +71,10 @@
 <span class="material-symbols-outlined text-sm text-primary">timer</span>
               Solve Time: <strong class="text-primary font-semibold">{{ puzzle.getDokuDuration }} minutes</strong>
 </span>
+                                <span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-primary">eyeglasses</span>
+              Views :<strong class="text-primary font-semibold">{{ puzzle.getDokuViewCount }} time{% if puzzle.getDokuViewCount > 1 or puzzle.getDokuViewCount == 0 %}s{% endif %}</strong>
+</span>
                             </div>
                         </div>
                         <!-- Primary CTC CTA -->

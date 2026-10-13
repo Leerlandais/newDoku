@@ -225,4 +225,10 @@ GROUP BY dd.doku_id");
         return $results;
     }
 
+    public function incrementViewCount(int $id) : void
+    {
+        $stmt = $this->db->prepare("UPDATE doku_dokus SET doku_view_count = doku_view_count + 1 WHERE doku_id = :id");
+        $stmt->bindParam(":id", $id, \PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }

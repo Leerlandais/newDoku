@@ -160,6 +160,7 @@ class GeneralController extends Abstract\AbstractController
         $ip = $ip == "::1" ? "localhost" : $ip;
         if ($ip !== MAIN_IP) {
             $this->connectionManager->logConnection($ip, "Puzzle :" . $id);
+            $this->dokuManager->incrementViewCount($id);
         }
         $puzzle = $this->dokuManager->getPuzzleById($id);
         $variants = $this->dokuManager->getAllVariants();
