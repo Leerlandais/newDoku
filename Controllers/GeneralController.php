@@ -196,6 +196,9 @@ class GeneralController extends Abstract\AbstractController
             $this->adminManager->updateStars($cleanedData);
             header("Location: ?route=showDetails&id=$id");
             exit();
+        }elseif (isset($_POST["unset:incrementSolve"])) {
+            $puzzleId = $this->intClean($_POST["unset:incrementSolve"]);
+            $this->adminManager->incrementSolve($puzzleId);
         }
         $dokuClues = $this->cluesManager->getDokuClues($id);
         echo $this->twig->render('public/public.showDetails.html.twig', [

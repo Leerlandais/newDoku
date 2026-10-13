@@ -52,7 +52,14 @@
                                     </form>
                                 {% endif %}
                             </div>
-                            <a href="{{ puzzle.getDokuUrl }}" target="_blank"><h1 class="h1-style">{{ puzzle.getDokuTitle }}</h1></a>
+                            <a href="{{ puzzle.getDokuUrl }}" target="_blank"><h1 class="h1-style">{{ puzzle.getDokuTitle }}</h1>      </a>
+                                    <form method="post">
+                                {% if "ROLE_ADMIN" in sessionRole %}<span class="h1-style">&lpar;{{ puzzle.getDokuSolveCount }}&rpar;
+                                    <button type="submit" name="unset:incrementSolve" value="{{ puzzle.getDokuId }}">+</button>
+                                    </span>
+                                </form>
+                                {% endif %}
+
                             <div class="flex items-center gap-space-md text-secondary font-label-md text-label-md flex-wrap pt-1">
                                 <span>Setter: <strong
                                             class="text-on-surface font-semibold">{{ puzzle.getDokuSetterName }}</strong></span>
