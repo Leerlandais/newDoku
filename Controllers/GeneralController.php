@@ -199,6 +199,7 @@ class GeneralController extends Abstract\AbstractController
         }elseif (isset($_POST["unset:incrementSolve"])) {
             $puzzleId = $this->intClean($_POST["unset:incrementSolve"]);
             $this->adminManager->incrementSolve($puzzleId);
+            header("Location: ?route=showDetails&id=$puzzleId");
         }
         $dokuClues = $this->cluesManager->getDokuClues($id);
         echo $this->twig->render('public/public.showDetails.html.twig', [
