@@ -30,6 +30,11 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <a class="font-label-md text-label-md bg-surface-container-low text-on-surface px-space-lg py-space-sm border border-outline-variant hover:bg-surface-container transition-all flex items-center gap-space-xs focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+               id="quick-log-btn" href="?route=viewLog&attempt=1">
+                <span class="material-symbols-outlined text-base text-primary">add_box</span>
+                <span>View Login Attempts</span>
+            </a>
         </div>
     {% else %}
         <h2 class="h2-center mt-12">No logs available</h2>
