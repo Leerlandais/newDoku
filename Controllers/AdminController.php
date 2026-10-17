@@ -42,10 +42,10 @@ class AdminController extends Abstract\AbstractController
         $setters = $this->dokuManager->getAllSetters();
 
         if (isset($_POST["unset:addSetter"])) {
-            // $this->verifyCsrfToken($_POST['csrf:csrf_token']);
+            $this->verifyCsrfToken($_POST['csrf:csrf_token']);
             $cleanedData = $this->preparePostData($_POST);
             $addSetter = $this->adminManager->addSetter($cleanedData);
-            $_SESSION["systemMessage"] = $addSetter ? "Setter added" : "Setter not added";
+          //  $_SESSION["systemMessage"] = $addSetter ? "Setter added" : "Setter not added";
             header("Location: ?route=addSudoku");
             exit();
         }
@@ -66,6 +66,7 @@ class AdminController extends Abstract\AbstractController
         $variants = $this->dokuManager->getAllVariants();
 
         if (isset($_POST["unset:addVariant"])) {
+            $this->verifyCsrfToken($_POST['csrf:csrf_token']);
             $cleanedData = $this->preparePostData($_POST);
             $addVariant = $this->adminManager->addVariant($cleanedData);
             $_SESSION["systemMessage"] = $addVariant ? "Variant added" : "Variant not added";
@@ -89,7 +90,7 @@ class AdminController extends Abstract\AbstractController
         $variants = $this->dokuManager->getAllVariants();
 
         if (isset($_POST["unset:addSudoku"])) {
-            // $this->verifyCsrfToken($_POST['csrf:csrf_token']);
+            $this->verifyCsrfToken($_POST['csrf:csrf_token']);
             $dokuVariants = $_POST["int:variant"];
             unset($_POST["int:variant"]);
             $cleanedData = $this->preparePostData($_POST);
@@ -99,7 +100,7 @@ class AdminController extends Abstract\AbstractController
                 $dokuVariants["doku_id"] = $addSoduku;
                 $this->adminManager->addSudokuVariantsToLatestPuzzle($dokuVariants);
             }
-            $_SESSION["systemMessage"] = $addSoduku ? "Sudoku added" : "Sudoku not added";
+         //   $_SESSION["systemMessage"] = $addSoduku ? "Sudoku added" : "Sudoku not added";
             header("Location: ?route=showDetails&id=$addSoduku");
             exit();
 
@@ -145,6 +146,7 @@ class AdminController extends Abstract\AbstractController
         $variants = $this->dokuManager->getAllVariants();
 
         if (isset($_POST["unset:editVariant"])) {
+            $this->verifyCsrfToken($_POST['csrf:csrf_token']);
             $cleanedData = $this->preparePostData($_POST);
             $editVariant = $this->adminManager->editVariant($cleanedData);
             $_SESSION["systemMessage"] = $editVariant ? "Variant edited" : "Variant not edited";
