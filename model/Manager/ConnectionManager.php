@@ -70,4 +70,17 @@
             return $logs;
         }
 
+        public function checkLoginAttempt(string $ip) : bool
+        {
+            $stmt = $this->db->prepare("SELECT COUNT(*) AS failed_attempts
+FROM doku_connection_logs
+WHERE log_ip = :ip
+  AND log_page_visited = 'FAILED'
+  AND log_date >= NOW() - INTERVAL 15 MINUTE");
+            $stmt->bindParam(":ip", $ip, \PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch();
+            return $result["failed_attempts"] > 2;
+        }
+
     }
