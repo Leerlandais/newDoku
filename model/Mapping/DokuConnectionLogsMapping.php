@@ -12,7 +12,7 @@ class DokuConnectionLogsMapping extends AbstractMapping
     private string $log_ip;
     private string $log_page_visited;
     private ?int $log_user;
-    private ?int $log_url;
+    private ?int $log_url = null;
 
     public function getLogId(): int
     {

@@ -73,6 +73,11 @@ class ConnectionController extends Abstract\AbstractController
                 $this->connectionManager->logConnection($ip, "Login");
             }
         if (isset($_POST['unset:entryUser'])) {
+            if($this->connectionManager->checkLoginAttempt($ip)) {
+                $_SESSION["systemMessage"] = "Fuck off!";
+                header("Location: ./");
+                die();
+            }
             //  var_dump($_POST);
             //  die();
             //  $this->verifyCsrfToken($_POST['csrf:csrf_token']);

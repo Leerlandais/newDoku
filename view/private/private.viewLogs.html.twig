@@ -24,12 +24,18 @@
                     <tr class="border-b border-blue-gray-200">
 
                         <td class="py-3 px-4">{{ log.getLogDate|date("d/m H:i:s") }}</td>
-                        <td class="py-3 px-4">{{ log.getLogIp }}</td>
+                        <td class="py-3 px-4"><a href="?route=showLogs&ip={{ log.getLogIp }}">{{ log.getLogIp }}</a><a
+                                    href="https://myip.ms/info/whois/{{ log.getLogIp }}" target="_blank"><span class="material-symbols-outlined text-base ms-4">open_in_new</span></a></td>
                         <td class="py-3 px-4"><a href="?route=showDetails&id={{ log.getLogUrl }}">{{ log.getLogPageVisited == 0 ? "Home" : log.getLogPageVisited }}</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
+            <a class="font-label-md text-label-md bg-surface-container-low text-on-surface px-space-lg py-space-sm border border-outline-variant hover:bg-surface-container transition-all flex items-center gap-space-xs focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+               id="quick-log-btn" href="?route=viewLog&attempt=1">
+                <span class="material-symbols-outlined text-base text-primary">add_box</span>
+                <span>View Login Attempts</span>
+            </a>
         </div>
     {% else %}
         <h2 class="h2-center mt-12">No logs available</h2>

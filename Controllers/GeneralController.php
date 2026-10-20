@@ -160,6 +160,7 @@ class GeneralController extends Abstract\AbstractController
         $ip = $ip == "::1" ? "localhost" : $ip;
         if ($ip !== MAIN_IP) {
             $this->connectionManager->logConnection($ip, "Puzzle :" . $id);
+            $this->dokuManager->incrementViewCount($id);
         }
         $puzzle = $this->dokuManager->getPuzzleById($id);
         $variants = $this->dokuManager->getAllVariants();
@@ -196,6 +197,10 @@ class GeneralController extends Abstract\AbstractController
             $this->adminManager->updateStars($cleanedData);
             header("Location: ?route=showDetails&id=$id");
             exit();
+        }elseif (isset($_POST["unset:incrementSolve"])) {
+            $puzzleId = $this->intClean($_POST["unset:incrementSolve"]);
+            $this->adminManager->incrementSolve($puzzleId);
+            header("Location: ?route=showDetails&id=$puzzleId");
         }
         $dokuClues = $this->cluesManager->getDokuClues($id);
         echo $this->twig->render('public/public.showDetails.html.twig', [
