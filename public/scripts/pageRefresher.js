@@ -3,7 +3,7 @@ const sessionExpiresAt = parseInt((document.getElementById("sessionExpiresAt").t
 console.log("pageRefresher loaded ; timeout set at : ", sessionExpiresAt);
 function checkSessionExpiry() {
     if (Date.now() >= sessionExpiresAt) {
-        location.reload();
+        location.replace("https://leerlandais.com/dokus");
     }
 }
 
