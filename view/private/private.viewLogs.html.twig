@@ -6,8 +6,9 @@
 {% endblock %}
 {% block content %}
     {% if logs %}
-        <div class="overflow-scroll max-h-[500px]">
+        <form class="overflow-scroll max-h-[500px]">
             <h1 class="h1-style">Total Connections : {{ logCount }}</h1>
+            {% if banButton %} <span class="adminButton mx-auto w-fit flex mt-4 hover:bg-red-500"><button name="unset:banIp" value="{{ log.getLogIp }}">Ban</button></span>{% endif %}
             <table class="min-w-full bg-white shadow-md rounded-xl border border-gray-300
                   max-h-[500px] overflow-scroll text-center"
                    id="logTable">
@@ -27,16 +28,15 @@
                         <td class="py-3 px-4"><a href="?route=showLogs&ip={{ log.getLogIp }}">{{ log.getLogIp }}</a><a
                                     href="https://myip.ms/info/whois/{{ log.getLogIp }}" target="_blank"><span class="material-symbols-outlined text-base ms-4">open_in_new</span></a></td>
                         <td class="py-3 px-4"><a href="?route=showDetails&id={{ log.getLogUrl }}">{{ log.getLogPageVisited == 0 ? "Home" : log.getLogPageVisited }}</a></td>
+
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            <a class="font-label-md text-label-md bg-surface-container-low text-on-surface px-space-lg py-space-sm border border-outline-variant hover:bg-surface-container transition-all flex items-center gap-space-xs focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-               id="quick-log-btn" href="?route=viewLog&attempt=1">
-                <span class="material-symbols-outlined text-base text-primary">add_box</span>
-                <span>View Login Attempts</span>
-            </a>
-        </div>
+
+        </form>
+
+
     {% else %}
         <h2 class="h2-center mt-12">No logs available</h2>
     {% endif %}

@@ -1,0 +1,40 @@
+{% extends 'template.html.twig' %}
+
+{% block dumpArea %}
+
+{% endblock %}
+
+{% block content %}
+    {% if bannedIps %}
+        <form class="overflow-scroll max-h-[500px]" method="post">
+            <h1 class="h1-style">Total Banned : {{ bannedIps|length }}</h1>
+
+            <table class="min-w-full bg-white shadow-md rounded-xl border border-gray-300
+                  max-h-[500px] overflow-scroll text-center"
+                   id="logTable">
+                <thead>
+                <tr class="bg-blue-gray-100 text-center text-gray-700">
+                    <th class="py-3 px-4 cursor-pointer">IP</th>
+                    <th class="py-3 px-4 cursor-pointer">UnBan</th>
+                </tr>
+                </thead>
+                <tbody class="text-blue-gray-900">
+
+                {% for ip in bannedIps %}
+                    <tr class="border-b border-blue-gray-200">
+                        <td class="py-3 px-4">{{ ip.getBanIp }}</td>
+                        <td class="py-3 px-4"><button name="str:ban_ip" value={{ ip.getBanIp }}>UnBan</button></td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+            <input type="hidden" name="unset:unBanIp">
+            <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
+        </form>
+
+
+    {% else %}
+        <h2 class="h2-center mt-12">No IPs available</h2>
+    {% endif %}
+{% endblock %}

@@ -7,6 +7,7 @@ use Factory\ManagerFactory;
 use model\Manager\AdminManager;
 use model\Manager\ConnectionManager;
 use model\Manager\DokuManager;
+use model\Manager\SecurityManager;
 use Twig\Environment;
 
 class AdminController extends Abstract\AbstractController
@@ -14,6 +15,7 @@ class AdminController extends Abstract\AbstractController
     private DokuManager $dokuManager;
     private ConnectionManager $connectionManager;
     private AdminManager $adminManager;
+    private SecurityManager $securityManager;
 
     public function __construct(Environment $twig, ManagerFactory $managerFactory)
     {
@@ -21,6 +23,7 @@ class AdminController extends Abstract\AbstractController
         $this->dokuManager = $this->getManager(DokuManager::class);
         $this->connectionManager = $this->getManager(ConnectionManager::class);
         $this->adminManager = $this->getManager(AdminManager::class);
+        $this->securityManager = $this->getManager(SecurityManager::class);
     }
 
     public function admin(): void
@@ -182,12 +185,41 @@ class AdminController extends Abstract\AbstractController
         $logs = $this->connectionManager->getAllLogs($this->simpleTrim($getParams["ip"]));
         $logCount = count($logs);
 
+        if(isset($_POST["unset:banIp"])) {
+            die(var_dump($_POST));
+        }
         echo $this->twig->render("private/private.viewLogs.html.twig", [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
             "logs" => $logs,
             "sessionExpiresAt" => $sessionExpiresAt,
-            "logCount" => $logCount
+            "logCount" => $logCount,
+            "banButton" => true
+        ]);
+    }
+
+    public function getBanList(): void
+    {
+        global $sessionRole, $systemMessage, $sessionExpiresAt;
+        $this->checkPermissions("ROLE_ADMIN", $sessionRole);
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
+        $bannedIps = $this->securityManager->getBannedIps();
+
+        if(isset($_POST["unset:unBanIp"])) {
+         //   $this->verifyCsrfToken($_POST['csrf:csrf_token']);
+            $cleanedData = $this->preparePostData($_POST);
+            $unban = $this->securityManager->unBanIp($cleanedData["ban_ip"]);
+            $_SESSION["systemMessage"] = $unban ? "Ip unbanned" : "Ip not unbanned";
+            header("Location: ?route=viewBanList");
+            exit();
+        }
+        echo $this->twig->render("private/private.banList.html.twig", [
+            "systemMessage" => $systemMessage,
+            "sessionRole" => $sessionRole,
+            "bannedIps" => $bannedIps,
+            "sessionExpiresAt" => $sessionExpiresAt,
+            "csrfToken" => $this->csrfToken,
         ]);
     }
 

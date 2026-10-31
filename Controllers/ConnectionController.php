@@ -75,7 +75,6 @@ class ConnectionController extends Abstract\AbstractController
         if ($ip !== MAIN_IP) {
             $this->connectionManager->logConnection($ip, "Login");
         }
-        if ($this->connectionManager->checkForBanned)
             if (isset($_POST['unset:entryUser'])) {
                 //  var_dump($_POST);
                 //  die();
