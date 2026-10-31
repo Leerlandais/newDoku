@@ -34,4 +34,9 @@ class SecurityManager extends AbstractManager
         $stmt->bindParam(":ip", $ip);
         return $stmt->execute();
     }
+
+    public function banIp(array $data) : bool
+    {
+        return $this->insertAnything($data, "doku_banned_ips");
+    }
 }

@@ -186,7 +186,11 @@ class AdminController extends Abstract\AbstractController
         $logCount = count($logs);
 
         if(isset($_POST["unset:banIp"])) {
-            die(var_dump($_POST));
+            $cleanedData = $this->preparePostData($_POST);
+         //   $this->verifyCsrfToken($_POST['csrf:csrf_token']);
+            $_SESSION["systemMessage"] = $this->securityManager->banIp($cleanedData) ? "Ip banned" : "Ip not banned";
+            header("Location: ?route=viewLogs");
+            exit();
         }
         echo $this->twig->render("private/private.viewLogs.html.twig", [
             "systemMessage" => $systemMessage,
@@ -194,7 +198,8 @@ class AdminController extends Abstract\AbstractController
             "logs" => $logs,
             "sessionExpiresAt" => $sessionExpiresAt,
             "logCount" => $logCount,
-            "banButton" => true
+            "banButton" => true,
+            "csrfToken" => $this->csrfToken,
         ]);
     }
 
@@ -207,7 +212,7 @@ class AdminController extends Abstract\AbstractController
         $bannedIps = $this->securityManager->getBannedIps();
 
         if(isset($_POST["unset:unBanIp"])) {
-         //   $this->verifyCsrfToken($_POST['csrf:csrf_token']);
+            $this->verifyCsrfToken($_POST['csrf:csrf_token']);
             $cleanedData = $this->preparePostData($_POST);
             $unban = $this->securityManager->unBanIp($cleanedData["ban_ip"]);
             $_SESSION["systemMessage"] = $unban ? "Ip unbanned" : "Ip not unbanned";
