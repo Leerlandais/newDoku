@@ -3,6 +3,7 @@
 namespace Controllers\Abstract;
 
 use Factory\ManagerFactory;
+use model\Manager\SecurityManager;
 use Twig\Environment;
 use model\Trait\TraitLaundryRoom;
 
@@ -14,11 +15,13 @@ abstract class AbstractController
     protected ManagerFactory $managerFactory;
     protected string $csrfToken;
 
+    private SecurityManager $securityManager;
     public function __construct(Environment $twig, ManagerFactory $managerFactory)
     {
         $this->twig = $twig;
         $this->managerFactory = $managerFactory;
         $this->csrfToken = $this->createNewCsrfToken();
+        $this->securityManager = $this->getManager(SecurityManager::class);
     }
 
     protected function getManager(string $class): object
@@ -158,6 +161,16 @@ abstract class AbstractController
             $data = $this->testAndClean($data);
         }
         return $parsedData;
+    }
+
+    protected function checkIpForBan(string $ip): void
+    {
+         if ($this->securityManager->checkForBanned($ip))
+         {
+             $_SESSION["systemMessage"] = "BEGONE";
+             header("Location: ?route=begone");
+             exit();
+         }
     }
 
     /**

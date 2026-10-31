@@ -27,6 +27,9 @@ class AdminController extends Abstract\AbstractController
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->connectionManager->logConnection($ip, "Admin");
+        $this->checkIpForBan($ip);
         echo $this->twig->render("private/private.admin.html.twig", [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
@@ -39,6 +42,8 @@ class AdminController extends Abstract\AbstractController
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
         $setters = $this->dokuManager->getAllSetters();
 
         if (isset($_POST["unset:addSetter"])) {
@@ -62,7 +67,8 @@ class AdminController extends Abstract\AbstractController
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
-
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
         $variants = $this->dokuManager->getAllVariants();
 
         if (isset($_POST["unset:addVariant"])) {
@@ -86,6 +92,8 @@ class AdminController extends Abstract\AbstractController
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
         $setters = $this->dokuManager->getAllSetters();
         $variants = $this->dokuManager->getAllVariants();
 
@@ -119,7 +127,8 @@ class AdminController extends Abstract\AbstractController
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
-
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
         $logs = $this->connectionManager->getAllLogs();
         foreach ($logs as &$log) {
             if (isset(explode(":", $log->getLogPageVisited())[1])) {
@@ -143,6 +152,8 @@ class AdminController extends Abstract\AbstractController
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
         $variants = $this->dokuManager->getAllVariants();
 
         if (isset($_POST["unset:editVariant"])) {
@@ -166,6 +177,8 @@ class AdminController extends Abstract\AbstractController
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
         $logs = $this->connectionManager->getAllLogs($this->simpleTrim($getParams["ip"]));
         $logCount = count($logs);
 

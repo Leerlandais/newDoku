@@ -34,11 +34,12 @@ class ConnectionController extends Abstract\AbstractController
 
     public function index(?array $getParams): void
     {
-
         global $systemMessage, $sessionRole, $sessionExpiresAt;
-        if (!isset($_SESSION["visit_logged"])) {
             $ip = $_SERVER['REMOTE_ADDR'];
+            $this->checkIpForBan($ip);
+        if (!isset($_SESSION["visit_logged"])) {
             $ip = $ip == "::1" ? "localhost" : $ip;
+            $this->checkIpForBan($ip);
             if ($ip !== MAIN_IP) {
                 $this->connectionManager->logConnection($ip, "Home");
                 $_SESSION["visit_logged"] = true;
@@ -67,36 +68,34 @@ class ConnectionController extends Abstract\AbstractController
             header("Location: ./");
             exit();
         }
-            $ip = $_SERVER['REMOTE_ADDR'];
-            $ip = $ip == "::1" ? "localhost" : $ip;
-            if ($ip !== MAIN_IP) {
-                $this->connectionManager->logConnection($ip, "Login");
-            }
-        if (isset($_POST['unset:entryUser'])) {
-            if($this->connectionManager->checkLoginAttempt($ip)) {
-                $_SESSION["systemMessage"] = "Fuck off!";
-                header("Location: ./");
-                die();
-            }
-            //  var_dump($_POST);
-            //  die();
-            //  $this->verifyCsrfToken($_POST['csrf:csrf_token']);
-            $cleanPostData = $this->preparePostData($_POST);
-            $userLogin = $this->connectionManager->loginUser($cleanPostData);
-            if ($userLogin) {
-                if ($ip !== MAIN_IP) {
-                    $this->connectionManager->logConnection($ip, "SUCCESS");
-                }
-                header("Location: ?route=admin");
-            } else {
-                $_SESSION["systemMessage"] = "Not the right credentials";
-                if ($ip !== MAIN_IP) {
-                    $this->connectionManager->logConnection($ip, "FAILED");
-                }
-                header("Location: ./");
-            }
-            exit();
+        $ip = $_SERVER['REMOTE_ADDR'];
+
+        $ip = $ip == "::1" ? "localhost" : $ip;
+        $this->checkIpForBan($ip);
+        if ($ip !== MAIN_IP) {
+            $this->connectionManager->logConnection($ip, "Login");
         }
+        if ($this->connectionManager->checkForBanned)
+            if (isset($_POST['unset:entryUser'])) {
+                //  var_dump($_POST);
+                //  die();
+                //  $this->verifyCsrfToken($_POST['csrf:csrf_token']);
+                $cleanPostData = $this->preparePostData($_POST);
+                $userLogin = $this->connectionManager->loginUser($cleanPostData);
+                if ($userLogin) {
+                    if ($ip !== MAIN_IP) {
+                        $this->connectionManager->logConnection($ip, "SUCCESS");
+                    }
+                    header("Location: ?route=admin");
+                } else {
+                    $_SESSION["systemMessage"] = "Not the right credentials";
+                    if ($ip !== MAIN_IP) {
+                        $this->connectionManager->logConnection($ip, "FAILED");
+                    }
+                    header("Location: ./");
+                }
+                exit();
+            }
 
 
         echo $this->twig->render('public/public.login.html.twig', [
@@ -108,9 +107,14 @@ class ConnectionController extends Abstract\AbstractController
         ]);
     }
 
-    public function logLinkConnect(string $link): void
-    {
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $this->connectionManager->logConnection($ip, $link);
-    }
+public function begone() : void
+{
+    global $systemMessage, $sessionRole, $sessionExpiresAt;
+    echo $this->twig->render('public/public.begone.html.twig', [
+        "systemMessage" => $systemMessage,
+        "sessionRole" => $sessionRole,
+        "sessionExpiresAt" => $sessionExpiresAt
+    ]);
+}
+
 }

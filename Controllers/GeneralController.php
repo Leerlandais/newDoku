@@ -34,8 +34,9 @@ class GeneralController extends Abstract\AbstractController
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
 
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
         if (!isset($_SESSION["viewAll_logged"])) {
-            $ip = $_SERVER['REMOTE_ADDR'];
             $ip = $ip == "::1" ? "localhost" : $ip;
             //     if($ip !== MAIN_IP) {
             $this->connectionManager->logConnection($ip, "View All");
@@ -62,9 +63,10 @@ class GeneralController extends Abstract\AbstractController
     {
 
         global $systemMessage, $sessionRole, $sessionExpiresAt;
-
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
         $offset = null;
-        if(isset($getParams["date"])) {
+        if (isset($getParams["date"])) {
             $offset = $this->intClean($getParams["date"]);
         }
 
@@ -87,8 +89,9 @@ class GeneralController extends Abstract\AbstractController
     public function findDoku(): void
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
         if (!isset($_SESSION["findDoku_logged"])) {
-            $ip = $_SERVER['REMOTE_ADDR'];
             $ip = $ip == "::1" ? "localhost" : $ip;
             //  if($ip !== MAIN_IP) {
             $this->connectionManager->logConnection($ip, "Find Doku");
@@ -157,6 +160,7 @@ class GeneralController extends Abstract\AbstractController
         }
         $id = $this->intClean($getParams["id"]);
         $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
         $ip = $ip == "::1" ? "localhost" : $ip;
         if ($ip !== MAIN_IP) {
             $this->connectionManager->logConnection($ip, "Puzzle :" . $id);
@@ -197,7 +201,7 @@ class GeneralController extends Abstract\AbstractController
             $this->adminManager->updateStars($cleanedData);
             header("Location: ?route=showDetails&id=$id");
             exit();
-        }elseif (isset($_POST["unset:incrementSolve"])) {
+        } elseif (isset($_POST["unset:incrementSolve"])) {
             $puzzleId = $this->intClean($_POST["unset:incrementSolve"]);
             $this->adminManager->incrementSolve($puzzleId);
             header("Location: ?route=showDetails&id=$puzzleId");
@@ -223,6 +227,8 @@ class GeneralController extends Abstract\AbstractController
             header("Location: ?route=home");
             exit();
         }
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
         $id = $this->intClean($getParams["id"]);
 
         $puzzles["byVariant"] = $this->searchManager->getPuzzlesByVariantId($id);
@@ -241,8 +247,9 @@ class GeneralController extends Abstract\AbstractController
     public function showVariantRules(): void
     {
         global $systemMessage, $sessionRole, $sessionExpiresAt;
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
         if (!isset($_SESSION["variant_logged"])) {
-            $ip = $_SERVER['REMOTE_ADDR'];
             $ip = $ip == "::1" ? "localhost" : $ip;
             if ($ip !== MAIN_IP) {
                 $this->connectionManager->logConnection($ip, "Variant Rules");
@@ -261,8 +268,9 @@ class GeneralController extends Abstract\AbstractController
     public function getRandomPuzzle(): void
     {
         global $systemMessage, $sessionRole, $sessionExpiresAt;
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
         if (!isset($_SESSION["random_logged"])) {
-            $ip = $_SERVER['REMOTE_ADDR'];
             $ip = $ip == "::1" ? "localhost" : $ip;
             if ($ip !== MAIN_IP) {
                 $this->connectionManager->logConnection($ip, "Random Puzzle");
@@ -315,16 +323,16 @@ class GeneralController extends Abstract\AbstractController
         }
         $stopIt = false;
         if (isset($data["doku_start"]) && isset($data["doku_end"])) {
-            if(substr($data["doku_start"], 0, 10) == "2026-09-06" &&
+            if (substr($data["doku_start"], 0, 10) == "2026-09-06" &&
                 substr($data["doku_end"], 0, 10) == date("Y-m-d")) {
                 $stopIt = true;
-                if(count($data) < 3) {
+                if (count($data) < 3) {
                     header("Location: ?route=viewAll");
                 }
             }
             $resultsArray["byDate"] = $this->searchManager->getPuzzlesByDate($data["doku_start"], $data["doku_end"]);
         }
-        if($stopIt) $resultsArray["byDate"] = false;
+        if ($stopIt) $resultsArray["byDate"] = false;
 
 
         foreach (array_merge(
