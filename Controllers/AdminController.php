@@ -252,11 +252,8 @@ class AdminController extends Abstract\AbstractController
             $puzzleId = $cleanedData["doku_id"];
                 $dokuVariants["doku_id"] = $puzzleId;
             $editSoduku = $this->adminManager->editSudoku($cleanedData);
-            if ($editSoduku) {
                 $this->adminManager->removeCurrentVariantsFromPuzzle($puzzleId);
                 $this->adminManager->addSudokuVariantsToLatestPuzzle($dokuVariants);
-            }
-               $_SESSION["systemMessage"] = $editSoduku ? "Sudoku edited" : "Sudoku not edited";
             header("Location: ?route=showDetails&id=$puzzleId");
             exit();
         }
