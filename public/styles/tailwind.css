@@ -88,3 +88,7 @@
 .p-style {
     @apply font-body-sm text-body-sm text-on-error-container mt-0.5;
 }
+
+.external-link {
+    @apply inline-flex items-center justify-center gap-space-xs bg-primary-container text-on-primary font-label-md text-label-md px-space-lg py-space-sm hover:bg-inverse-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+}

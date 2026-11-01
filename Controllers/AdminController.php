@@ -228,4 +228,48 @@ class AdminController extends Abstract\AbstractController
         ]);
     }
 
+    public function editDoku(array $getParams): void
+    {
+        global $sessionRole, $systemMessage, $sessionExpiresAt;
+        $this->checkPermissions("ROLE_ADMIN", $sessionRole);
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $this->checkIpForBan($ip);
+        if(!isset($getParams["id"]) || !is_numeric($getParams["id"]))
+        {
+            header("Location: ?route=home");
+            exit();
+        }
+        $id = $this->intClean($getParams["id"]);
+        $puzzleNow = $this->dokuManager->getPuzzleById($id);
+        $setters = $this->dokuManager->getAllSetters();
+        $variants = $this->dokuManager->getAllVariants();
+
+        if (isset($_POST["unset:editSudoku"])) {
+           // $this->verifyCsrfToken($_POST['csrf:csrf_token']);
+            $dokuVariants = $_POST["int:variant"];
+            unset($_POST["int:variant"]);
+            $cleanedData = $this->preparePostData($_POST);
+            $puzzleId = $cleanedData["doku_id"];
+                $dokuVariants["doku_id"] = $puzzleId;
+            $editSoduku = $this->adminManager->editSudoku($cleanedData);
+            if ($editSoduku) {
+                $this->adminManager->removeCurrentVariantsFromPuzzle($puzzleId);
+                $this->adminManager->addSudokuVariantsToLatestPuzzle($dokuVariants);
+            }
+               $_SESSION["systemMessage"] = $editSoduku ? "Sudoku edited" : "Sudoku not edited";
+            header("Location: ?route=showDetails&id=$puzzleId");
+            exit();
+        }
+
+        echo $this->twig->render("private/private.editDoku.html.twig", [
+            "systemMessage" => $systemMessage,
+            "sessionRole" => $sessionRole,
+            "csrfToken" => $this->csrfToken,
+            "puzzleNow" => $puzzleNow,
+            "setters" => $setters,
+            "variants" => $variants,
+            "sessionExpiresAt" => $sessionExpiresAt,
+        ]);
+    }
+
 }

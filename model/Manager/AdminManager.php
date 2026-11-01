@@ -83,5 +83,16 @@ class AdminManager extends AbstractManager
         $stmt->execute();
     }
 
+    public function editSudoku(array $data) : bool
+    {
+        return $this->updateAnything($data, "doku_id", $data["doku_id"], "doku_dokus");
+    }
+
+    public function removeCurrentVariantsFromPuzzle(int $dokuId) : void
+    {
+        $stmt = $this->db->prepare("DELETE FROM doku_has_variant WHERE doku_id = :doku_id");
+        $stmt->bindParam(":doku_id", $dokuId, \PDO::PARAM_INT);
+        $stmt->execute();
+    }
 
 }

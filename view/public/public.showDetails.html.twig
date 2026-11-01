@@ -92,11 +92,18 @@
                                       input-fx h-10 w-[300px] lg:w-[460px] px-2.5 mb-1" required value="{{ puzzle.getDokuTitle }}">
                                         <input type="submit"
                                                value="Upload Image"
-                                               class="inline-flex items-center justify-center gap-space-xs bg-primary-container text-on-primary font-label-md text-label-md px-space-lg py-space-sm hover:bg-inverse-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                                               class="external-link">
                                     </form>
                                 </div>
                             {% endif %}
-                            <a class="inline-flex items-center justify-center gap-space-xs bg-primary-container text-on-primary font-label-md text-label-md px-space-lg py-space-sm hover:bg-inverse-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                            {% if "ROLE_SUPER" in sessionRole %}
+                            <a class="external-link"
+                               href="?route=editDoku&id={{ puzzle.getDokuId }}">
+                                <span>Edit this Puzzle</span>
+                                <span class="material-symbols-outlined text-base">open_in_new</span>
+                            </a>
+                            {% endif %}
+                            <a class="external-link"
                                href="{{ puzzle.getDokuUrl }}" rel="noopener noreferrer" target="_blank">
                                 <span>Play on CTC Web App</span>
                                 <span class="material-symbols-outlined text-base">open_in_new</span>
