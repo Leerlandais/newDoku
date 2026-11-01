@@ -245,7 +245,7 @@ class AdminController extends Abstract\AbstractController
         $variants = $this->dokuManager->getAllVariants();
 
         if (isset($_POST["unset:editSudoku"])) {
-           // $this->verifyCsrfToken($_POST['csrf:csrf_token']);
+           $this->verifyCsrfToken($_POST['csrf:csrf_token']);
             $dokuVariants = $_POST["int:variant"];
             unset($_POST["int:variant"]);
             $cleanedData = $this->preparePostData($_POST);
