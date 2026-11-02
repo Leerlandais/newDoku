@@ -1,5 +1,8 @@
 {% extends "template.html.twig" %}
 {% block title %}{{ parent() }} Add Sudoku{% endblock %}
+{% block dumpArea %}
+
+{% endblock %}
 {% block content %}
 
     <div class="w-fit mx-auto text-center border border-blue-500 rounded-xl p-10 mt-12">
@@ -60,7 +63,7 @@
             <select name="int:doku_setter_id" id="setterName" class="select-standard" required>
                 <option value="" disabled selected>Choose Setter</option>
                 {% for setter in setters %}
-                    <option value="{{ setter.getSetterId }}">{{ setter.getSetterName }}</option>
+                    <option value="{{ setter.getSetterId }}" {% if setterId == setter.getSetterId %}selected{% endif %}>{{ setter.getSetterName }}</option>
                 {% endfor %}
             </select>
             <div>

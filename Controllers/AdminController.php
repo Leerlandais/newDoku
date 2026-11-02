@@ -54,7 +54,7 @@ class AdminController extends Abstract\AbstractController
             $cleanedData = $this->preparePostData($_POST);
             $addSetter = $this->adminManager->addSetter($cleanedData);
           //  $_SESSION["systemMessage"] = $addSetter ? "Setter added" : "Setter not added";
-            header("Location: ?route=addSudoku");
+            header("Location: ?route=addSudoku&id=$addSetter");
             exit();
         }
         echo $this->twig->render("private/private.addSetter.html.twig", [
@@ -91,12 +91,16 @@ class AdminController extends Abstract\AbstractController
         ]);
     }
 
-    public function addSudoku(): void
+    public function addSudoku(array $getParams): void
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
         $ip = $_SERVER['REMOTE_ADDR'];
         $this->checkIpForBan($ip);
+        $setterId = null;
+        if(isset($getParams["id"]) && is_numeric($getParams["id"])) {
+            $setterId = $this->intClean($getParams["id"]);
+        }
         $setters = $this->dokuManager->getAllSetters();
         $variants = $this->dokuManager->getAllVariants();
 
@@ -122,7 +126,8 @@ class AdminController extends Abstract\AbstractController
             "csrfToken" => $this->csrfToken,
             "setters" => $setters,
             "variants" => $variants,
-            "sessionExpiresAt" => $sessionExpiresAt
+            "sessionExpiresAt" => $sessionExpiresAt,
+            "setterId" => $setterId
         ]);
     }
 
