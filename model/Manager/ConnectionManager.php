@@ -30,6 +30,7 @@
             if (!$user) return false;
             $login = password_verify($data["user_pass"], $user["doku_password"]);
             if ($login) {
+                $_SESSION["id"] = session_id();
                 $_SESSION["user_id"] = $user["doku_user_id"];
                 $_SESSION["user_name"] = $user["doku_username"];
                 $_SESSION["roles"] = $user["doku_user_roles"];
