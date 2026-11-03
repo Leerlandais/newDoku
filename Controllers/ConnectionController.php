@@ -64,7 +64,7 @@ class ConnectionController extends Abstract\AbstractController
     public function login(): void
     {
         global $systemMessage, $sessionRole, $sessionExpiresAt;
-        if (!empty($sessionRole)) {
+        if (!empty($sessionRole) && isset($_SESSION["id"]) && $_SESSION["id"] === session_id()) {
             header("Location: ./");
             exit();
         }
