@@ -16,25 +16,25 @@
                         <div class="flex flex-col gap-space-xs">
                             <div class="flex items-center gap-space-sm flex-wrap">
                                 <span class="font-label-sm text-label-sm bg-surface-container text-on-surface px-2 py-0.5 uppercase tracking-wider">Sudoku Variant</span>
-                                    {% set stars = puzzle.getDokuStars ?? 0 %}
+                                {% set stars = puzzle.getDokuStars ?? 0 %}
                                 {% if stars %}
-                                <span class="font-label-sm text-label-sm bg-tertiary-container text-on-tertiary px-2 py-0.5 uppercase tracking-wider">Difficulty :</span>
-                                <div class="flex items-center text-tertiary text-sm" title="Difficulty: 4 of 5">
+                                    <span class="font-label-sm text-label-sm bg-tertiary-container text-on-tertiary px-2 py-0.5 uppercase tracking-wider">Difficulty :</span>
+                                    <div class="flex items-center text-tertiary text-sm" title="Difficulty: 4 of 5">
 
-                                    {% if stars > 5 %}
-                                        {% set stars = 5 %}
-                                    {% endif %}
-                                    {% for i in range(1, stars) %}
-                                    <span class="material-symbols-outlined text-sm"
-                                          style="font-variation-settings: 'FILL' 1;">star</span>
-                                    {% endfor %}
-                                    {% if stars < 5 %}
-                                    {% for j in range(1, (5 - stars)) %}
-                                    <span class="material-symbols-outlined text-sm text-outline-variant">star</span>
-                                    {% endfor %}
-                                    {% endif %}
-                                    <span class="font-label-sm text-label-sm text-secondary ml-1.5 font-semibold">{{ stars }} / 5</span>
-                                </div>
+                                        {% if stars > 5 %}
+                                            {% set stars = 5 %}
+                                        {% endif %}
+                                        {% for i in range(1, stars) %}
+                                            <span class="material-symbols-outlined text-sm"
+                                                  style="font-variation-settings: 'FILL' 1;">star</span>
+                                        {% endfor %}
+                                        {% if stars < 5 %}
+                                            {% for j in range(1, (5 - stars)) %}
+                                                <span class="material-symbols-outlined text-sm text-outline-variant">star</span>
+                                            {% endfor %}
+                                        {% endif %}
+                                        <span class="font-label-sm text-label-sm text-secondary ml-1.5 font-semibold">{{ stars }} / 5</span>
+                                    </div>
                                 {% endif %}
                                 {% if "ROLE_SUPER" in sessionRole %}
                                     <form method="post">
@@ -52,13 +52,16 @@
                                     </form>
                                 {% endif %}
                             </div>
-                            <a href="{{ puzzle.getDokuUrl }}" target="_blank" class="w-fit"><h1 class="h1-style">{{ puzzle.getDokuTitle }}</h1></a>
-                                    <form method="post">
-                                {% if "ROLE_ADMIN" in sessionRole %}<span class="h1-style">&lpar;{{ puzzle.getDokuSolveCount }}&rpar;
-                                    <button type="submit" name="unset:incrementSolve" value="{{ puzzle.getDokuId }}">+</button>
+                            <a href="{{ puzzle.getDokuUrl }}" target="_blank" class="w-fit"><h1
+                                        class="h1-style">{{ puzzle.getDokuTitle }}</h1></a>
+                            <form method="post">
+                                {% if "ROLE_ADMIN" in sessionRole %}<span
+                                        class="h1-style">&lpar;{{ puzzle.getDokuSolveCount }}&rpar;
+                                    <button type="submit" name="unset:incrementSolve"
+                                            value="{{ puzzle.getDokuId }}">+</button>
                                     </span>
-                                </form>
-                                {% endif %}
+                            </form>
+                            {% endif %}
 
                             <div class="flex items-center gap-space-md text-secondary font-label-md text-label-md flex-wrap pt-1">
                                 <span>Setter: <strong
@@ -89,7 +92,8 @@
                                         <input type="file" name="fileToUpload" id="fileToUpload" required>
                                         <label for="altText" class="label-bold">Alt Text : </label>
                                         <input type="text" name="altText" id="altText" class="input-style index-shadow-input
-                                      input-fx h-10 w-[300px] lg:w-[460px] px-2.5 mb-1" required value="{{ puzzle.getDokuTitle }}">
+                                      input-fx h-10 w-[300px] lg:w-[460px] px-2.5 mb-1" required
+                                               value="{{ puzzle.getDokuTitle }}">
                                         <input type="submit"
                                                value="Upload Image"
                                                class="external-link">
@@ -97,11 +101,11 @@
                                 </div>
                             {% endif %}
                             {% if "ROLE_SUPER" in sessionRole %}
-                            <a class="external-link"
-                               href="?route=editDoku&id={{ puzzle.getDokuId }}">
-                                <span>Edit this Puzzle</span>
-                                <span class="material-symbols-outlined text-base">open_in_new</span>
-                            </a>
+                                <a class="external-link"
+                                   href="?route=editDoku&id={{ puzzle.getDokuId }}">
+                                    <span>Edit this Puzzle</span>
+                                    <span class="material-symbols-outlined text-base">open_in_new</span>
+                                </a>
                             {% endif %}
                             <a class="external-link"
                                href="{{ puzzle.getDokuUrl }}" rel="noopener noreferrer" target="_blank">
@@ -125,9 +129,10 @@
                             </div>
                             <!-- The Given Puzzle Image -->
                             <div class="w-fit aspect-square bg-surface-cream overflow-hidden p-2">
-                                <a href="{{ puzzle.getDokuUrl }}" target="_blank"><img alt="Image for {{ puzzle.getDokuTitle }} missing"
-                                     class="w-full h-full select-none"
-                                     src="{{ IMG_DIR }}/{{ puzzle.getDokuImgLocation }}.png"/>
+                                <a href="{{ puzzle.getDokuUrl }}" target="_blank"><img
+                                            alt="Image for {{ puzzle.getDokuTitle }} missing"
+                                            class="w-full h-full select-none"
+                                            src="{{ IMG_DIR }}/{{ puzzle.getDokuImgLocation }}.png"/>
                                 </a>
                             </div>
                             -
@@ -205,7 +210,8 @@
                                 {% for variant in variants %}
                                     {% if variant.getVariantName in puzzle.getDokuVariantNames %}
                                         <div>
-                                            <a  href="?route=getVariant&id={{ variant.getVariantId }}" class="font-label-md text-label-md text-primary font-semibold uppercase tracking-wide flex items-center gap-1.5 mb-1">
+                                            <a href="?route=getVariant&id={{ variant.getVariantId }}"
+                                               class="font-label-md text-label-md text-primary font-semibold uppercase tracking-wide flex items-center gap-1.5 mb-1">
                                                 <span class="material-symbols-outlined text-sm">linear_scale</span>
                                                 {{ variant.getVariantName }}
                                             </a>
@@ -215,6 +221,30 @@
                                         </div>
                                     {% endif %}
                                 {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="bg-surface-container-lowest p-space-lg shadow-sm">
+                            <div class="flex items-center justify-between pb-space-sm mb-space-md bg-surface-container-low px-space-md py-2">
+                                <h2 class="span-style font-semibold">Comments</h2>
+                                <span class="font-label-sm text-label-sm text-secondary">The occasional comment</span>
+                            </div>
+                            <!-- Comment -->
+                            <div class="space-y-space-md">
+                                <div>
+                                    {% if comments %}
+                                        {% for comment in comments %}
+                                        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed ms-2">
+                                            {{ comment.getCommentText }}
+                                        </p>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed ms-2">
+                                            No comments added yet. Sorry.
+                                        </p>
+                                    {% endif %}
+                                </div>
+
                             </div>
                         </div>
                         <!-- SPOILERS & LOGICAL BREAKTHROUGHS SECTION -->
@@ -238,7 +268,8 @@
                                         The sections below reveal slight to major spoilers...
                                     </p>
                                     <p class="p-style">
-                                        - 1: A nudge: "Look at this cell, or row/whatever. How is it interacting with this, other, cell?", or some other, gentle hint</p>
+                                        - 1: A nudge: "Look at this cell, or row/whatever. How is it interacting with
+                                        this, other, cell?", or some other, gentle hint</p>
                                     <p class="p-style">
                                         - 2: A bit more: "Still gentle but bigger than a nudge"</p>
                                     <p class="p-style">
@@ -264,109 +295,163 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {% else %}
-                                <!-- Clue 1 -->
-                                        {% for clue in clues %}
-                                <div class="bg-surface-container-low p-space-md transition-colors">
-                                    <div class="flex items-center justify-between gap-space-md">
-                                        <div class="flex items-center gap-space-sm">
-                                            <span class="font-label-sm text-label-sm bg-surface-container px-2 py-0.5 text-on-surface font-bold">{{ clue.getClueLevel }} : {{ clue.getClueHeader }}</span>
-                                  {#           <span class="font-label-md text-label-md font-semibold text-on-surface">The Break-in Step (Row 1 &amp; Row 9 Parity)</span> #}
+                                {% else %}
+                                    <!-- Clue 1 -->
+                                    {% for clue in clues %}
+                                        <div class="bg-surface-container-low p-space-md transition-colors">
+                                            <div class="flex items-center justify-between gap-space-md">
+                                                <div class="flex items-center gap-space-sm">
+                                                    <span class="font-label-sm text-label-sm bg-surface-container px-2 py-0.5 text-on-surface font-bold">{{ clue.getClueLevel }} : {{ clue.getClueHeader }}</span>
+                                                    {#           <span class="font-label-md text-label-md font-semibold text-on-surface">The Break-in Step (Row 1 &amp; Row 9 Parity)</span> #}
+                                                </div>
+                                                <button aria-expanded="false"
+                                                        class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container hover:bg-primary hover:text-on-primary text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
+                                                        onclick="toggleClue('clue-{{ clue.getClueId }}', this)"
+                                                        type="button">
+                                                    Reveal Step
+                                                </button>
+                                            </div>
+                                            <div class="hidden mt-space-md pt-space-sm bg-surface-container-lowest p-space-md font-body-sm text-body-sm text-on-surface-variant leading-relaxed"
+                                                 id="clue-{{ clue.getClueId }}">
+                                                <p class="mb-2">
+                                                    {# <strong class="text-primary font-medium">Parity Segregation:</strong> #}
+                                                    {{ clue.getClueText }}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <button aria-expanded="false"
-                                                class="font-label-sm text-label-sm px-space-md py-space-xs bg-surface-container hover:bg-primary hover:text-on-primary text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1"
-                                                onclick="toggleClue('clue-{{ clue.getClueId }}', this)" type="button">
-                                            Reveal Step
-                                        </button>
-                                    </div>
-                                    <div class="hidden mt-space-md pt-space-sm bg-surface-container-lowest p-space-md font-body-sm text-body-sm text-on-surface-variant leading-relaxed"
-                                         id="clue-{{ clue.getClueId }}">
-                                        <p class="mb-2">
-                                            {# <strong class="text-primary font-medium">Parity Segregation:</strong> #}
-                                            {{ clue.getClueText }}
-                                        </p>
-                                    </div>
-                                </div>
-                                        {% endfor %}
+                                    {% endfor %}
                                 {% endif %}
                                 {% if "ROLE_SUPER" in sessionRole %}
 
-                                <div class="flex-1 max-w-3xl w-full mx-auto px-6 py-8">
-                                    <!-- Page Heading & Context -->
+                                    <div class="flex-1 max-w-3xl w-full mx-auto px-6 py-8">
+                                        <!-- Page Heading & Context -->
 
 
-                                    <!-- Clue Submission Form -->
-                                    <form method="POST" class="bg-surface-card border border-border rounded-lg shadow-sm overflow-hidden font-sans">
+                                        <!-- Clue Submission Form -->
+                                        <form method="POST"
+                                              class="bg-surface-card border border-border rounded-lg shadow-sm overflow-hidden font-sans">
 
-                                        <div class="p-6 md:p-8 space-y-6">
-                                            <!-- 1. clue_level -->
-                                            <div>
-                                                <div class="flex items-baseline justify-between mb-2">
-                                                    <label for="clue_level" class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
-                                                        Clue Level <span class="text-primary">*</span>
-                                                    </label>
-                                                </div>
-
-                                                <div class="relative">
-                                                    <select id="clue_level"
-                                                            name="int:clue_level"
-                                                            required
-                                                            class="w-full px-4 py-2.5 bg-white border border-border rounded text-text font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors appearance-none cursor-pointer">
-                                                        <option value="" disabled>Select clue severity level...</option>
-                                                        <option value="6" selected>Special Rule</option>
-                                                        <option value="1">Level 1 — Gentle Nudge (Point towards a specific row, box, or variant line)</option>
-                                                        <option value="2">Level 2 — Focused Observation (Highlight candidate restriction or parity balance)</option>
-                                                        <option value="3">Level 3 — Significant Breakthrough (Key deduction unlocking several cells)</option>
-                                                        <option value="4">Level 4 — Critical Bottleneck / Break-in (Primary core solve deduction)</option>
-                                                        <option value="5">Level 5 — Full Resolution Step (Exact digits &amp; chain walkthrough)</option>
-                                                    </select>
-                                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-text-muted font-mono text-xs">
-                                                        ▼
+                                            <div class="p-6 md:p-8 space-y-6">
+                                                <!-- 1. clue_level -->
+                                                <div>
+                                                    <div class="flex items-baseline justify-between mb-2">
+                                                        <label for="clue_level"
+                                                               class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
+                                                            Clue Level <span class="text-primary">*</span>
+                                                        </label>
                                                     </div>
+
+                                                    <div class="relative">
+                                                        <select id="clue_level"
+                                                                name="int:clue_level"
+                                                                required
+                                                                class="w-full px-4 py-2.5 bg-white border border-border rounded text-text font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors appearance-none cursor-pointer">
+                                                            <option value="" disabled>Select clue severity level...
+                                                            </option>
+                                                            <option value="6" selected>Special Rule</option>
+                                                            <option value="1">Level 1 — Gentle Nudge (Point towards a
+                                                                specific row, box, or variant line)
+                                                            </option>
+                                                            <option value="2">Level 2 — Focused Observation (Highlight
+                                                                candidate restriction or parity balance)
+                                                            </option>
+                                                            <option value="3">Level 3 — Significant Breakthrough (Key
+                                                                deduction unlocking several cells)
+                                                            </option>
+                                                            <option value="4">Level 4 — Critical Bottleneck / Break-in
+                                                                (Primary core solve deduction)
+                                                            </option>
+                                                            <option value="5">Level 5 — Full Resolution Step (Exact
+                                                                digits
+                                                                &amp; chain walkthrough)
+                                                            </option>
+                                                        </select>
+                                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-text-muted font-mono text-xs">
+                                                            ▼
+                                                        </div>
+                                                    </div>
+
                                                 </div>
 
+
+                                                <!-- 3. clue_description -->
+                                                <div>
+                                                    <div class="flex items-baseline justify-between mb-2">
+                                                        <label for="clue_header"
+                                                               class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
+                                                            Clue Header <span class="text-primary">*</span>
+                                                        </label>
+                                                        <input type="text" id="clue_header" name="str:clue_header"
+                                                               class="border border-gray-300 rounded-md px-2 py-1"
+                                                               value="Special Rule">
+
+                                                    </div>
+                                                    <div class="flex items-baseline justify-between mb-2">
+                                                        <label for="clue_description"
+                                                               class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
+                                                            Clue Description <span class="text-primary">*</span>
+                                                        </label>
+
+                                                    </div>
+
+                                                    <textarea id="clue_description"
+                                                              name="str:clue_text"
+                                                              rows="6"
+                                                              required
+                                                              class="w-full px-4 py-3 bg-white border border-border rounded text-text font-sans text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors placeholder:text-text-muted/60 leading-relaxed"></textarea>
+                                                </div>
                                             </div>
+                                            <!-- Form Actions -->
+                                            <div class="px-6 md:px-8 py-4 bg-slate-50 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
+                                                <div class="flex items-center gap-3 w-full sm:w-auto order-1 sm:order-2">
+                                                    <input type="hidden" name="int:clue_doku_id"
+                                                           value="{{ puzzle.getDokuId }}">
+                                                    <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
+                                                    <button type="submit"
+                                                            class="w-1/2 sm:w-auto px-6 py-2.5 bg-primary text-white font-bold rounded hover:bg-primary-dark transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                                                            name="unset:addClue">
+                                                        + Save Clue Deduction
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+
+                                        <!-- Comment Submission Form -->
+                                        <form method="POST"
+                                              class="bg-surface-card border border-border rounded-lg shadow-sm overflow-hidden font-sans">
 
 
                                             <!-- 3. clue_description -->
                                             <div>
-                                                <div class="flex items-baseline justify-between mb-2">
-                                                    <label for="clue_header" class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
-                                                        Clue Header <span class="text-primary">*</span>
+                                                <div class="flex items-baseline justify-between mb-2 mt-6">
+                                                    <label for="comment_text"
+                                                           class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
+                                                        Comment <span class="text-primary">*</span>
                                                     </label>
-                                                    <input type="text" id="clue_header" name="str:clue_header" class="border border-gray-300 rounded-md px-2 py-1" value="Special Rule">
-
-                                                </div>
-                                                <div class="flex items-baseline justify-between mb-2">
-                                                    <label for="clue_description" class="block text-xs font-mono uppercase font-bold text-text tracking-wider">
-                                                        Clue Description <span class="text-primary">*</span>
-                                                    </label>
-
+                                                    <input type="text" id="comment_text" name="str:comment_text"
+                                                           class="border border-gray-300 rounded-md px-2 py-1 w-[85%] me-2">
                                                 </div>
 
-                                                <textarea id="clue_description"
-                                                          name="str:clue_text"
-                                                          rows="6"
-                                                          required
-                                                          class="w-full px-4 py-3 bg-white border border-border rounded text-text font-sans text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors placeholder:text-text-muted/60 leading-relaxed"></textarea>
                                             </div>
-                                        </div>
-                                        <!-- Form Actions -->
-                                        <div class="px-6 md:px-8 py-4 bg-slate-50 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
-                                            <div class="flex items-center gap-3 w-full sm:w-auto order-1 sm:order-2">
-                                                <input type="hidden" name="int:clue_doku_id" value="{{ puzzle.getDokuId }}">
-                                                <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
-                                                <button type="submit" class="w-1/2 sm:w-auto px-6 py-2.5 bg-primary text-white font-bold rounded hover:bg-primary-dark transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                                                        name="unset:addClue">
-                                                    + Save Clue Deduction
-                                                </button>
+                                            <!-- Form Actions -->
+                                            <div class="px-6 md:px-8 py-4 bg-slate-50 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
+                                                <div class="flex items-center gap-3 w-full sm:w-auto order-1 sm:order-2">
+                                                    <input type="hidden" name="int:comment_doku_id"
+                                                           value="{{ puzzle.getDokuId }}">
+                                                    <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
+                                                    <button type="submit"
+                                                            class="w-1/2 sm:w-auto px-6 py-2.5 bg-primary text-white font-bold rounded hover:bg-primary-dark transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                                                            name="unset:addComment">
+                                                        + Add Comment
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                {% endif %}
+                                        </form>
                                     </div>
-                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
 
 
                         <!-- Solve Log Meta Info Footer -->

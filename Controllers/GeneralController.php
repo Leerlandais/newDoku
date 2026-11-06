@@ -6,6 +6,7 @@ use Controllers\Abstract\AbstractController;
 use Factory\ManagerFactory;
 use model\Manager\AdminManager;
 use model\Manager\CluesManager;
+use model\Manager\CommentManager;
 use model\Manager\ConnectionManager;
 use model\Manager\DokuManager;
 use model\Manager\SearchManager;
@@ -19,6 +20,7 @@ class GeneralController extends Abstract\AbstractController
     private AdminManager $adminManager;
     private CluesManager $cluesManager;
     private SearchManager $searchManager;
+    private CommentManager $commentManager;
 
     public function __construct(Environment $twig, ManagerFactory $managerFactory)
     {
@@ -28,6 +30,7 @@ class GeneralController extends Abstract\AbstractController
         $this->adminManager = $this->getManager(AdminManager::class);
         $this->cluesManager = $this->getManager(CluesManager::class);
         $this->searchManager = $this->getManager(SearchManager::class);
+        $this->commentManager = $this->getManager(CommentManager::class);
     }
 
     public function viewAll(array $getParams): void
@@ -205,8 +208,19 @@ class GeneralController extends Abstract\AbstractController
             $puzzleId = $this->intClean($_POST["unset:incrementSolve"]);
             $this->adminManager->incrementSolve($puzzleId);
             header("Location: ?route=showDetails&id=$puzzleId");
+        } elseif (isset($_POST["unset:addComment"])) {
+
+            $this->verifyCsrfToken($this->standardClean($_POST["csrf:csrf_token"]));
+            $cleanedData = $this->preparePostData($_POST);
+            $addComment = $this->commentManager->addComment($cleanedData);
+            $_SESSION["systemMessage"] = $addComment ? "Comment added" : "Comment not added";
+            header("Location: ?route=showDetails&id=$id");
+            exit();
         }
+
+
         $dokuClues = $this->cluesManager->getDokuClues($id);
+        $dokuComments = $this->commentManager->getDokuComments($id);
         echo $this->twig->render('public/public.showDetails.html.twig', [
             "systemMessage" => $systemMessage,
             "sessionRole" => $sessionRole,
@@ -217,6 +231,7 @@ class GeneralController extends Abstract\AbstractController
             "variants" => $variants,
             "clues" => $dokuClues,
             "averageTime" => $averageTime,
+            "comments" => $dokuComments,
         ]);
     }
 
