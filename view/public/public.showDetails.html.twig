@@ -430,7 +430,7 @@
                                                         Comment <span class="text-primary">*</span>
                                                     </label>
                                                     <input type="text" id="comment_text" name="str:comment_text"
-                                                           class="border border-gray-300 rounded-md px-2 py-1 w-[85%] me-2">
+                                                           class="border border-gray-300 rounded-md px-2 py-1 w-[85%] me-2" required>>
                                                 </div>
 
                                             </div>
@@ -438,8 +438,8 @@
                                             <div class="px-6 md:px-8 py-4 bg-slate-50 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
                                                 <div class="flex items-center gap-3 w-full sm:w-auto order-1 sm:order-2">
                                                     <input type="hidden" name="int:comment_doku_id"
-                                                           value="{{ puzzle.getDokuId }}">
-                                                    <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
+                                                           value="{{ puzzle.getDokuId }}" required>>
+                                                    <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}" required>>
                                                     <button type="submit"
                                                             class="w-1/2 sm:w-auto px-6 py-2.5 bg-primary text-white font-bold rounded hover:bg-primary-dark transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                                                             name="unset:addComment">
