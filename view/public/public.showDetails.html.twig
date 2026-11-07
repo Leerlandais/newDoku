@@ -4,6 +4,14 @@
     {% endblock %}
     {% block title %}{{ parent() }}Details{% endblock %}
 {% block content %}
+    {% set SpecialRule = null %}
+
+    {% for clue in clues %}
+        {% if clue.getClueLevel == 6 and clue.getClueText|length > 1 %}
+            {% set SpecialRule = clue.getClueText %}
+        {% endif %}
+    {% endfor %}
+
     <main class="w-full pt-20 bg-surface min-h-[calc(100vh-5rem)]">
         <div class="flex flex-col w-full">
             <!-- Top Context / Breadcrumbs Bar -->
@@ -197,18 +205,12 @@
                             </div>
                             <!-- Detailed Rules Accordion / Narrative -->
                             <div class="space-y-space-md">
-                                <div>
-                                    <h3 class="font-label-md text-label-md text-primary font-semibold uppercase tracking-wide flex items-center gap-1.5 mb-1">
-                                        <span class="material-symbols-outlined text-sm">check_circle</span>
-                                        Classic Sudoku Rules
-                                    </h3>
-                                    <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                                        Place the digits 1 through 9 once each in every row, column, and 3x3 box without
-                                        repetition.
-                                    </p>
-                                </div>
+
+
+
                                 {% for variant in variants %}
-                                    {% if variant.getVariantName in puzzle.getDokuVariantNames %}
+
+                                    {% if variant.getVariantName in puzzle.getDokuVariantNames and variant.getVariantId != 3 %}
                                         <div>
                                             <a href="?route=getVariant&id={{ variant.getVariantId }}"
                                                class="font-label-md text-label-md text-primary font-semibold uppercase tracking-wide flex items-center gap-1.5 mb-1">
@@ -219,8 +221,20 @@
                                                 {{ variant.getVariantRules }}
                                             </p>
                                         </div>
-                                    {% endif %}
+                                {% endif %}
                                 {% endfor %}
+                                    {% if SpecialRule %}
+                                    <div>
+                                        <a href="?route=getVariant&id=3"
+                                           class="font-label-md text-label-md text-primary font-semibold uppercase tracking-wide flex items-center gap-1.5 mb-1">
+                                            <span class="material-symbols-outlined text-sm">linear_scale</span>
+                                            Special Rule
+                                        </a>
+                                        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                                            {{ SpecialRule }}
+                                        </p>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -300,6 +314,7 @@ comment
                                 {% else %}
                                     <!-- Clue 1 -->
                                     {% for clue in clues %}
+                                        {% if clue.getClueLevel != 6 %}
                                         <div class="bg-surface-container-low p-space-md transition-colors">
                                             <div class="flex items-center justify-between gap-space-md">
                                                 <div class="flex items-center gap-space-sm">
@@ -321,6 +336,7 @@ comment
                                                 </p>
                                             </div>
                                         </div>
+                                        {% endif %}
                                     {% endfor %}
                                 {% endif %}
                                 {% if "ROLE_SUPER" in sessionRole %}
