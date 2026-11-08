@@ -131,13 +131,18 @@ class AdminController extends Abstract\AbstractController
         ]);
     }
 
-    public function viewLogs(): void
+    public function viewLogs(array $getParams): void
     {
         global $sessionRole, $systemMessage, $sessionExpiresAt;
         $this->checkPermissions("ROLE_ADMIN", $sessionRole);
         $ip = $_SERVER['REMOTE_ADDR'];
         $this->checkIpForBan($ip);
-        $logs = $this->connectionManager->getAllLogs();
+
+        if(isset($getParams["login"]) && $getParams["login"] === "true") {
+            $logs = $this->connectionManager->getAllLogs(false, true);
+        }else {
+            $logs = $this->connectionManager->getAllLogs();
+        }
         foreach ($logs as &$log) {
             if (isset(explode(":", $log->getLogPageVisited())[1])) {
 

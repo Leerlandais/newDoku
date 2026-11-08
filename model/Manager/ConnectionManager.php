@@ -55,9 +55,11 @@
 
         }
 
-        public function getAllLogs($ip = false) : array
+        public function getAllLogs($ip = false, $login = false) : array
         {
-            $whereClause = $ip ? "WHERE log_ip = :ip" : "";
+            $whereClause = "";
+            if($ip) $whereClause =  "WHERE log_ip = :ip";
+            if($login) $whereClause = "WHERE `log_page_visited` = 'SUCCESS' OR `log_page_visited` = 'FAILED'";
             $query = $this->db->prepare("SELECT * FROM doku_connection_logs $whereClause ORDER BY log_id DESC");
             if($ip) {
                 $query->bindValue(":ip", $ip, \PDO::PARAM_STR);

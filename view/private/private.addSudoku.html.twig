@@ -54,7 +54,7 @@
                 {% for variant in variants %}
                     <div class="flex items-center justify-between">
                         <label>{{ variant.getVariantName }}
-                            <input type="checkbox" name="int:variant[]" value="{{ variant.getVariantId }}">
+                            <input type="checkbox" name="int:variant[]" value="{{ variant.getVariantId }}" {% if variant.getVariantId == 42 %}checked{% endif %}>
                         </label>
                     </div>
                 {% endfor %}
