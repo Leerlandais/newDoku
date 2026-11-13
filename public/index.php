@@ -8,7 +8,7 @@ if (isset($_SESSION["activity"]) && time() - $_SESSION["activity"] > 1800) {
 }
 $_SESSION["activity"] = time();
 
-if(isset($_SESSION["id"]) && $_SESSION["id"] !== session_id()){
+if(isset($_SESSION["id"]) && $_SESSION["id"] !== session_id() || isset($_SESSION["user_name"]) && $_SESSION["user_name"] != "leeDoku"){
     session_unset();
     session_destroy();
     header("location: ./");
