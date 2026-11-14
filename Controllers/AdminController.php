@@ -53,7 +53,9 @@ class AdminController extends Abstract\AbstractController
             $this->verifyCsrfToken($_POST['csrf:csrf_token']);
             $cleanedData = $this->preparePostData($_POST);
             $addSetter = $this->adminManager->addSetter($cleanedData);
-          //  $_SESSION["systemMessage"] = $addSetter ? "Setter added" : "Setter not added";
+            if(!$addSetter) {
+                $addSetter = $this->dokuManager->getSetterByName($cleanedData["setter_name"]);
+            }
             header("Location: ?route=addSudoku&id=$addSetter");
             exit();
         }

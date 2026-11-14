@@ -231,4 +231,14 @@ GROUP BY dd.doku_id");
         $stmt->bindParam(":id", $id, \PDO::PARAM_INT);
         $stmt->execute();
     }
+
+    public function getSetterByName(string $name) : int|false
+    {
+        $stmt = $this->db->prepare("SELECT * FROM doku_setters WHERE setter_name = :name");
+        $stmt->bindParam(":name", $name);
+        $stmt->execute();
+        $setter = $stmt->fetch();
+        if(!$setter) return false;
+        return $setter["setter_id"];
+    }
 }

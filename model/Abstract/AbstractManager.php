@@ -16,10 +16,14 @@ abstract class AbstractManager
     }
     protected function insertAnything(array $data, string $dbName, string $dbType = "db", $returnId = false): bool|int
     {
-        $columns = implode(", ", array_keys($data));
-        $placeholders = ":" . implode(", :", array_keys($data));
-        $stmt = $this->$dbType->prepare("INSERT INTO $dbName ($columns) VALUES ($placeholders)");
-        $stmt->execute($data);
+        try {
+            $columns = implode(", ", array_keys($data));
+            $placeholders = ":" . implode(", :", array_keys($data));
+            $stmt = $this->$dbType->prepare("INSERT INTO $dbName ($columns) VALUES ($placeholders)");
+            $stmt->execute($data);
+        }catch (\PDOException $e) {
+            return false;
+        }
         if($returnId === true) return $this->$dbType->lastInsertId();
         return (int)$this->$dbType->lastInsertId() > 0; // Turns out insert and a rowCount() check is not always valid. Better to use a lastInsertId check
     }
