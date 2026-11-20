@@ -76,6 +76,13 @@ class AdminManager extends AbstractManager
     {
         $this->insertAnything($insertInfo, "doku_has_image");
     }
+
+    public function deleteImage(int $id) : bool
+    {
+        $stmt = $this->db->prepare("DELETE FROM doku_has_image WHERE doku_id = :id");
+        $stmt->bindParam(":id", $id, \PDO::PARAM_INT);
+        return $stmt->execute();
+    }
     public function incrementSolve(int $id) : void
     {
         $stmt = $this->db->prepare("UPDATE doku_dokus SET doku_solve_count = doku_solve_count + 1 WHERE doku_id = :id");

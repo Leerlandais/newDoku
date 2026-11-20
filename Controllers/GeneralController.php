@@ -193,27 +193,38 @@ class GeneralController extends Abstract\AbstractController
             exit();
 
         } elseif (isset($_POST["unset:addClue"])) {
+            $this->verifyCsrfToken($this->simpleTrim($_POST["csrf:csrf_token"]));
             $cleanedData = $this->preparePostData($_POST);
             $addClue = $this->adminManager->addClue($cleanedData);
             $_SESSION["systemMessage"] = $addClue ? "Clue added" : "Clue not added";
             header("Location: ?route=showDetails&id=$id");
             exit();
         } elseif (isset($_POST["unset:updateStars"])) {
+            $this->verifyCsrfToken($this->simpleTrim($_POST["csrf:csrf_token"]));
             $cleanedData = $this->preparePostData($_POST);
             $cleanedData["doku_id"] = $id;
             $this->adminManager->updateStars($cleanedData);
             header("Location: ?route=showDetails&id=$id");
             exit();
         } elseif (isset($_POST["unset:incrementSolve"])) {
+            $this->verifyCsrfToken($this->simpleTrim($_POST["csrf:csrf_token"]));
             $puzzleId = $this->intClean($_POST["unset:incrementSolve"]);
             $this->adminManager->incrementSolve($puzzleId);
             header("Location: ?route=showDetails&id=$puzzleId");
         } elseif (isset($_POST["unset:addComment"])) {
 
-            $this->verifyCsrfToken($this->standardClean($_POST["csrf:csrf_token"]));
+            $this->verifyCsrfToken($this->simpleTrim($_POST["csrf:csrf_token"]));
             $cleanedData = $this->preparePostData($_POST);
             $addComment = $this->commentManager->addComment($cleanedData);
             $_SESSION["systemMessage"] = $addComment ? "Comment added" : "Comment not added";
+            header("Location: ?route=showDetails&id=$id");
+            exit();
+        }elseif (isset($_POST["unset:deleteImage"])) {
+            $this->verifyCsrfToken($this->simpleTrim($_POST["csrf:csrf_token"]));
+            $cleanedData = $this->preparePostData($_POST);
+            $deleteId = $cleanedData["doku_id"];
+            $deleteImage = $this->adminManager->deleteImage($deleteId);
+            $_SESSION["systemMessage"] = $deleteImage ? "Image deleted" : "Image not deleted";
             header("Location: ?route=showDetails&id=$id");
             exit();
         }

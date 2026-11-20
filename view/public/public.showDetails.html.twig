@@ -56,6 +56,7 @@
                                                 <option value="5">5</option>
                                             </select>
                                         </label>
+                                        <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
                                         <button type="submit" name="unset:updateStars">Go</button>
                                     </form>
                                 {% endif %}
@@ -94,7 +95,7 @@
                                 <div class="flex flex-col items-center justify-center h-3/6">
                                     <form method="post" enctype="multipart/form-data" class="flex flex-col gap-y-4">
                                         <label>
-                                            <input type="hidden" name="csrf:csrf_token" value="{{ csrf_token }}">
+                                            <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
                                         </label>
                                         Choose an image to upload :
                                         <input type="file" name="fileToUpload" id="fileToUpload" required>
@@ -134,6 +135,14 @@
                             <div class="flex items-center justify-between pb-space-xs mb-space-sm bg-surface-container-low px-space-sm py-1.5">
                                 <span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">Grid Schematic</span>
                                 <span class="font-label-sm text-label-sm text-primary">9 × 9 CLASSIC FRAME</span>
+                                {% if "ROLE_ADMIN" in sessionRole %}
+                                    <form method="post">
+                                        <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}" required>
+                                        <input type="hidden" name="int:doku_id" value="{{ puzzle.getDokuId }}" required>
+                                        <input type="hidden" name="unset:deleteImage" required>
+                                        <button type="submit" class="text-red-500">X</button>
+                                    </form>
+                                {% endif %}
                             </div>
                             <!-- The Given Puzzle Image -->
                             <div class="w-fit aspect-square bg-surface-cream overflow-hidden p-2">
