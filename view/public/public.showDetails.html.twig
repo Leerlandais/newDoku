@@ -47,7 +47,7 @@
                                 {% if "ROLE_SUPER" in sessionRole %}
                                     <form method="post">
                                         <label>
-                                            <select name="int:doku_stars">
+                                            <select name="int:doku_stars" class="select-standard">
                                                 <option selected disabled></option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
@@ -57,7 +57,7 @@
                                             </select>
                                         </label>
                                         <input type="hidden" name="csrf:csrf_token" value="{{ csrfToken }}">
-                                        <button type="submit" name="unset:updateStars">Go</button>
+                                        <button type="submit" name="unset:updateStars" class="button-style">Go</button>
                                     </form>
                                 {% endif %}
                             </div>
